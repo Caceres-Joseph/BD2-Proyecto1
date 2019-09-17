@@ -1,0 +1,209 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D2BCD4E1-CA50-945B-0B4B-224442090146" name="Transaccion">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>B3BE4567-43E1-A7F9-CBD1-F956F4CF4751</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_transaccion" id="7461A960-B5B5-94B2-C4D0-1C23C1AA5519">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>18B2BDE3-0DA1-29F0-A96A-B87BCDD1E7B5</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="fecha" id="67228587-4C37-D064-2814-8EAE20D526EC">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>9754FD25-90D9-D465-7649-CCEA1D4C264A</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="tipo" id="8388D01A-1B78-0566-1267-FEAA992F6285">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>A7F785EC-2D1B-5ACD-680A-A8D494A8AFCE</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="naturaleza" id="AB69C758-EFD9-2BED-891F-E22695E4E86A">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>F1C36A8A-36E5-2DE8-83B6-4D0D9AFB4393</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="saldo_inicial" id="BC5863B2-FD5D-E4D9-2EFC-6AB43129821B">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>64521DD9-4AB8-9C7B-37B9-17D32A973FE6</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT022</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="saldo_final" id="2BB02588-CB66-E3E1-A7C8-09B8AF9F96C8">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>F55F84B1-E42F-F52D-22C6-29C943944033</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT022</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="codigo_autorizacion" id="0293E2B2-78F3-9C1C-62D7-6E745248A9F3">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>FC74B7AF-D613-94D0-56EC-317A75F095F2</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="rechazado" id="02F1FC97-FCB1-749D-07DF-E8A44DB0EFA8">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>95B44FD4-EBAA-908C-DCBC-04E7FDB49DF0</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="razon_rechazo" id="468EFFCC-35B8-4579-F583-C20B756A4D84">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>792D7796-0D76-EB25-E745-E3C7D8F9A31F</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Usuario_id_usuario" id="8BC6BB8A-7CDE-6570-2FF0-B1C7731B6E5E">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>9FB750FB-6A8C-1A09-525A-8FD47754EC13</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DA5C2D73-37DB-4D09-00E3-C7E96678DFA5" referredColumn="E97607B2-8A69-9418-21E8-B8F3ED999119"/>
+</associations>
+</Column>
+<Column name="Terminal_id_terminal" id="A7E4BEBC-22EC-6BA2-2EBE-55C5466ABFBA">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>7F767DB5-EDF7-C3B3-B9B1-776BE385A3DD</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AB51ADC0-B0D7-85C8-C0E6-3D1B637D1299" referredColumn="6AA5729B-7D3E-DFC6-7A10-0CC60C0FD317"/>
+</associations>
+</Column>
+<Column name="Cuenta_no_cuenta" id="F0B7AC77-6CB4-2B48-D5E3-2DE33B5F5282">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>2A2A5747-1439-871A-4B4B-A924C7709DEC</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8EB2D0F7-8BDB-AD6B-7538-0061B0629626" referredColumn="840AFF63-D075-5535-E3F8-9C0C98A01AF1"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0C90A419-2391-B987-84A7-C4F739C802BD" name="Transaccion_PK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>8827B0AC-A62E-ED43-2175-3E06DDC96E29</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7461A960-B5B5-94B2-C4D0-1C23C1AA5519"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="814758BC-8879-2B2A-1716-D5566B82F9A2" name="Transaccion_Usuario_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>C905A421-767E-3D37-C2BD-E82C0C5376F6</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8BC6BB8A-7CDE-6570-2FF0-B1C7731B6E5E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="94434F66-3498-7565-8B7C-1021B5BAC16C" name="Transaccion_Terminal_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>538B2FD3-5E8B-EA10-28C5-036E2F395E52</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A7E4BEBC-22EC-6BA2-2EBE-55C5466ABFBA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A874B044-F421-2A2F-70E6-3C24E591D8D3" name="Transaccion_Cuenta_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>F31555D8-770B-7771-1AA0-3492AA849666</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F0B7AC77-6CB4-2B48-D5E3-2DE33B5F5282"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

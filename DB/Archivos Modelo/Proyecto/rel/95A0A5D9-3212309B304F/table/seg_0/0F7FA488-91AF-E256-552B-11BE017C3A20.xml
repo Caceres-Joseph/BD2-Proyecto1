@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0F7FA488-91AF-E256-552B-11BE017C3A20" name="Permiso">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>06595C13-C389-12D6-68C2-FE2EEB42335C</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_permiso" id="5E740D96-EBFC-BFAB-AD9A-A2B1F5779669">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>16EDBF32-87DE-679F-0D73-36C2CAA77A68</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nombre" id="B078580F-1678-0233-D194-2EDB0A2CBB9A">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>905AAC8C-D8C4-BCB0-7283-7F647E42E3C7</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="descripcion" id="CF7AF712-2D65-9062-288C-8AFC7046459C">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>43BD3336-CAE1-2199-9B35-5ABACDCF3932</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="968EE328-3392-1B6D-26DD-03F353B9B56F" name="Permiso_PK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>2979D803-5C47-F1EE-06EC-C043A9CAC171</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5E740D96-EBFC-BFAB-AD9A-A2B1F5779669"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

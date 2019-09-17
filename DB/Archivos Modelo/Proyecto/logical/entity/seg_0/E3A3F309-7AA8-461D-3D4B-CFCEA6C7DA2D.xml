@@ -1,0 +1,74 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E3A3F309-7AA8-461D-3D4B-CFCEA6C7DA2D" name="Mancomunada">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:47:07 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_mancomunada" id="D9C12CC8-7833-806F-C7EB-355AD8F8C6F3">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:47:14 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_cliente" id="370227EE-60CD-1B28-AD79-4A918D5BEB45">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:52:07 UTC</createdTime>
+<generatorID>78A03E22-1FA2-9413-79F5-4D8143DF84C2</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<referedAttribute>0F627F0E-446B-D61A-E6CA-9B6C7EA6C12B</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="no_cuenta" id="0A2FAEAF-D1C5-418A-1907-28269FB6CA80">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:53:45 UTC</createdTime>
+<generatorID>C9E18251-4504-884A-4B55-6BD7A0087271</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<referedAttribute>48F620FB-6649-4FA6-429C-4CE05816C1C9</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="EEA1FB1C-B4FB-9A2B-5428-9B3AACEF1A70" name="Mancomunada PK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:47:37 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>D9C12CC8-7833-806F-C7EB-355AD8F8C6F3</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

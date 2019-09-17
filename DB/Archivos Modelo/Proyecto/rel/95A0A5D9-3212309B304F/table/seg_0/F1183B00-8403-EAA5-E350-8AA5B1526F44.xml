@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F1183B00-8403-EAA5-E350-8AA5B1526F44" name="Agencia">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:36 UTC</createdTime>
+<generatorID>8797995E-3612-C436-6087-657F9394061D</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_agencia" id="355B6848-B247-9BE2-E9F7-C672EB99C22E">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:36 UTC</createdTime>
+<generatorID>00C28D0B-E97E-BCEE-F0C5-2FB448900D1C</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nombre" id="8B6A53CE-8D8E-7EC9-952D-128E0ADE39C9">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:36 UTC</createdTime>
+<generatorID>3BBD8861-BF33-FD99-17F2-A3774D80FCF5</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="direccion" id="CD77AB3E-CEC0-FE5E-AA75-3CAA6D8CE581">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:36 UTC</createdTime>
+<generatorID>986FCE95-A090-C0A4-6A92-9E9BEF20E3B3</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Banco_id_banco" id="2DF8CED1-C3A0-6647-8359-C5A34D2DA6E3">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:36 UTC</createdTime>
+<generatorID>22873E25-6D46-A386-39D1-47AC3C7AD90B</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3928C28E-4B1E-21AA-CF31-D052DAA6B860" referredColumn="53F997A9-37E1-9FCF-2DFD-49D1274EE938"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="AEB4601A-4F06-82F3-EA28-D4A4FD745D57" name="Agencia_PK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:36 UTC</createdTime>
+<generatorID>B82C2224-6340-8F76-D160-98E64317F307</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="355B6848-B247-9BE2-E9F7-C672EB99C22E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="955595E0-856A-6345-7015-05189B2B2FE3" name="Agencia_Banco_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>20BE6A34-F74E-32EC-3AF4-583CD24B4FF3</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2DF8CED1-C3A0-6647-8359-C5A34D2DA6E3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

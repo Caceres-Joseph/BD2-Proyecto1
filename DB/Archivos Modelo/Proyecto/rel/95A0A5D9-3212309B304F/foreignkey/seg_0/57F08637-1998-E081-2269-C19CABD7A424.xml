@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="57F08637-1998-E081-2269-C19CABD7A424" containerWithKeyObject="D132987A-4611-1611-657E-4185CAB84BEC" localFKIndex="4778D552-E042-6E8F-AD33-51C97900C4C9" name="Mancomunada_Cuenta_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>C9E18251-4504-884A-4B55-6BD7A0087271</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<referredTableLongName>Cuenta</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>C6C02802-A0B1-3EEA-7415-FAD002CED52B</referredTableID>
+<keyObject>AE32B259-6E4E-B292-AF28-651DD5DC961D</keyObject>
+<referredKeyID>AE32B259-6E4E-B292-AF28-651DD5DC961D</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>no_cuenta</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

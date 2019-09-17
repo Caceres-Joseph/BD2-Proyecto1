@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D132987A-4611-1611-657E-4185CAB84BEC" name="Mancomunada">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>E3A3F309-7AA8-461D-3D4B-CFCEA6C7DA2D</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_mancomunada" id="6592B45F-E47B-0813-1FA4-6288A9D0CB20">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>D9C12CC8-7833-806F-C7EB-355AD8F8C6F3</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Cliente_id_cliente" id="1CE82844-0934-C512-7434-293430CC5CB5">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>370227EE-60CD-1B28-AD79-4A918D5BEB45</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5A74947E-651D-7881-9BE0-E8DF087E5EBF" referredColumn="84B18893-129B-7DD1-0FDE-89FB10A67324"/>
+</associations>
+</Column>
+<Column name="Cuenta_no_cuenta" id="365DC50F-9D73-E3D1-B816-A8C8609B9317">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>0A2FAEAF-D1C5-418A-1907-28269FB6CA80</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="57F08637-1998-E081-2269-C19CABD7A424" referredColumn="840AFF63-D075-5535-E3F8-9C0C98A01AF1"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1BE0ABED-A69B-DE79-26AA-D0CC2605CA4F" name="Mancomunada_PK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>EEA1FB1C-B4FB-9A2B-5428-9B3AACEF1A70</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6592B45F-E47B-0813-1FA4-6288A9D0CB20"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4778D552-E042-6E8F-AD33-51C97900C4C9" name="Mancomunada_Cuenta_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>C9E18251-4504-884A-4B55-6BD7A0087271</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="365DC50F-9D73-E3D1-B816-A8C8609B9317"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="894B7DE8-71A7-048F-04A1-8A0D23BC523A" name="Mancomunada_Cliente_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:57:37 UTC</createdTime>
+<generatorID>78A03E22-1FA2-9413-79F5-4D8143DF84C2</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1CE82844-0934-C512-7434-293430CC5CB5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

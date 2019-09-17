@@ -1,0 +1,190 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="B3BE4567-43E1-A7F9-CBD1-F956F4CF4751" name="Transaccion">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:40:03 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_transaccion" id="18B2BDE3-0DA1-29F0-A96A-B87BCDD1E7B5">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:40:49 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="fecha" id="9754FD25-90D9-D465-7649-CCEA1D4C264A">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:41:03 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="tipo" id="A7F785EC-2D1B-5ACD-680A-A8D494A8AFCE">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:41:12 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="naturaleza" id="F1C36A8A-36E5-2DE8-83B6-4D0D9AFB4393">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:41:36 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="saldo_inicial" id="64521DD9-4AB8-9C7B-37B9-17D32A973FE6">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:41:53 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT022</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="saldo_final" id="F55F84B1-E42F-F52D-22C6-29C943944033">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:42:17 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT022</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="codigo_autorizacion" id="FC74B7AF-D613-94D0-56EC-317A75F095F2">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:42:46 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="rechazado" id="95B44FD4-EBAA-908C-DCBC-04E7FDB49DF0">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:43:12 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="razon_rechazo" id="792D7796-0D76-EB25-E745-E3C7D8F9A31F">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:43:38 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_usuario" id="9FB750FB-6A8C-1A09-525A-8FD47754EC13">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:54:08 UTC</createdTime>
+<generatorID>C905A421-767E-3D37-C2BD-E82C0C5376F6</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<referedAttribute>5AC55CF5-D57B-FFD4-A3B1-039120E47973</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_terminal" id="7F767DB5-EDF7-C3B3-B9B1-776BE385A3DD">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:54:16 UTC</createdTime>
+<generatorID>538B2FD3-5E8B-EA10-28C5-036E2F395E52</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<referedAttribute>84C3FF3A-44F8-6E23-0389-9E916F462395</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="no_cuenta" id="2A2A5747-1439-871A-4B4B-A924C7709DEC">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:54:59 UTC</createdTime>
+<generatorID>F31555D8-770B-7771-1AA0-3492AA849666</generatorID>
+<ownerDesignName>Proyecto</ownerDesignName>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="true"/>
+</engineerTo>
+<referedAttribute>48F620FB-6649-4FA6-429C-4CE05816C1C9</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="8827B0AC-A62E-ED43-2175-3E06DDC96E29" name="Transaccion PK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-09-14 22:41:01 UTC</createdTime>
+<ownerDesignName>Proyecto</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="95A0A5D9-FFBE-94A8-AA3F-3212309B304F" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>18B2BDE3-0DA1-29F0-A96A-B87BCDD1E7B5</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
