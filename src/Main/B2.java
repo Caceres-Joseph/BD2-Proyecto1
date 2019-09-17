@@ -5,38 +5,32 @@
  */
 package Main;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
+ 
 /**
  *
  * @author Notebook
  */
 public class B2 extends Application {
-    
+
     @Override
-    public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Qué pex");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+    public void start(Stage primaryStage) throws IOException {
+ 
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Login/login.fxml"));
+       
+        Scene scene = new Scene(root);
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("#SiSaleBD2");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -47,5 +41,5 @@ public class B2 extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
