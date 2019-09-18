@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
  
 /**
  *
@@ -24,15 +25,23 @@ import javafx.stage.Stage;
  */
 public class B2 extends Application {
 
+    public static Stage sta;
+    
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage stage) throws IOException {
  
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Login/login.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/View/Login/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Gui/Gui.fxml"));
        
-        Scene scene = new Scene(root);
         
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setTitle("Bases 2");
+        Scene scene = new Scene(root); 
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest((WindowEvent we) -> {
+            System.exit(0);
+        });      
+        sta=stage;
     }
 
     /**
