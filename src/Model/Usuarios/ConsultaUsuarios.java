@@ -10,15 +10,15 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import jdk.nashorn.internal.parser.TokenKind;
 
 /**
  *
  * @author ricar
  */
-public class ConsultaUsuarios extends Conexion{
-    
-    public boolean save(Usuario usuario)
-    {
+public class ConsultaUsuarios extends Conexion {
+
+    public boolean save(Usuario usuario) {
         Connection con = getConexion();
         try {
             String cmd = "{CALL INSERT_USUARIO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
@@ -31,9 +31,7 @@ public class ConsultaUsuarios extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return false;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
@@ -41,9 +39,8 @@ public class ConsultaUsuarios extends Conexion{
             }
         }
     }
-    
-    public boolean update(Usuario usuario)
-    {
+
+    public boolean update(Usuario usuario) {
         Connection con = getConexion();
         try {
             String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
@@ -57,9 +54,7 @@ public class ConsultaUsuarios extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return false;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
@@ -67,9 +62,8 @@ public class ConsultaUsuarios extends Conexion{
             }
         }
     }
-    
-    public Usuario findById(int id)
-    {
+
+    public Usuario findById(int id) {
         Connection con = getConexion();
         try {
             PreparedStatement ps = null;
@@ -79,8 +73,7 @@ public class ConsultaUsuarios extends Conexion{
             ps.setInt(1, id);
             rs = ps.executeQuery();
             Usuario us = null;
-            if(rs.next())
-            {
+            if (rs.next()) {
                 us = new Usuario(rs.getString("usuario"), rs.getString("password"));
                 us.setId_usuario(rs.getInt("id_usuario"));
             }
@@ -88,9 +81,7 @@ public class ConsultaUsuarios extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return null;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
@@ -98,9 +89,8 @@ public class ConsultaUsuarios extends Conexion{
             }
         }
     }
-    
-    public ResultSet listItems()
-    {
+
+    public ResultSet listItems() {
         Connection con = getConexion();
         try {
             ResultSet rs = null;
@@ -112,9 +102,7 @@ public class ConsultaUsuarios extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return null;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
@@ -122,31 +110,32 @@ public class ConsultaUsuarios extends Conexion{
             }
         }
     }
-    
+
     /**
      * HACE LOGIN DEL USUARIO
+     *
      * @param usuario
-     * @return 
+     * @return
      */
-    public boolean usuarioLogIn(Usuario usuario)
-    {
+    public boolean usuarioLogIn(Usuario usuario) {
         Connection con = getConexion();
         try {
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM usuario WHRE usuario=? AND password=?";
+            String sql = "SELECT * FROM usuario WHERE password=? AND usuario=?";
             ps = con.prepareStatement(sql);
+            ps.setString(1, usuario.getUsuario());
+            ps.setString(2, usuario.getPassword());
             rs = ps.executeQuery();
-            if(rs.next())
-            {
+            if (rs.next()) {
                 return true;
             }
-            return false;
+            ps.close();
+            return true;
         } catch (Exception e) {
+            System.err.println(e);
             return false;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
