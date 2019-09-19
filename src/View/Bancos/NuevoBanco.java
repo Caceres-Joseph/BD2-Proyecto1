@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import Controller.BancosController;
 /**
  * FXML Controller class
  *
@@ -20,7 +20,7 @@ import javafx.fxml.Initializable;
  */
 public class NuevoBanco extends NuevoRol {
 
-     
+    BancosController b = new BancosController();
     @FXML
     void clckAceptar(ActionEvent event) {
 
@@ -66,12 +66,11 @@ public class NuevoBanco extends NuevoRol {
     
      */
     public boolean insertarBanco(String nombre) {
-
-        return true;
+        return b.createBanco(nombre);
     }
 
     public boolean editarBanco(String nombre, int id_banco) {
-        return true;
+        return b.updateBanco(id_banco, nombre);
     }
     
 }

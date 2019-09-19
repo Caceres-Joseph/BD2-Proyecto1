@@ -6,6 +6,7 @@
 package Model.Usuarios;
 
 import Model.BD.Conexion;
+import java.sql.Statement;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -121,13 +122,13 @@ public class ConsultaUsuarios extends Conexion {
         Connection con = getConexion();
         try {
             ResultSet rs = null;
-            PreparedStatement ps = null;
-            String sql = "SELECT * FROM usuario WHERE password=? AND usuario=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, usuario.getUsuario());
-            ps.setString(2, usuario.getPassword());
-            rs = ps.executeQuery();
+            Statement ps = con.createStatement();
+            String query = "SELECT * FROM usuario WHERE usuario='"+usuario.getUsuario()+"' AND password='"+usuario.getPassword()+"'";
+            //String sql = "SELECT * FROM usuario WHERE password= AND usuario=?";
+            System.err.println(query);
+            rs = ps.executeQuery(query);
             if (rs.next()) {
+                System.out.println(rs.getString("usuario"));
                 return true;
             }
             ps.close();

@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import Controller.RolesController;
 
 /**
  * FXML Controller class
@@ -21,7 +22,7 @@ import javafx.fxml.Initializable;
  */
 public class NuevoRol implements Initializable {
 
-    
+    RolesController r = new RolesController();
     @FXML
     private JFXButton btnEditar;
 
@@ -85,11 +86,12 @@ public class NuevoRol implements Initializable {
     
      */
     public boolean insertarRol(String nombre) {
-
-        return true;
+        
+        return r.creatRol(nombre);
+        
     }
 
     public boolean editarRol(String nombre, int id_rol) {
-        return true;
+        return r.updateRol(id_rol, nombre);
     }
 }

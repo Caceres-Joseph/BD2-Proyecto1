@@ -13,16 +13,16 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import Controller.AgenciasController;
 /**
  * FXML Controller class
  *
  * @author Notebook
  */
 public class NuevaAgencia implements Initializable {
-
+    AgenciasController a = new AgenciasController();
     int id_agen = -1;
-    int id_banco = -1;
+    //int id_banco = -1;
 
     @FXML
     private JFXTextField txtNombre;
@@ -90,11 +90,11 @@ public class NuevaAgencia implements Initializable {
      */
     public boolean insertar(String nombre, String direccion, int id_Banco) {
 
-        return true;
+        return a.createAgencia(nombre, direccion, id_Banco);
     }
 
     public boolean editar(String nombre, String direccion, int id_Banco) {
-        return true;
+        return a.updateAgencia(id_agen, nombre, direccion, id_Banco);
     }
 
 }
