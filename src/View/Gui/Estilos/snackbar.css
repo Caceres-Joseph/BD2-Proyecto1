@@ -1,0 +1,8 @@
+.jfx-snackbar-content{
+    -fx-background-color:  #045FB4 ;
+}
+.jfx-snackbar-toast{
+    -fx-text-fill:  #fdfefe;
+    -fx-font-size: 16px;
+    -fx-font-family: "Segoe UI Semibold";
+}

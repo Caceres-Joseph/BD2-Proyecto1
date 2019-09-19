@@ -1,0 +1,14 @@
+.tab-pane {
+    -fx-tab-max-height: 0;
+
+} 
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #843487;
+
+}
+.tab-pane .tab
+{
+    -fx-background-color: #843487;
+
+}
