@@ -87,4 +87,19 @@ public class UsuariosController {
             return new ArrayList<>();
         }
     }
+    
+    /**
+     * Metodo agregado para realizar un login
+     * @param usuario
+     * @param password
+     * @return 
+     */
+    public boolean UserLogin(String usuario, String password)
+    {
+        try {
+            return consultas.usuarioLogIn(new Usuario(usuario, password));
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

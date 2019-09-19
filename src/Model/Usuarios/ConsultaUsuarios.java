@@ -122,4 +122,36 @@ public class ConsultaUsuarios extends Conexion{
             }
         }
     }
+    
+    /**
+     * HACE LOGIN DEL USUARIO
+     * @param usuario
+     * @return 
+     */
+    public boolean usuarioLogIn(Usuario usuario)
+    {
+        Connection con = getConexion();
+        try {
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM usuario WHRE usuario=? AND password=?";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next())
+            {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
 }
