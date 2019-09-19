@@ -5,6 +5,7 @@
  */
 package View.Agencia;
 
+import Main.B2;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
@@ -19,6 +20,9 @@ import javafx.fxml.Initializable;
  * @author Notebook
  */
 public class NuevaAgencia implements Initializable {
+
+    int id_agen = -1;
+    int id_banco = -1;
 
     @FXML
     private JFXTextField txtNombre;
@@ -37,6 +41,34 @@ public class NuevaAgencia implements Initializable {
         System.out.println(elemento.getNo());
         System.out.println(elemento.getValue());
 
+        String txtNombreRol = this.txtNombre.getText();
+        String txtDireccion = this.txtDIreccion.getText();
+
+        if (comboAgencia.id_Banco == -1) {
+
+            B2.GuiController.mensajeConsola("Debe seleccionar un banco");
+            return;
+        }
+
+        if (this.id_agen == -1) {
+
+            if (insertar(txtNombreRol, txtDireccion, comboAgencia.id_Banco)) {
+
+                B2.GuiController.mensajeConsola("Agencia insertada exitosamente");
+            } else {
+
+                B2.GuiController.mensajeConsola("Ocurrió un error al insertar la Agencia");
+            }
+        } else {
+
+            if (editar(txtNombreRol, txtDireccion, comboAgencia.id_Banco)) {
+
+                B2.GuiController.mensajeConsola("Agencia actualizada exitosamente");
+            } else {
+
+                B2.GuiController.mensajeConsola("Ocurrió un error al actualizar la Agencia");
+            }
+        }
     }
 
     /**
@@ -48,6 +80,21 @@ public class NuevaAgencia implements Initializable {
 
         comboAgencia = new ComboAgencia(cbBancos);
         comboAgencia.mostrarBancos();
+    }
+
+    /*
+    +--------------------------------------
+    | Metodos de inserción o modificación
+    +---------------------------------------
+    
+     */
+    public boolean insertar(String nombre, String direccion, int id_Banco) {
+
+        return true;
+    }
+
+    public boolean editar(String nombre, String direccion, int id_Banco) {
+        return true;
     }
 
 }
