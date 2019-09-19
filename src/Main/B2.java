@@ -5,40 +5,51 @@
  */
 package Main;
 
+import Model.Permisos.JsonPermiso;
+import View.Gui.Gui; 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
  * @author Notebook
  */
 public class B2 extends Application {
-    
+
+    public static Stage sta;
+    public static Gui GuiController;
+
+
     @Override
-    public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Que pex");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
+    public void start(Stage stage) throws IOException {
+        
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Gui/Gui.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Login/login.fxml"));
+        Parent root = loader.load();
+    
+
+
+        stage.setTitle("Bases 2");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        stage.setOnCloseRequest((WindowEvent we) -> {
+            System.exit(0);
         });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("#SiSaleBD2");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        sta = stage;
+
     }
 
     /**
@@ -47,5 +58,5 @@ public class B2 extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

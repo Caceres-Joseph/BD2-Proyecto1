@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="View.Login.login">
+   <children>
+      <ImageView fitHeight="365.0" fitWidth="496.0" layoutX="218.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/Uno.png" />
+         </image>
+      </ImageView>
+      <JFXButton buttonType="RAISED" layoutX="234.0" layoutY="381.0" onAction="#btnAceptar" prefHeight="53.0" prefWidth="142.0" style="-fx-background-color: #214a89;" text="Aceptar" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField fx:id="txtUsuario" alignment="CENTER" labelFloat="true" layoutX="200.0" layoutY="178.0" prefHeight="34.0" prefWidth="209.0" promptText="Usuario">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="227.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/home-935709.png" />
+         </image>
+      </ImageView>
+      <JFXPasswordField fx:id="txtPassword" alignment="CENTER" labelFloat="true" layoutX="200.0" layoutY="253.0" prefHeight="41.0" prefWidth="209.0" promptText="Contraseña">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXPasswordField>
+   </children>
+</AnchorPane>

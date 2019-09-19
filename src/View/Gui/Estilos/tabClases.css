@@ -1,0 +1,18 @@
+
+.tab-header-background {
+    -fx-background-color:    #37474F ;
+
+    
+}
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    /*-fx-font-family: "Segoe UI Semibold";*/
+   
+}
+
+ .jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #F39C12;
+    -fx-stroke-width: 3pt;
+}
