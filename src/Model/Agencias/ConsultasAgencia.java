@@ -6,6 +6,7 @@
 package Model.Agencias;
 
 import Model.BD.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +22,13 @@ public class ConsultasAgencia extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;   
-            String sql = "INSERT INTO agencia(nombre, direccion, banco_id_banco) VALUES(?,?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, agencia.getNombre());
-            ps.setString(2, agencia.getDireccion());
-            ps.setInt(3, agencia.getId_banco());
-            ps.execute();
+            String cmd = "{CALL INSERT_AGENCIA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setString(1, agencia.getNombre());
+            call.setString(2, agencia.getDireccion());
+            call.setInt(3, agencia.getId_banco());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -47,14 +48,14 @@ public class ConsultasAgencia extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;
-            String sql = "UPDATE agencia SET nombre=?, direccion=?, banco_id_banco=? WHERE id_agencia=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, agencia.getNombre());
-            ps.setString(2, agencia.getDireccion());
-            ps.setInt(3, agencia.getId_banco());
-            ps.setInt(4,agencia.getId_agencia());
-            ps.execute();
+            String cmd = "{CALL UPDATE_AGENCIA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setInt(1, agencia.getId_agencia());
+            call.setString(2, agencia.getNombre());
+            call.setString(3, agencia.getDireccion());
+            call.setInt(4, agencia.getId_banco());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -100,4 +101,29 @@ public class ConsultasAgencia extends Conexion{
             }
         }
     }
+    
+    public ResultSet listItems()
+    {
+        Connection con = getConexion();
+        try {
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM agencia ORDER BY  id_agencia DESC";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
 }
