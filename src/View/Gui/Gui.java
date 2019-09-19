@@ -7,16 +7,20 @@ package View.Gui;
 
 import View.Gui.Componentes.ideVistaArbol;
 import com.jfoenix.controls.JFXTabPane;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 
@@ -26,6 +30,9 @@ import javafx.scene.web.WebView;
  * @author Notebook
  */
 public class Gui extends ideVistaArbol {
+
+    @FXML
+    private AnchorPane contentRender;
 
     @FXML
     private JFXTabPane tabClases;
@@ -48,8 +55,6 @@ public class Gui extends ideVistaArbol {
     @FXML
     private TableColumn<?, ?> tcDescripcion;
 
-    @FXML
-    private TextArea txtConsola;
 
     @FXML
     private TableView<?> tbDasmStack;
@@ -128,8 +133,20 @@ public class Gui extends ideVistaArbol {
     }
 
     @FXML
-    void clckGuardar(ActionEvent event) {
+    void clckGuardar(ActionEvent event) throws IOException {
 
+        
+        AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("/View/Roles/ListarRol.fxml"));
+        renderizar(root);
+    }
+    
+    public void renderizar(AnchorPane root){
+        
+        root.setPrefWidth(contentRender.getWidth());
+        root.setPrefHeight(contentRender.getHeight());
+
+        //contentRender.getChildren().setAll(FXMLLoader.load(getClass().getResource("/View/Gui/Gui.fxml")));
+        contentRender.getChildren().setAll(root);
     }
 
     @FXML
@@ -163,7 +180,7 @@ public class Gui extends ideVistaArbol {
     }
 
     @FXML
-    void clckVistaArbol(MouseEvent event) {
+    void clckVistaArbol(MouseEvent event) throws IOException {
         enventoClickVistaArbol(event);
     }
 
@@ -172,7 +189,11 @@ public class Gui extends ideVistaArbol {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        
+        this.cargarPermisos();
+        
+        
     }
 
 }

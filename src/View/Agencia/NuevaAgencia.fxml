@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -14,18 +15,18 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Roles.NuevoRol">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Agencia.NuevaAgencia">
    <children>
-      <JFXTextField fx:id="txtNombreRol" labelFloat="true" layoutX="36.0" layoutY="87.0" prefHeight="34.0" prefWidth="425.0" promptText="Nombre del Rol" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="87.0">
+      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="46.0" layoutY="97.0" prefHeight="34.0" prefWidth="425.0" promptText="Nombre de la agencia" AnchorPane.topAnchor="97.0">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <GridPane styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane layoutX="10.0" layoutY="10.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="212.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="122.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1054.0" minWidth="10.0" prefWidth="469.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="279.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1054.0" minWidth="10.0" prefWidth="156.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -33,7 +34,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
                <children>
-                  <Label styleClass="title" text="Rol">
+                  <Label styleClass="title" text="Agencia">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -57,5 +58,11 @@
             </JFXButton>
          </children>
       </GridPane>
+      <JFXTextField fx:id="txtDIreccion" labelFloat="true" layoutX="46.0" layoutY="173.0" prefHeight="34.0" prefWidth="425.0" promptText="Dirección">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXComboBox fx:id="cbBancos" layoutX="46.0" layoutY="259.0" prefHeight="37.0" prefWidth="425.0" promptText="Banco al que pertenece" />
    </children>
 </AnchorPane>
