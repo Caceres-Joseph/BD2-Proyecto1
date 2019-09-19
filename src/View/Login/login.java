@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.WindowEvent;
+import Controller.UsuariosController;
 
 /**
  * FXML Controller class
@@ -34,37 +35,38 @@ public class login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-    
+    }
+
     @FXML
     private JFXTextField txtUsuario;
 
     @FXML
     private JFXPasswordField txtPassword;
-    
+
     @FXML
     void btnAceptar(ActionEvent event) throws IOException {
-         
-        
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Gui/Gui.fxml")); 
-        Parent root = loader.load();
-    
- 
-        GuiController = (Gui) loader.getController(); 
+        UsuariosController usuario = new UsuariosController();
+        if (usuario.UserLogin(txtUsuario.getText(), txtPassword.getText())) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Gui/Gui.fxml"));
+            Parent root = loader.load();
 
-        sta.setTitle("Bases 2");
-        Scene scene = new Scene(root);
-        sta.setScene(scene);
-        
-        sta.setMaximized(true);
-        sta.show();
-        sta.setOnCloseRequest((WindowEvent we) -> {
-            System.exit(0);
-        });
- 
+            GuiController = (Gui) loader.getController();
 
+            sta.setTitle("Bases 2");
+            Scene scene = new Scene(root);
+            sta.setScene(scene);
+
+            sta.setMaximized(true);
+            sta.show();
+            sta.setOnCloseRequest((WindowEvent we) -> {
+                System.exit(0);
+            });
+        }
+        else
+        {
+            // SII NO PERMITE EL LOGUEO
+            System.err.println("no logueo");
+        }
     }
 
 }
