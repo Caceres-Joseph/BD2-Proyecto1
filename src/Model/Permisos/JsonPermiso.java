@@ -49,6 +49,14 @@ public class JsonPermiso {
             + "        ]\n"
             + "    },\n"
             + "    \n"
+            + "	\"clientes\" : {\n"
+            + "		\"permisos\":[\n"
+            + "            \"crear\",\n"
+            + "            \"modificar\",\n"
+            + "            \"listar\"\n"
+            + "        ]\n"
+            + "    },\n"
+            + "    \n"
             + "	\"agencias\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"crear\",\n"
@@ -213,6 +221,24 @@ public class JsonPermiso {
                     rutaControlador = "/View/Usuarios/NuevoUsuario.fxml";
                 } else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Bancos/ListarBanco.fxml";
+
+                } else if (permiso.equals("modificar")) {
+                    rutaControlador = "/View/Bancos/EditarBanco.fxml";
+
+                } else if (permiso.equals("eliminar")) {
+                    
+                    //rutaControlador = "/View/Roles/EliminarRol.fxml";
+
+                } else {
+
+                    B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+                }
+            }else if (nombreModulo.toLowerCase().equals("clientes")) {
+
+                if (permiso.equals("crear")) {
+                    rutaControlador = "/View/Clientes/NuevoCliente.fxml";
+                } else if (permiso.equals("listar")) {
+                    rutaControlador = "/View/Clientes/ListarCliente.fxml";
 
                 } else if (permiso.equals("modificar")) {
                     rutaControlador = "/View/Bancos/EditarBanco.fxml";
