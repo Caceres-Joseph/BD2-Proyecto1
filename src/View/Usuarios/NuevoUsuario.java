@@ -13,14 +13,14 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import Controller.UsuariosController;
 /**
  * FXML Controller class
  *
  * @author Notebook
  */
 public class NuevoUsuario implements Initializable {
-
+    UsuariosController u = new UsuariosController();
     int id_Usuarios = -1;
 
     @FXML
@@ -84,12 +84,11 @@ public class NuevoUsuario implements Initializable {
     
      */
     public boolean insertar(String nombre, String password) {
-
-        return true;
+        return u.creatUsuario(nombre, password);
     }
 
     public boolean editar(String nombre, String password) {
-        return true;
+        return u.updateUsuario(id_Usuarios, nombre, password);
     }
 
 }
