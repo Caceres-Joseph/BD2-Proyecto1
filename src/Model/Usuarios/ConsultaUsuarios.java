@@ -6,6 +6,7 @@
 package Model.Usuarios;
 
 import Model.BD.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,12 +21,12 @@ public class ConsultaUsuarios extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null; 
-            String sql = "INSERT INTO usuario(usuario, password) VALUES(?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, usuario.getUsuario());
-            ps.setString(2, usuario.getPassword());
-            ps.execute();
+            String cmd = "{CALL INSERT_USUARIO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setString(1, usuario.getUsuario());
+            call.setString(2, usuario.getPassword());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -45,13 +46,13 @@ public class ConsultaUsuarios extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;
-            String sql = "UPDATE usuario SET usuario=?, password=? WHERE id_usuario=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, usuario.getUsuario());
-            ps.setString(2, usuario.getPassword());
-            ps.setInt(3, usuario.getId_usuario());
-            ps.execute();
+            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setInt(1, usuario.getId_usuario());
+            call.setString(2, usuario.getUsuario());
+            call.setString(3, usuario.getPassword());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -87,6 +88,62 @@ public class ConsultaUsuarios extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ResultSet listItems()
+    {
+        Connection con = getConexion();
+        try {
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM usuario ORDER BY  id_usuario DESC";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    /**
+     * HACE LOGIN DEL USUARIO
+     * @param usuario
+     * @return 
+     */
+    public boolean usuarioLogIn(Usuario usuario)
+    {
+        Connection con = getConexion();
+        try {
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM usuario WHRE usuario=? AND password=?";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next())
+            {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
         }
         finally
         {
