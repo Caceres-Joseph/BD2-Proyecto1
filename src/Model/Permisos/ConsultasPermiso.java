@@ -6,6 +6,7 @@
 package Model.Permisos;
 
 import Model.BD.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,12 +21,12 @@ public class ConsultasPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null; 
-            String sql = "INSERT INTO permiso(nombre, descripcion) VALUES(?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, permiso.getNombre());
-            ps.setString(2, permiso.getDescripcion());
-            ps.execute();
+            String cmd = "{CALL INSERT_PERMISO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setString(1, permiso.getNombre());
+            call.setString(2, permiso.getDescripcion());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -45,13 +46,13 @@ public class ConsultasPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;
-            String sql = "UPDATE permiso SET nombre=?, descipcion=? WHERE id_permiso=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, permiso.getNombre());
-            ps.setString(2, permiso.getDescripcion());
-            ps.setInt(3, permiso.getId_permiso());
-            ps.execute();
+            String cmd = "{CALL UPDATE_PERMISO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setInt(1, permiso.getId_permiso());
+            call.setString(2, permiso.getNombre());
+            call.setString(3, permiso.getDescripcion());    
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -88,6 +89,30 @@ public class ConsultasPermiso extends Conexion{
             return null;
         }
         finally{
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ResultSet listItems()
+    {
+        Connection con = getConexion();
+        try {
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM permiso ORDER BY  id_permiso DESC";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+        finally
+        {
             try {
                 con.close();
             } catch (Exception e) {

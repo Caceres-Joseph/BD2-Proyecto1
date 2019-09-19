@@ -10,6 +10,7 @@ package Model.Bancos;
  * @author ricar
  */
 import Model.BD.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,11 +26,11 @@ public class ConsultasBanco extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;   
-            String sql = "INSERT INTO banco(nombre) VALUES(?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, banco.getNombre());
-            ps.execute();
+            String cmd = "{CALL INSERT_BANCO(?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setString(1, banco.getNombre());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -53,12 +54,12 @@ public class ConsultasBanco extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;
-            String sql = "UPDATE banco SET nombre=? WHERE id_banco=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, banco.getNombre());
-            ps.setInt(2, banco.getId_banco());
-            ps.execute();
+            String cmd = "{CALL UPDATE_BANCO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setString(1, banco.getNombre());
+            call.setInt(2, banco.getId_banco());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -109,5 +110,32 @@ public class ConsultasBanco extends Conexion{
         }
     }
     
+    /**
+     * List todos los elementos de bancos del mas reciente al menos
+     * @return 
+     */
+    public ResultSet listItems()
+    {
+        Connection con = getConexion();
+        try {
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM banco ORDER BY  id_banco DESC";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
     
 }

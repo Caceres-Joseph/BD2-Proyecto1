@@ -6,6 +6,7 @@
 package Model.Cuentas;
 
 import Model.BD.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +22,13 @@ public class ConsultasCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null; 
-            String sql = "INSERT INTO cuenta(saldo, banco_id_banco, tipo_cuenta_id_tipo) VALUES(?,?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setDouble(1, cuenta.getSaldo());
-            ps.setInt(2, cuenta.getBanco_id_banco());
-            ps.setInt(3, cuenta.getTipo_cuenta_id_tipo());
-            ps.execute();
+            String cmd = "{CALL INSERT_CUENTA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setDouble(1, cuenta.getSaldo());
+            call.setInt(2, cuenta.getBanco_id_banco());
+            call.setInt(3, cuenta.getTipo_cuenta_id_tipo());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -47,14 +48,14 @@ public class ConsultasCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;
-            String sql = "UPDATE cuenta SET saldo=?, banco_id_banco=?, tipo_cuenta_id_tipo=?  WHERE no_cuenta=?";
-            ps = con.prepareStatement(sql);    
-            ps.setDouble(1, cuenta.getSaldo());
-            ps.setInt(2, cuenta.getBanco_id_banco());
-            ps.setInt(3, cuenta.getTipo_cuenta_id_tipo());
-            ps.setInt(4, cuenta.getNo_cuenta());
-            ps.execute();
+            String cmd = "{CALL UPDATE_CUENTA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setInt(1, cuenta.getNo_cuenta());
+            call.setDouble(2, cuenta.getSaldo());
+            call.setInt(3, cuenta.getBanco_id_banco());
+            call.setInt(4, cuenta.getTipo_cuenta_id_tipo());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -88,6 +89,30 @@ public class ConsultasCuenta extends Conexion{
                 c.setNo_cuenta(rs.getInt("no_cuenta"));
             }
             return c;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ResultSet listItems()
+    {
+        Connection con = getConexion();
+        try {
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM cuenta ORDER BY  no_cuenta DESC";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
         } catch (Exception e) {
             System.err.println(e);
             return null;

@@ -6,6 +6,7 @@
 package Model.Clientes;
 
 import Model.BD.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,12 +21,12 @@ public class ConsultasClientes extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null; 
-            String sql = "INSERT INTO cliente(nombre, direccion) VALUES(?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, cliente.getNombre());
-            ps.setString(2, cliente.getDireccion());
-            ps.execute();
+            String cmd = "{CALL INSERT_CLIENTE(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setString(1, cliente.getNombre());
+            call.setString(2, cliente.getDireccion());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -46,13 +47,13 @@ public class ConsultasClientes extends Conexion{
     {
         Connection con = getConexion();
         try {
-            PreparedStatement ps = null;
-            String sql = "UPDATE cliente SET nombre=?, direccion=?  WHERE id_cliente=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, cliente.getNombre());
-            ps.setString(2, cliente.getDireccion());
-            ps.setInt(3, cliente.getId_cliente());
-            ps.execute();
+            String cmd = "{CALL UPDATE_CLIENTE(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setInt(1,cliente.getId_cliente());
+            call.setString(2, cliente.getNombre());
+            call.setString(3, cliente.getDireccion());
+            call.execute();
+            call.close();
             return true;
         } catch (Exception e) {
             System.err.println(e);
@@ -85,6 +86,30 @@ public class ConsultasClientes extends Conexion{
                 c.setId_cliente(rs.getInt("id_cliente"));
             }
             return c;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ResultSet listItems()
+    {
+        Connection con = getConexion();
+        try {
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM cliente ORDER BY  id_cliente DESC";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
         } catch (Exception e) {
             System.err.println(e);
             return null;
