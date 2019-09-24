@@ -9,14 +9,16 @@ CREATE TABLE agencia (
     id_agencia       INTEGER NOT NULL,
     nombre           VARCHAR2(32 CHAR) NOT NULL,
     direccion        VARCHAR2(32 CHAR) NOT NULL,
-    banco_id_banco   INTEGER NOT NULL
+    banco_id_banco   INTEGER NOT NULL,
+    estado_agencia   INTEGER NOT NULL
 );
 
 ALTER TABLE agencia ADD CONSTRAINT agencia_pk PRIMARY KEY ( id_agencia );
 
 CREATE TABLE banco (
     id_banco   INTEGER NOT NULL,
-    nombre     VARCHAR2(32 CHAR)
+    nombre     VARCHAR2(32 CHAR),
+    estado_banco   INTEGER NOT NULL
 );
 
 ALTER TABLE banco ADD CONSTRAINT banco_pk PRIMARY KEY ( id_banco );
@@ -28,7 +30,8 @@ CREATE TABLE cliente (
     direccion    VARCHAR2(32 CHAR) NOT NULL,
     correo       VARCHAR2(32 CHAR) NOT NULL,
     telefono     VARCHAR2(32 CHAR) NOT NULL,
-    fecha_nacimiento DATE NOT NULL
+    fecha_nacimiento DATE NOT NULL,
+    estado_cliente   INTEGER NOT NULL
 );
 
 ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( dpi_cliente );
@@ -37,7 +40,8 @@ CREATE TABLE cuenta (
     no_cuenta             INTEGER NOT NULL,
     saldo                 REAL NOT NULL,
     banco_id_banco        INTEGER NOT NULL,
-    tipo_cuenta_id_tipo   INTEGER NOT NULL
+    tipo_cuenta_id_tipo   INTEGER NOT NULL,
+    estado_cuenta         INTEGER NOT NULL
 );
 
 ALTER TABLE cuenta ADD CONSTRAINT cuenta_pk PRIMARY KEY ( no_cuenta );
@@ -45,7 +49,8 @@ ALTER TABLE cuenta ADD CONSTRAINT cuenta_pk PRIMARY KEY ( no_cuenta );
 CREATE TABLE mancomunada (
     id_mancomunada       INTEGER NOT NULL,
     cliente_dpi_cliente   INTEGER NOT NULL,
-    cuenta_no_cuenta     INTEGER NOT NULL
+    cuenta_no_cuenta     INTEGER NOT NULL,
+    estado_mancomunada   INTEGER NOT NULL
 );
 
 ALTER TABLE mancomunada ADD CONSTRAINT mancomunada_pk PRIMARY KEY ( id_mancomunada );
@@ -53,21 +58,24 @@ ALTER TABLE mancomunada ADD CONSTRAINT mancomunada_pk PRIMARY KEY ( id_mancomuna
 CREATE TABLE permiso (
     id_permiso    INTEGER NOT NULL,
     nombre        VARCHAR2(32 CHAR) NOT NULL,
-    descripcion   VARCHAR2(32 CHAR)
+    descripcion   VARCHAR2(32 CHAR),
+    estado_permiso   INTEGER NOT NULL
 );
 
 ALTER TABLE permiso ADD CONSTRAINT permiso_pk PRIMARY KEY ( id_permiso );
 
 CREATE TABLE rol (
     id_rol   INTEGER NOT NULL,
-    nombre   VARCHAR2(32 CHAR) NOT NULL
+    nombre   VARCHAR2(32 CHAR) NOT NULL,
+    estado_rol   INTEGER NOT NULL
 );
 
 ALTER TABLE rol ADD CONSTRAINT rol_pk PRIMARY KEY ( id_rol );
 
 CREATE TABLE rol_permiso (
     rol_id_rol           INTEGER NOT NULL,
-    permiso_id_permiso   INTEGER NOT NULL
+    permiso_id_permiso   INTEGER NOT NULL,
+    estado_rol_permiso   INTEGER NOT NULL
 );
 
 ALTER TABLE rol_permiso ADD CONSTRAINT rol_permiso_pk PRIMARY KEY ( rol_id_rol,
@@ -76,14 +84,16 @@ ALTER TABLE rol_permiso ADD CONSTRAINT rol_permiso_pk PRIMARY KEY ( rol_id_rol,
 CREATE TABLE terminal (
     id_terminal          INTEGER NOT NULL,
     agencia_id_agencia   INTEGER NOT NULL,
-    usuario_id_usuario   INTEGER NOT NULL
+    usuario_id_usuario   INTEGER NOT NULL,
+    estado_terminal      INTEGER NOT NULL
 );
 
 ALTER TABLE terminal ADD CONSTRAINT terminal_pk PRIMARY KEY ( id_terminal );
 
 CREATE TABLE tipo_cuenta (
     id_tipo   INTEGER NOT NULL,
-    nombre    VARCHAR2(32 CHAR) NOT NULL
+    nombre    VARCHAR2(32 CHAR) NOT NULL,
+    estado_tipo_cuenta   INTEGER NOT NULL
 );
 
 ALTER TABLE tipo_cuenta ADD CONSTRAINT tipo_cuenta_pk PRIMARY KEY ( id_tipo );
@@ -100,7 +110,8 @@ CREATE TABLE transaccion (
     razon_rechazo          VARCHAR2(32 CHAR),
     usuario_id_usuario     INTEGER NOT NULL,
     terminal_id_terminal   INTEGER NOT NULL,
-    cuenta_no_cuenta       INTEGER NOT NULL
+    cuenta_no_cuenta       INTEGER NOT NULL,
+    estado_transaccion     INTEGER NOT NULL
 );
 
 ALTER TABLE transaccion ADD CONSTRAINT transaccion_pk PRIMARY KEY ( id_transaccion );
@@ -108,7 +119,8 @@ ALTER TABLE transaccion ADD CONSTRAINT transaccion_pk PRIMARY KEY ( id_transacci
 CREATE TABLE usuario (
     id_usuario   INTEGER NOT NULL,
     usuario      VARCHAR2(32 CHAR) NOT NULL,
-    password     VARCHAR2(32 CHAR) NOT NULL
+    password     VARCHAR2(32 CHAR) NOT NULL,
+    estado_usuario   INTEGER NOT NULL
 );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id_usuario );
