@@ -22,12 +22,16 @@ CREATE TABLE banco (
 ALTER TABLE banco ADD CONSTRAINT banco_pk PRIMARY KEY ( id_banco );
 
 CREATE TABLE cliente (
-    id_cliente   INTEGER NOT NULL,
+    dpi_cliente   INTEGER NOT NULL,
     nombre       VARCHAR2(32 CHAR) NOT NULL,
-    direccion    VARCHAR2(32 CHAR) NOT NULL
+    apellido     VARCHAR2(32 CHAR) NOT NULL,
+    direccion    VARCHAR2(32 CHAR) NOT NULL,
+    correo       VARCHAR2(32 CHAR) NOT NULL,
+    telefono     VARCHAR2(32 CHAR) NOT NULL,
+    fecha_nacimiento DATE NOT NULL
 );
 
-ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( id_cliente );
+ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( dpi_cliente );
 
 CREATE TABLE cuenta (
     no_cuenta             INTEGER NOT NULL,
@@ -40,7 +44,7 @@ ALTER TABLE cuenta ADD CONSTRAINT cuenta_pk PRIMARY KEY ( no_cuenta );
 
 CREATE TABLE mancomunada (
     id_mancomunada       INTEGER NOT NULL,
-    cliente_id_cliente   INTEGER NOT NULL,
+    cliente_dpi_cliente   INTEGER NOT NULL,
     cuenta_no_cuenta     INTEGER NOT NULL
 );
 
@@ -125,8 +129,8 @@ ALTER TABLE cuenta
             ON DELETE CASCADE;
 
 ALTER TABLE mancomunada
-    ADD CONSTRAINT mancomunada_cliente_fk FOREIGN KEY ( cliente_id_cliente )
-        REFERENCES cliente ( id_cliente )
+    ADD CONSTRAINT mancomunada_cliente_fk FOREIGN KEY ( cliente_dpi_cliente )
+        REFERENCES cliente ( dpi_cliente )
             ON DELETE CASCADE;
 
 ALTER TABLE mancomunada
