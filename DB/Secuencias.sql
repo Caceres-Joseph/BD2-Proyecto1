@@ -24,15 +24,15 @@ BEGIN
 END;
 
 --CLIENTE
-CREATE SEQUENCE cliente_sequence;
-CREATE OR REPLACE TRIGGER cliente_on_insert
-    BEFORE INSERT ON cliente
-    FOR EACH ROW
-BEGIN
-    SELECT cliente_sequence.nextval
-    INTO :new.dpi_cliente
-    FROM dual;
-END;
+--CREATE SEQUENCE cliente_sequence;
+--CREATE OR REPLACE TRIGGER cliente_on_insert
+--    BEFORE INSERT ON cliente
+--    FOR EACH ROW
+--BEGIN
+--    SELECT cliente_sequence.nextval
+--    INTO :new.dpi_cliente
+--    FROM dual;
+--END;
 
 --CUENTA
 CREATE SEQUENCE cuenta_sequence;
