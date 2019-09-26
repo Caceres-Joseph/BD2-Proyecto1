@@ -144,6 +144,18 @@ public class ConsultasClientes extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Cliente> clientes = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM cliente "+BDOpciones.getLimit(OpcLimite, limite)+" OREDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Cliente c = new Cliente(rs.getInt("dpi_cliente")
+                        ,rs.getString("nombre"), rs.getString("apellido"), rs.getString("direccion"), rs.getString("correo")
+                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente"));
+                clientes.add(c);
+            }
             return clientes;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -163,6 +175,18 @@ public class ConsultasClientes extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Cliente> clientes = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM cliente WHERE nombre LIKE '%"+LikeString+"%' OR apellido LIKE '%"+LikeString+"%' OR correo LIKE '%"+LikeString+"%'  OREDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Cliente c = new Cliente(rs.getInt("dpi_cliente")
+                        ,rs.getString("nombre"), rs.getString("apellido"), rs.getString("direccion"), rs.getString("correo")
+                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente"));
+                clientes.add(c);
+            }
             return clientes;
         } catch (Exception e) {
             return new ArrayList<>();

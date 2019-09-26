@@ -132,6 +132,18 @@ public class ConsultasRoles extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Rol> roles = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM rol "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Rol r = new Rol(rs.getString("nombre"));
+                r.setEstado_rol(rs.getInt("estado_rol"));
+                r.setId_rol(rs.getInt("id_rol"));
+                roles.add(r);
+            }
             return roles;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -151,6 +163,18 @@ public class ConsultasRoles extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Rol> roles = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM rol WHERE nombre LIKE '%"+LikeString+"%'  ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Rol r = new Rol(rs.getString("nombre"));
+                r.setEstado_rol(rs.getInt("estado_rol"));
+                r.setId_rol(rs.getInt("id_rol"));
+                roles.add(r);
+            }
             return roles;
         } catch (Exception e) {
             return new ArrayList<>();

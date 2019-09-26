@@ -127,17 +127,18 @@ public class ConsultaUsuarios extends Conexion {
         Connection con = getConexion();
         try {
             ResultSet rs = null;
-            Statement ps = con.createStatement();
-            /*String query = "SELECT * FROM usuario WHERE usuario='"+usuario.getUsuario()+"' AND password='"+usuario.getPassword()+"'";
-            //String sql = "SELECT * FROM usuario WHERE password= AND usuario=?";
-            System.err.println(query);
-            rs = ps.executeQuery(query);
-            if (rs.next()) {
-                System.out.println(rs.getString("usuario"));
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM usuario WHERE usuario=? AND password=?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, usuario.getUsuario());
+            ps.setString(2, usuario.getPassword());
+            rs = ps.executeQuery();
+            if(rs.next())
+            {
                 return true;
-            }*/
+            }
             ps.close();
-            return true;
+            return false;
         } catch (Exception e) {
             System.err.println(e);
             return false;
@@ -155,6 +156,18 @@ public class ConsultaUsuarios extends Conexion {
         Connection con = getConexion();
         try {
             ArrayList<Usuario> users = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM usuario "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
+                u.setId_usuario(rs.getInt("id_usuario"));
+                u.setEstado_usuario(rs.getInt("estado_usuario"));
+                users.add(u);
+            }
             return users;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -174,6 +187,18 @@ public class ConsultaUsuarios extends Conexion {
         Connection con = getConexion();
         try {
             ArrayList<Usuario> users = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM usuario WHERE usuario LIKE '%"+LikeString+"%' ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
+                u.setId_usuario(rs.getInt("id_usuario"));
+                u.setEstado_usuario(rs.getInt("estado_usuario"));
+                users.add(u);
+            }
             return users;
         } catch (Exception e) {
             return new ArrayList<>();

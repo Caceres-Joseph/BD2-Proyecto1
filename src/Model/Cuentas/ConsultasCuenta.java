@@ -137,6 +137,18 @@ public class ConsultasCuenta extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Cuenta> cuentas = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM cuenta "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
+                c.setNo_cuenta(rs.getInt("no_cuenta"));
+                c.setEstado_cuenta(rs.getInt("estado_cuenta"));
+                cuentas.add(c);
+            }
             return cuentas;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -156,6 +168,18 @@ public class ConsultasCuenta extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Cuenta> cuentas = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM cuenta WHERE no_cuenta LIKE '%"+LikeString+"%' ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
+                c.setNo_cuenta(rs.getInt("no_cuenta"));
+                c.setEstado_cuenta(rs.getInt("estado_cuenta"));
+                cuentas.add(c);
+            }
             return cuentas;
         } catch (Exception e) {
             return new ArrayList<>();

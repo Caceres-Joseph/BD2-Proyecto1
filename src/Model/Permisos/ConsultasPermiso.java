@@ -131,6 +131,18 @@ public class ConsultasPermiso extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Permiso> permisos = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM permiso "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Permiso p = new Permiso(rs.getString("nombre"), rs.getString("descripcion"));
+                p.setId_permiso(rs.getInt("id_permiso"));
+                p.setEstado_permiso(rs.getInt("estado_permiso"));
+                permisos.add(p);
+            }
             return permisos;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -150,6 +162,18 @@ public class ConsultasPermiso extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<Permiso> permisos = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM permiso WHERE nombre LIKE '%"+LikeString+"%' ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Permiso p = new Permiso(rs.getString("nombre"), rs.getString("descripcion"));
+                p.setId_permiso(rs.getInt("id_permiso"));
+                p.setEstado_permiso(rs.getInt("estado_permiso"));
+                permisos.add(p);
+            }
             return permisos;
         } catch (Exception e) {
             return new ArrayList<>();

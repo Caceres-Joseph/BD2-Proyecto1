@@ -133,6 +133,18 @@ public class ConsultasTipoCuenta extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<TipoCuenta> tcs = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM tipo_cuenta "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                TipoCuenta tc = new TipoCuenta(rs.getString("nombre"));
+                tc.setEstado_tipo_cuenta(rs.getInt("estado_tipo_cuenta"));
+                tc.setId_tipo(rs.getInt("id_tipo"));
+                tcs.add(tc);
+            }
             return tcs;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -152,6 +164,18 @@ public class ConsultasTipoCuenta extends Conexion{
         Connection con = getConexion();
         try {
             ArrayList<TipoCuenta> tcs = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM tipo_cuenta WHERE nombre LIKE '%"+LikeString+"%' ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                TipoCuenta tc = new TipoCuenta(rs.getString("nombre"));
+                tc.setEstado_tipo_cuenta(rs.getInt("estado_tipo_cuenta"));
+                tc.setId_tipo(rs.getInt("id_tipo"));
+                tcs.add(tc);
+            }
             return tcs;
         } catch (Exception e) {
             return new ArrayList<>();
