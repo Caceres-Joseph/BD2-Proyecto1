@@ -33,7 +33,6 @@ public class B2 extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
         
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Gui/Gui.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Login/login.fxml"));
