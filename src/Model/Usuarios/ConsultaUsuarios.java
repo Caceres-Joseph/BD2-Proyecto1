@@ -5,13 +5,15 @@
  */
 package Model.Usuarios;
 
+import Model.BD.BDOpciones;
 import Model.BD.Conexion;
 import java.sql.Statement;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import jdk.nashorn.internal.parser.TokenKind;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -140,6 +142,44 @@ public class ConsultaUsuarios extends Conexion {
             System.err.println(e);
             return false;
         } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Usuario> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Usuario> users = new ArrayList<>();
+            return users;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Usuario> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Usuario> users = new ArrayList<>();
+            return users;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        finally
+        {
             try {
                 con.close();
             } catch (Exception e) {
