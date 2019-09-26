@@ -14,6 +14,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import Model.BD.BDOpciones;
 
 public class ConsultasBanco extends Conexion{
     
@@ -141,4 +143,80 @@ public class ConsultasBanco extends Conexion{
         }
     }
     
+    /**
+     * Metodo para listar los datos del banco
+     * @param Opcorden Orden que se desa la data DESC, ASC
+     * @param OpcLimite Si se quiere limite se pondra LIMIT, De lo contrario NO_LIMIT
+     * @param limite Si se definio un limite el parametro se tomara en cuenta
+     * @return 
+     */
+    public ArrayList<Banco> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Banco> bancos = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM banco "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_banco "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Banco b = new Banco(rs.getString("nombre"));
+                b.setId_banco(rs.getInt("id_banco"));
+                b.setEstado_banco(rs.getInt("estado_banco"));
+                bancos.add(b);
+            }
+            return bancos;
+        } catch (Exception e) {
+            System.err.println(e);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    /**
+     * Listar buscando comparando los campos
+     * @param Opcorden Orden: ASC, DESC
+     * @param LikeString Cadena que se desa buscar en los parametros
+     * @return 
+     */
+    public ArrayList<Banco> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Banco> bancos = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM banco WHERE nombre LIKE '%"+LikeString+"%' ORDER BY id_banco "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Banco b = new Banco(rs.getString("nombre"));
+                b.setId_banco(rs.getInt("id_banco"));
+                b.setEstado_banco(rs.getInt("estado_banco"));
+                bancos.add(b);
+            }
+            return bancos;
+        } catch (Exception e) {
+            System.err.println(e);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
 }

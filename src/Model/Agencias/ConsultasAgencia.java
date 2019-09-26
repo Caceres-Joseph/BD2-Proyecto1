@@ -5,11 +5,13 @@
  */
 package Model.Agencias;
 
+import Model.BD.BDOpciones;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -128,5 +130,81 @@ public class ConsultasAgencia extends Conexion{
             }
         }
     }
+ 
+    /**
+     * Metodo para listar los datos del Agencia
+     * @param Opcorden Orden que se desa la data DESC, ASC
+     * @param OpcLimite Si se quiere limite se pondra LIMIT, De lo contrario NO_LIMIT
+     * @param limite Si se definio un limite el parametro se tomara en cuenta
+     * @return 
+     */
+    public ArrayList<Agencia> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Agencia> agencias = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM agencia "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_agencia "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Agencia a = new Agencia(rs.getString("nombre"), rs.getString("direccion"), rs.getInt("banco_id_banco"));
+                a.setId_agencia(rs.getInt("id_agencia"));
+                a.setEstado_agencia(rs.getInt("estado_agencia"));
+                agencias.add(a);
+            }
+            return agencias;
+        } catch (Exception e) {
+            System.err.println(e);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
     
+    /**
+     * Listar buscando comparando los campos
+     * @param Opcorden Orden: ASC, DESC
+     * @param LikeString Cadena que se desa buscar en los parametros
+     * @return 
+     */
+    public ArrayList<Agencia> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Agencia> agencias = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM agencia WHERE nombre LIKE '%"+LikeString+"%' OR direccion LIKE '%"+LikeString+"%' ORDER BY id_agencia "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Agencia a = new Agencia(rs.getString("nombre"), rs.getString("direccion"), rs.getInt("banco_id_banco"));
+                a.setId_agencia(rs.getInt("id_agencia"));
+                a.setEstado_agencia(rs.getInt("estado_agencia"));
+                agencias.add(a);
+            }
+            return agencias;
+        } catch (Exception e) {
+            System.err.println(e);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
 }
