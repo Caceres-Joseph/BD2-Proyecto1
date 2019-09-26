@@ -26,9 +26,10 @@ public class ConsultasBanco extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_BANCO(?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_BANCO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, banco.getNombre());
+            call.setInt(2, banco.getEstado_banco());
             call.execute();
             call.close();
             return true;
@@ -54,10 +55,11 @@ public class ConsultasBanco extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_BANCO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_BANCO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, banco.getNombre());
             call.setInt(2, banco.getId_banco());
+            call.setInt(3, banco.getEstado_banco());
             call.execute();
             call.close();
             return true;
@@ -94,6 +96,7 @@ public class ConsultasBanco extends Conexion{
             {
                 b = new Banco(rs.getString("nombre"));
                 b.setId_banco(rs.getInt("id_banco"));
+                b.setEstado_banco(rs.getInt("estado_banco"));
             }
             return b;
         } catch (Exception e) {

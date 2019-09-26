@@ -14,12 +14,14 @@ public class Cuenta {
     private double saldo;
     private int banco_id_banco;
     private int tipo_cuenta_id_tipo;
+    private int estado_cuenta;
     
     public Cuenta(double saldo, int banco_id_banco, int tipo_cuenta_id_tipo)
     {
         this.saldo = saldo;
         this.banco_id_banco = banco_id_banco;
         this.tipo_cuenta_id_tipo = tipo_cuenta_id_tipo;
+        this.estado_cuenta = 1;
     }
 
     public int getNo_cuenta() {
@@ -52,6 +54,14 @@ public class Cuenta {
 
     public void setTipo_cuenta_id_tipo(int tipo_cuenta_id_tipo) {
         this.tipo_cuenta_id_tipo = tipo_cuenta_id_tipo;
+    }
+
+    public int getEstado_cuenta() {
+        return estado_cuenta;
+    }
+
+    public void setEstado_cuenta(int estado_cuenta) {
+        this.estado_cuenta = estado_cuenta;
     }
     
     

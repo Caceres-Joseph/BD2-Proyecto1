@@ -22,11 +22,12 @@ public class ConsultasCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_CUENTA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_CUENTA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setDouble(1, cuenta.getSaldo());
             call.setInt(2, cuenta.getBanco_id_banco());
             call.setInt(3, cuenta.getTipo_cuenta_id_tipo());
+            call.setInt(4, cuenta.getEstado_cuenta());
             call.execute();
             call.close();
             return true;
@@ -48,12 +49,13 @@ public class ConsultasCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_CUENTA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_CUENTA(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, cuenta.getNo_cuenta());
             call.setDouble(2, cuenta.getSaldo());
             call.setInt(3, cuenta.getBanco_id_banco());
             call.setInt(4, cuenta.getTipo_cuenta_id_tipo());
+            call.setInt(5, cuenta.getEstado_cuenta());
             call.execute();
             call.close();
             return true;
@@ -87,6 +89,7 @@ public class ConsultasCuenta extends Conexion{
             {
                 c = new Cuenta(rs.getDouble("saldo"), rs.getInt("bando_id_banco"), rs.getInt("tipo_cuenta_id_cuenta"));
                 c.setNo_cuenta(rs.getInt("no_cuenta"));
+                c.setEstado_cuenta(rs.getInt("estado_cuenta"));
             }
             return c;
         } catch (Exception e) {

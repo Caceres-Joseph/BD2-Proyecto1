@@ -13,11 +13,12 @@ public class Permiso {
     private int id_permiso;
     private String nombre;
     private String descripcion;
-    
+    private int estado_permiso;
     public Permiso(String nombre, String descripcion)
     {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.estado_permiso = 1;
     }
 
     public int getId_permiso() {
@@ -42,6 +43,14 @@ public class Permiso {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public int getEstado_permiso() {
+        return estado_permiso;
+    }
+
+    public void setEstado_permiso(int estado_permiso) {
+        this.estado_permiso = estado_permiso;
     }
     
     

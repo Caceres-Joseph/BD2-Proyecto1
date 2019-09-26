@@ -12,7 +12,7 @@ public class Agencia {
     private String nombre;
     private String direccion;
     private int id_banco;
-    
+    private int estado_agencia;
     /**
      * Constructor de la clase
      * @param nombre
@@ -24,6 +24,7 @@ public class Agencia {
         this.nombre = nombre;
         this.direccion = direccion;
         this.id_banco = id_banco;
+        this.estado_agencia = 1;
     }
     
     /**
@@ -88,6 +89,14 @@ public class Agencia {
      */
     public void setId_agencia(int id_agencia) {
         this.id_agencia = id_agencia;
+    }
+
+    public int getEstado_agencia() {
+        return estado_agencia;
+    }
+
+    public void setEstado_agencia(int estado_agencia) {
+        this.estado_agencia = estado_agencia;
     }
     
     

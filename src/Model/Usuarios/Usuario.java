@@ -13,11 +13,13 @@ public class Usuario {
     private int id_usuario;
     private String usuario;
     private String password;
+    private int estado_usuario;
     
     public Usuario(String usuario, String password)
     {
         this.usuario = usuario;
         this.password = password;
+        this.estado_usuario = 1;
     }
 
     public int getId_usuario() {
@@ -42,6 +44,14 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getEstado_usuario() {
+        return estado_usuario;
+    }
+
+    public void setEstado_usuario(int estado_usuario) {
+        this.estado_usuario = estado_usuario;
     }
     
     

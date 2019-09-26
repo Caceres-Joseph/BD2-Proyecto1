@@ -21,10 +21,11 @@ public class ConsultasPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_PERMISO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_PERMISO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, permiso.getNombre());
             call.setString(2, permiso.getDescripcion());
+            call.setInt(3, permiso.getEstado_permiso());
             call.execute();
             call.close();
             return true;
@@ -46,11 +47,12 @@ public class ConsultasPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_PERMISO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_PERMISO(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, permiso.getId_permiso());
             call.setString(2, permiso.getNombre());
-            call.setString(3, permiso.getDescripcion());    
+            call.setString(3, permiso.getDescripcion()); 
+            call.setInt(4, permiso.getEstado_permiso());
             call.execute();
             call.close();
             return true;
@@ -82,6 +84,7 @@ public class ConsultasPermiso extends Conexion{
             {
                 p = new Permiso(rs.getString("nombre"), rs.getString("descripcion"));
                 p.setId_permiso(rs.getInt("id_permiso"));
+                p.setEstado_permiso(rs.getInt("estado_permiso"));
             }
             return p;
         } catch (Exception e) {

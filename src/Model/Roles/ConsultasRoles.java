@@ -21,9 +21,10 @@ public class ConsultasRoles extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_ROL(?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_ROL(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, rol.getNombre());
+            call.setInt(2, rol.getEstado_rol());
             call.execute();
             call.close();
             return true;
@@ -49,6 +50,7 @@ public class ConsultasRoles extends Conexion{
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, rol.getId_rol());
             call.setString(2, rol.getNombre());
+            call.setInt(3, rol.getEstado_rol());
             call.execute();
             call.close();
             return true;
@@ -82,6 +84,7 @@ public class ConsultasRoles extends Conexion{
             {
                 r = new Rol(rs.getString("nombre"));
                 r.setId_rol(rs.getInt("id_rol"));
+                r.setEstado_rol(rs.getInt("estado_rol"));
             }
             return r;
         } catch (Exception e) {

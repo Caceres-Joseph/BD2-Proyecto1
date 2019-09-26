@@ -21,9 +21,10 @@ public class ConsultasTipoCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_TIPO_CUENTA(?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_TIPO_CUENTA(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, tc.getNombre());
+            call.setInt(2, tc.getEstado_tipo_cuenta());
             call.execute();
             call.close();
             return true;
@@ -46,10 +47,11 @@ public class ConsultasTipoCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, tc.getId_tipo());
             call.setString(2, tc.getNombre());
+            call.setInt(3, tc.getEstado_tipo_cuenta());
             call.execute();
             call.close();
             return true;
@@ -83,6 +85,7 @@ public class ConsultasTipoCuenta extends Conexion{
             {
                 tc = new TipoCuenta(rs.getString("nombre"));
                 tc.setId_tipo(rs.getInt("id_tipo"));
+                tc.setEstado_tipo_cuenta(rs.getInt("estado_tipo_cuenta"));
             }
             return tc;
         } catch (Exception e) {

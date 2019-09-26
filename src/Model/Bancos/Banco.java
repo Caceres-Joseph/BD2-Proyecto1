@@ -10,6 +10,7 @@ package Model.Bancos;
 public class Banco {
     private String nombre;
     private int id_banco;
+    private int estado_banco;
     
     /**
      * Constructor de la clase
@@ -18,6 +19,7 @@ public class Banco {
     public Banco(String nombre)
     {
         this.nombre = nombre;
+        this.estado_banco = 1;
     }
     
     /**
@@ -51,6 +53,15 @@ public class Banco {
     public void setId_banco(int id_banco) {
         this.id_banco = id_banco;
     }
+
+    public int getEstado_banco() {
+        return estado_banco;
+    }
+
+    public void setEstado_banco(int estado_banco) {
+        this.estado_banco = estado_banco;
+    }
+    
     
     
 }

@@ -22,10 +22,11 @@ public class ConsultaUsuarios extends Conexion {
     public boolean save(Usuario usuario) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_USUARIO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_USUARIO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, usuario.getUsuario());
             call.setString(2, usuario.getPassword());
+            call.setInt(3, usuario.getEstado_usuario());
             call.execute();
             call.close();
             return true;
@@ -44,11 +45,12 @@ public class ConsultaUsuarios extends Conexion {
     public boolean update(Usuario usuario) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, usuario.getId_usuario());
             call.setString(2, usuario.getUsuario());
             call.setString(3, usuario.getPassword());
+            call.setInt(4, usuario.getEstado_usuario());
             call.execute();
             call.close();
             return true;
@@ -77,6 +79,7 @@ public class ConsultaUsuarios extends Conexion {
             if (rs.next()) {
                 us = new Usuario(rs.getString("usuario"), rs.getString("password"));
                 us.setId_usuario(rs.getInt("id_usuario"));
+                us.setEstado_usuario(rs.getInt("estado_usuario"));
             }
             return us;
         } catch (Exception e) {
@@ -123,14 +126,14 @@ public class ConsultaUsuarios extends Conexion {
         try {
             ResultSet rs = null;
             Statement ps = con.createStatement();
-            String query = "SELECT * FROM usuario WHERE usuario='"+usuario.getUsuario()+"' AND password='"+usuario.getPassword()+"'";
+            /*String query = "SELECT * FROM usuario WHERE usuario='"+usuario.getUsuario()+"' AND password='"+usuario.getPassword()+"'";
             //String sql = "SELECT * FROM usuario WHERE password= AND usuario=?";
             System.err.println(query);
             rs = ps.executeQuery(query);
             if (rs.next()) {
                 System.out.println(rs.getString("usuario"));
                 return true;
-            }
+            }*/
             ps.close();
             return true;
         } catch (Exception e) {

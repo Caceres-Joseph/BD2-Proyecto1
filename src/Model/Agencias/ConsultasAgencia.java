@@ -22,11 +22,12 @@ public class ConsultasAgencia extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_AGENCIA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_AGENCIA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, agencia.getNombre());
             call.setString(2, agencia.getDireccion());
             call.setInt(3, agencia.getId_banco());
+            call.setInt(4, agencia.getEstado_agencia());
             call.execute();
             call.close();
             return true;
@@ -48,12 +49,13 @@ public class ConsultasAgencia extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_AGENCIA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_AGENCIA(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, agencia.getId_agencia());
             call.setString(2, agencia.getNombre());
             call.setString(3, agencia.getDireccion());
             call.setInt(4, agencia.getId_banco());
+            call.setInt(5, agencia.getEstado_agencia());
             call.execute();
             call.close();
             return true;
@@ -86,6 +88,7 @@ public class ConsultasAgencia extends Conexion{
             {
                 a = new Agencia(rs.getString("nombre"), rs.getString("direccion"), rs.getInt("banco_id_banco"));
                 a.setId_agencia(rs.getInt("id_agencia"));
+                a.setEstado_agencia(rs.getInt("estado_agencia"));
             }
             return a;
         } catch (Exception e) {
