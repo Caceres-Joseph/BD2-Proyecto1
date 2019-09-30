@@ -5,6 +5,7 @@
  */
 package View.Roles;
 
+import Controller.RolesController;
 import Main.B2;
 import static Main.B2.GuiController;
 import View.Gui.Gui;
@@ -28,6 +29,7 @@ import javafx.scene.layout.AnchorPane;
  */
 public class ListarRol implements Initializable {
 
+    RolesController r = new RolesController();
     public TablaRol tablaRols;
 
     @FXML
@@ -73,7 +75,7 @@ public class ListarRol implements Initializable {
 
         tablaRols = new TablaRol(tbRol, tcId, tcRol);
 
-        tablaRols.mostrar();
+        tablaRols.mostrar(r);
         B2.GuiController.mensajeConsola("Listando roles");
     }
 

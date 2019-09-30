@@ -5,6 +5,11 @@
  */
 package View.Roles;
 
+import Controller.BancosController;
+import Controller.RolesController;
+import Model.Bancos.Banco;
+import Model.Roles.Rol;
+import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,33 +47,6 @@ public class TablaRol {
     }
 
     /**
-     * Muesta el contenido de Stack en la tabla
-     *
-     * @param Stack
-     */
-    public void mostrar() {
-
-        //limpiando tabla
-        contenidoTabla.clear();
-
-        elementoTabla nuevoItem = new elementoTabla(String.valueOf("12"), String.valueOf(23));
-        contenidoTabla.add(nuevoItem);
-
-    }
-
-    
-    public void mostrarBancos() {
-        
-        //limpiando tabla
-        contenidoTabla.clear();
-
-        elementoTabla nuevoItem = new elementoTabla(String.valueOf("1"), String.valueOf("Banco de guatemala"));
-        contenidoTabla.add(nuevoItem);
-        
-    }
-    
-    
-    /**
      * Inicializa la tabla
      */
     public void inicializarTabla() {
@@ -81,6 +59,42 @@ public class TablaRol {
         contenidoTabla.clear();
     }
 
+    /*
+    +--------------------------------------
+    | Metodos Para mostrar una tabla de roles
+    +---------------------------------------
+     */
+    void mostrar(RolesController r) {
+
+        //limpiando tabla
+        contenidoTabla.clear();
+        ArrayList<Rol> listaRoles = r.listRoles();
+
+        for (int i = 0; i < listaRoles.size(); i++) {
+            Rol temp = listaRoles.get(i);
+            elementoTabla nuevoItem = new elementoTabla(String.valueOf(temp.getId_rol()), String.valueOf(temp.getNombre()));
+            contenidoTabla.add(nuevoItem);
+        }
+    }
+    
+    
+    /*
+    +--------------------------------------
+    | Metodos Para mostrar una tabla de bancos
+    +---------------------------------------
+     */
+    public void mostrarBancos(BancosController b) {
+      
+        //limpiando tabla
+        contenidoTabla.clear();
+        ArrayList<Banco> listarBancos = b.listBancos();
+
+        for (int i = 0; i < listarBancos.size(); i++) {
+            Banco temp = listarBancos.get(i);
+            elementoTabla nuevoItem = new elementoTabla(String.valueOf(temp.getId_banco()), String.valueOf(temp.getNombre()));
+            contenidoTabla.add(nuevoItem);
+        }
+    }
 
     public class elementoTabla {
 
