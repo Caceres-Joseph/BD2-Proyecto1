@@ -44,10 +44,27 @@ public class login implements Initializable {
     private JFXPasswordField txtPassword;
 
     @FXML
-    void btnAceptar(ActionEvent event) throws IOException {
+    void btnAceptar(ActionEvent event) throws IOException{
         UsuariosController usuario = new UsuariosController();
-        if (usuario.UserLogin(txtUsuario.getText(), txtPassword.getText())) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Gui/Gui.fxml"));
+        String tUsuario= this.txtUsuario.getText();
+        String tPassword = this.txtPassword.getText();
+        
+
+        
+        if (usuario.UserLogin(tUsuario, tPassword)) {
+            this.success_login();
+        }
+        else
+        {
+            // SII NO PERMITE EL LOGUEO
+            System.err.println("no logueo");
+            //this.success_login();
+        }
+    }
+    
+    
+    public void success_login() throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Gui/Gui.fxml"));
             Parent root = loader.load();
 
             GuiController = (Gui) loader.getController();
@@ -61,12 +78,6 @@ public class login implements Initializable {
             sta.setOnCloseRequest((WindowEvent we) -> {
                 System.exit(0);
             });
-        }
-        else
-        {
-            // SII NO PERMITE EL LOGUEO
-            System.err.println("no logueo");
-        }
     }
 
 }
