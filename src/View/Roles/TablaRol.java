@@ -87,7 +87,7 @@ public class TablaRol {
       
         //limpiando tabla
         contenidoTabla.clear();
-        ArrayList<Banco> listarBancos = b.listBancos();
+        ArrayList<Banco> listarBancos = b.listBancosTest();
 
         for (int i = 0; i < listarBancos.size(); i++) {
             Banco temp = listarBancos.get(i);

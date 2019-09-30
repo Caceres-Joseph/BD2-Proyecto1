@@ -87,4 +87,28 @@ public class BancosController {
             return new ArrayList<>();
         }
     }
+    
+    
+    /**
+     * Retorna los items listados del mas reciente al menos...
+     * Sirve para test
+     * @return 
+     */
+    
+    public ArrayList<Banco> listBancosTest()
+    {
+        try {
+            ArrayList<Banco> bancos = new ArrayList<>();
+           Banco bank=new Banco("Guatemala");
+           bank.setId_banco(1);
+           bank.setEstado_banco(1);
+           
+           bancos.add(bank);
+            
+            
+            return bancos;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 }
