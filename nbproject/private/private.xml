@@ -3,32 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Bancos/NuevoBanco.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/README.md</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Roles/NuevoRol.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Controller/RolesController.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Agencia/ListarAgencia.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Controller/AgenciaBancoController.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Model/Roles/Rol.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Roles/TablaRol.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Model/Roles/ConsultasRoles.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Controller/BancosController.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Agencia/TablaAgencia.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Agencia/ListarAgencia.fxml</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Roles/NuevoRol.fxml</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Agencia/NuevaAgencia.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Bancos/ListarBanco.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Controller/AgenciasController.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Model/Permisos/JsonPermiso.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Login/login.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Agencia/NuevaAgencia.fxml</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Model/Bancos/Banco.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Model/Agencias/AgenciaBanco.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Roles/ListarRol.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Gui/Tablas/TablaTresColumnas.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Model/Agencias/Agencia.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/Main/B2.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Agencia/ComboAgencia.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
