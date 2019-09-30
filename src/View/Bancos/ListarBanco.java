@@ -5,6 +5,7 @@
  */
 package View.Bancos;
 
+import Controller.BancosController;
 import Main.B2;
 import View.Roles.ListarRol;
 import View.Roles.NuevoRol;
@@ -25,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
  */
 public class ListarBanco extends ListarRol {
 
+    BancosController b = new BancosController();
     @FXML
     void clckEditar(ActionEvent event) throws IOException {
         TablaRol.elementoTabla selected = tbRol.getSelectionModel().getSelectedItem();
@@ -47,13 +49,15 @@ public class ListarBanco extends ListarRol {
     }
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
      
         tablaRols = new TablaRol(tbRol, tcId, tcRol);
 
-        tablaRols.mostrarBancos();
+        tablaRols.mostrarBancos(b);
         B2.GuiController.mensajeConsola("Listando bancos");
     }    
     

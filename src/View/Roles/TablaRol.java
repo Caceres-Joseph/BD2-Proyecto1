@@ -5,7 +5,9 @@
  */
 package View.Roles;
 
+import Controller.BancosController;
 import Controller.RolesController;
+import Model.Bancos.Banco;
 import Model.Roles.Rol;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
@@ -44,16 +46,6 @@ public class TablaRol {
 
     }
 
-    public void mostrarBancos() {
-
-        //limpiando tabla
-        contenidoTabla.clear();
-
-        elementoTabla nuevoItem = new elementoTabla(String.valueOf("1"), String.valueOf("Banco de guatemala"));
-        contenidoTabla.add(nuevoItem);
-
-    }
-
     /**
      * Inicializa la tabla
      */
@@ -81,6 +73,25 @@ public class TablaRol {
         for (int i = 0; i < listaRoles.size(); i++) {
             Rol temp = listaRoles.get(i);
             elementoTabla nuevoItem = new elementoTabla(String.valueOf(temp.getId_rol()), String.valueOf(temp.getNombre()));
+            contenidoTabla.add(nuevoItem);
+        }
+    }
+    
+    
+    /*
+    +--------------------------------------
+    | Metodos Para mostrar una tabla de bancos
+    +---------------------------------------
+     */
+    public void mostrarBancos(BancosController b) {
+      
+        //limpiando tabla
+        contenidoTabla.clear();
+        ArrayList<Banco> listarBancos = b.listBancos();
+
+        for (int i = 0; i < listarBancos.size(); i++) {
+            Banco temp = listarBancos.get(i);
+            elementoTabla nuevoItem = new elementoTabla(String.valueOf(temp.getId_banco()), String.valueOf(temp.getNombre()));
             contenidoTabla.add(nuevoItem);
         }
     }
