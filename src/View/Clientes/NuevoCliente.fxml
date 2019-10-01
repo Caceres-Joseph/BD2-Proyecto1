@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -12,11 +13,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import View.Gui.Componentes.MaskedTextField?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Clientes.NuevoCliente">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Clientes.NuevoCliente">
    <children>
-      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="46.0" layoutY="97.0" prefHeight="34.0" prefWidth="425.0" promptText="Nombre del Cliente">
+      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="46.0" layoutY="97.0" prefHeight="34.0" prefWidth="211.0" promptText="Nombres">
          <font>
             <Font size="15.0" />
          </font>
@@ -57,10 +58,26 @@
             </JFXButton>
          </children>
       </GridPane>
-      <JFXTextField fx:id="txtDireccion" labelFloat="true" layoutX="46.0" layoutY="183.0" prefHeight="34.0" prefWidth="425.0" promptText="Direccion">
+      <JFXTextField fx:id="txtDireccion" labelFloat="true" layoutX="46.0" layoutY="166.0" prefHeight="34.0" prefWidth="451.0" promptText="Direccion">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
+      <JFXTextField fx:id="txtApellido" labelFloat="true" layoutX="284.0" layoutY="97.0" prefHeight="34.0" prefWidth="211.0" promptText="Apellidos">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <MaskedTextField mask="(###)#####-####" fx:id="txtCorreo" labelFloat="true" layoutX="46.0" layoutY="237.0" prefHeight="34.0" prefWidth="211.0" promptText="Correo">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </MaskedTextField>
+      <JFXTextField fx:id="txtTelefono" labelFloat="true" layoutX="284.0" layoutY="237.0" prefHeight="34.0" prefWidth="211.0" promptText="telefono">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXDatePicker fx:id="txtNacimiento" layoutX="46.0" layoutY="308.0" prefHeight="28.0" prefWidth="234.0" promptText="Fecha de Nacimiento" />
    </children>
 </AnchorPane>
