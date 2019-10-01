@@ -6,6 +6,7 @@
 package View.Clientes;
 
 import Main.B2;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,6 +28,18 @@ public class NuevoCliente implements Initializable {
 
     @FXML
     private JFXTextField txtDireccion;
+
+    @FXML
+    private JFXTextField txtApellido;
+
+    @FXML
+    private JFXTextField txtCorreo;
+
+    @FXML
+    private JFXTextField txtTelefono;
+
+    @FXML
+    private JFXDatePicker txtNacimiento;
 
     @FXML
     void clckAceptar(ActionEvent event) {
