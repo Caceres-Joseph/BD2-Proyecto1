@@ -6,6 +6,7 @@
 package View.Usuarios;
 
 import Controller.UsuariosController;
+import Model.BD.BDOpciones;
 import Model.Usuarios.Usuario;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -72,7 +73,7 @@ public class TablaUsuario {
         contenidoTabla.clear();
 
         //Llenando la tabla
-        ArrayList<Usuario> listaUsuario = r.listUsuariosTest();
+        ArrayList<Usuario> listaUsuario = r.listUsuarios(BDOpciones.LimitOp.NO_LIMIT, BDOpciones.Orden.DESC, -1);
         contenidoTabla.addAll(listaUsuario); 
     }
 }

@@ -47,7 +47,7 @@ public class ConsultaUsuarios extends Conexion {
     public boolean update(Usuario usuario) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_USUARIO(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, usuario.getId_usuario());
             call.setString(2, usuario.getUsuario());

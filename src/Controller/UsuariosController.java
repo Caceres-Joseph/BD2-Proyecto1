@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.BD.BDOpciones;
 import Model.Usuarios.ConsultaUsuarios;
 import Model.Usuarios.Usuario;
 import java.sql.ResultSet;
@@ -74,15 +75,9 @@ public class UsuariosController {
      *
      * @return
      */
-    public ArrayList<Usuario> listUsuarios() {
+    public ArrayList<Usuario> listUsuarios(BDOpciones.LimitOp limitOp, BDOpciones.Orden orden, int limite) {
         try {
-            ArrayList<Usuario> usuarios = new ArrayList<>();
-            ResultSet rs = consultas.listItems();
-            while (rs.next()) {
-                Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
-                u.setId_usuario(rs.getInt("id_usuario"));
-                usuarios.add(u);
-            }
+            ArrayList<Usuario> usuarios = consultas.listData(orden, limitOp, limite);
             return usuarios;
         } catch (Exception e) {
             return new ArrayList<>();
