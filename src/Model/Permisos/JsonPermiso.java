@@ -57,6 +57,14 @@ public class JsonPermiso {
             + "        ]\n"
             + "    },\n"
             + "    \n"
+            + "	\"tipo_cuenta\" : {\n"
+            + "		\"permisos\":[\n"
+            + "            \"crear\",\n"
+            + "            \"modificar\",\n"
+            + "            \"listar\"\n"
+            + "        ]\n"
+            + "    },\n"
+            + "    \n"
             + "	\"agencias\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"crear\",\n"
@@ -242,6 +250,24 @@ public class JsonPermiso {
 
                 } else if (permiso.equals("modificar")) {
                     rutaControlador = "/View/Bancos/EditarBanco.fxml";
+
+                } else if (permiso.equals("eliminar")) {
+                    
+                    //rutaControlador = "/View/Roles/EliminarRol.fxml";
+
+                } else {
+
+                    B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+                }
+            }else if (nombreModulo.toLowerCase().equals("tipo_cuenta")) {
+
+                if (permiso.equals("crear")) {
+                    rutaControlador = "/View/TipoCuenta/NuevoTipoCuenta.fxml";
+                } else if (permiso.equals("listar")) {
+                    rutaControlador = "/View/TipoCuenta/ListarTipoCuenta.fxml";
+
+                } else if (permiso.equals("modificar")) {
+                    rutaControlador = "/View/TipoCuenta/EditarTipoCuenta.fxml";
 
                 } else if (permiso.equals("eliminar")) {
                     
