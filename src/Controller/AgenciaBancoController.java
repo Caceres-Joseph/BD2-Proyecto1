@@ -7,13 +7,22 @@ package Controller;
 
 import Model.Agencias.AgenciaBanco;
 import java.util.ArrayList;
-
+import Model.Agencias.ConsultasAgencia;
+import Model.BD.BDOpciones;
 /**
  *
  * @author Notebook
  */
 public class AgenciaBancoController extends AgenciasController {
-
+    
+    ConsultasAgencia consultas;
+    
+    
+    public  AgenciaBancoController()
+    {
+        consultas = new ConsultasAgencia();
+    }
+    
     /**
      * Retorna los items listados del mas reciente al menos TEST
      *
@@ -21,14 +30,7 @@ public class AgenciaBancoController extends AgenciasController {
      */
     public ArrayList<AgenciaBanco> listBancosTest() {
         try {
-            ArrayList<AgenciaBanco> bancos = new ArrayList<>();
-            AgenciaBanco bank = new AgenciaBanco("Agencia 1", "Ciudad de Gutemala", 1, "Banco de Guatemala");
-            AgenciaBanco bank2 = new AgenciaBanco("Agencia 2", "Tecpán", 2, "Banco de Chimaltenango");
-
-            bancos.add(bank);
-            bancos.add(bank2);
-
-            return bancos;
+            return consultas.listaData(BDOpciones.Orden.DESC);
         } catch (Exception e) {
             return new ArrayList<>();
         }

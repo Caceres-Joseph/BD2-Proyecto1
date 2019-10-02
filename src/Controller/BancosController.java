@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.BD.BDOpciones;
 import Model.Bancos.Banco;
 import Model.Bancos.ConsultasBanco;
 import java.sql.ResultSet;
@@ -71,17 +72,10 @@ public class BancosController {
      * Retorna los items listados del mas reciente al menos...
      * @return 
      */
-    public ArrayList<Banco> listBancos()
+    public ArrayList<Banco> listBancos(BDOpciones.LimitOp l, BDOpciones.Orden orden, int limite)
     {
         try {
-            ArrayList<Banco> bancos = new ArrayList<>();
-            ResultSet rs = consultas.listItems();
-            while(rs.next())
-            {
-                Banco nuevo = new Banco(rs.getString("nombre"));
-                nuevo.setId_banco(rs.getInt("id_banco"));
-                bancos.add(nuevo);
-            }
+            ArrayList<Banco> bancos = consultas.listData(orden, l, limite);
             return bancos;
         } catch (Exception e) {
             return new ArrayList<>();

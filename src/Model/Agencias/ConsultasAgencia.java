@@ -207,4 +207,42 @@ public class ConsultasAgencia extends Conexion{
             }
         }
     }
+    
+    public ArrayList<AgenciaBanco> listaData(BDOpciones.Orden Opcorden)
+    {
+        Connection con = getConexion();
+        try
+        {
+            ArrayList<AgenciaBanco> agencias = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT agencia.id_agencia, agencia.nombre, agencia.direccion, agencia.banco_id_banco, agencia.estado_agencia, banco.nombre as banco_nombre" +
+                        " FROM agencia, banco" + 
+                        " WHERE agencia.estado_agencia = 1 AND agencia.banco_id_banco = banco.id_banco AND banco.estado_banco = 1"+
+                        " ORDER BY agencia.id_agencia "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                AgenciaBanco a = new AgenciaBanco(rs.getString("nombre"), rs.getString("direccion"), rs.getInt("banco_id_banco"),rs.getString("banco_nombre"));
+                a.setId_agencia(rs.getInt("id_agencia"));
+                a.setEstado_agencia(rs.getInt("estado_agencia"));
+                agencias.add(a);
+            }
+            return agencias;
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
 }

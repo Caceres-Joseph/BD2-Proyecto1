@@ -7,6 +7,7 @@ package View.Roles;
 
 import Controller.BancosController;
 import Controller.RolesController;
+import Model.BD.BDOpciones;
 import Model.Bancos.Banco;
 import Model.Roles.Rol;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class TablaRol {
 
         //limpiando tabla
         contenidoTabla.clear();
-        ArrayList<Rol> listaRoles = r.listRoles();
+        ArrayList<Rol> listaRoles = r.listRoles(BDOpciones.LimitOp.NO_LIMIT, BDOpciones.Orden.DESC, -1);
 
         for (int i = 0; i < listaRoles.size(); i++) {
             Rol temp = listaRoles.get(i);
@@ -87,8 +88,7 @@ public class TablaRol {
       
         //limpiando tabla
         contenidoTabla.clear();
-        ArrayList<Banco> listarBancos = b.listBancos();
-
+        ArrayList<Banco> listarBancos = b.listBancos(BDOpciones.LimitOp.NO_LIMIT, BDOpciones.Orden.DESC, -1);
         for (int i = 0; i < listarBancos.size(); i++) {
             Banco temp = listarBancos.get(i);
             elementoTabla nuevoItem = new elementoTabla(String.valueOf(temp.getId_banco()), String.valueOf(temp.getNombre()));
