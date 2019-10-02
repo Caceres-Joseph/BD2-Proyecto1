@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
  * @author gbfragoso
  * @version 2.1
  */
-public class MaskedTextField extends JFXTextField {
+public class MaskedTextField extends TextField {
 
     private static final char MASK_ESCAPE = '\'';
     private static final char MASK_NUMBER = '#';

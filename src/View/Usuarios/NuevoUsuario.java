@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import Controller.UsuariosController;
+import Model.Usuarios.Usuario;
 /**
  * FXML Controller class
  *
@@ -21,7 +22,8 @@ import Controller.UsuariosController;
  */
 public class NuevoUsuario implements Initializable {
     UsuariosController u = new UsuariosController();
-    int id_Usuarios = -1;
+    
+    
 
     @FXML
     private JFXTextField txtNombre;
@@ -46,7 +48,7 @@ public class NuevoUsuario implements Initializable {
             return;
         }
 
-        if (this.id_Usuarios == -1) {
+        if (this.itemModificar == null) {
 
             if (insertar(nombre, pass1)) {
 
@@ -69,6 +71,25 @@ public class NuevoUsuario implements Initializable {
 
     }
 
+    
+    
+    
+    /*
+    +--------------------------------------
+    | Metodos de modificación y carga de datos
+    +---------------------------------------
+    
+     */
+    private Usuario itemModificar;
+
+    public void initData(Usuario item) {
+        this.itemModificar = item;
+        this.txtNombre.setText(item.getUsuario());
+        this.txtPassword.setText(item.getPassword());
+        this.txtPassword2.setText(item.getPassword());
+         
+    }
+
     /**
      * Initializes the controller class.
      */
@@ -88,7 +109,10 @@ public class NuevoUsuario implements Initializable {
     }
 
     public boolean editar(String nombre, String password) {
-        return u.updateUsuario(id_Usuarios, nombre, password);
+        return u.updateUsuario(itemModificar.getId_usuario(), nombre, password);
     }
+    
+    
+    
 
 }
