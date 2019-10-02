@@ -220,10 +220,10 @@ public class JsonPermiso {
                 if (permiso.equals("crear")) {
                     rutaControlador = "/View/Usuarios/NuevoUsuario.fxml";
                 } else if (permiso.equals("listar")) {
-                    rutaControlador = "/View/Bancos/ListarBanco.fxml";
+                    rutaControlador = "/View/Usuarios/ListarUsuario.fxml";
 
                 } else if (permiso.equals("modificar")) {
-                    rutaControlador = "/View/Bancos/EditarBanco.fxml";
+                    rutaControlador = "/View/Usuarios/EditarUsuario.fxml";
 
                 } else if (permiso.equals("eliminar")) {
                     
