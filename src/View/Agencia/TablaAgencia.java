@@ -8,8 +8,7 @@ package View.Agencia;
 import Controller.AgenciaBancoController;
 import Controller.RolesController;
 import Model.Agencias.AgenciaBanco;
-import Model.Roles.Rol;
-
+import Model.Roles.Rol; 
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
