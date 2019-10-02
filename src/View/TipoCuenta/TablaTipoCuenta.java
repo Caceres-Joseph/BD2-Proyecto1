@@ -6,6 +6,7 @@
 package View.TipoCuenta;
 
 import Controller.TipoCuentasController;
+import Model.BD.BDOpciones;
 import Model.TipoCuentas.TipoCuenta;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -72,7 +73,7 @@ public class TablaTipoCuenta {
         contenidoTabla.clear();
 
         //Llenando la tabla
-        ArrayList<TipoCuenta> listaTipoCuenta = r.listTipoCuentasTest();
+        ArrayList<TipoCuenta> listaTipoCuenta = r.listTipoCuentas(BDOpciones.LimitOp.NO_LIMIT, BDOpciones.Orden.DESC, -1);
         contenidoTabla.addAll(listaTipoCuenta); 
     }
 }

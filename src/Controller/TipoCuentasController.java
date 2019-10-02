@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.BD.BDOpciones;
 import Model.TipoCuentas.TipoCuenta;
 import Model.TipoCuentas.ConsultasTipoCuenta;
 import java.sql.ResultSet;
@@ -72,15 +73,9 @@ public class TipoCuentasController {
      *
      * @return
      */
-    public ArrayList<TipoCuenta> listTipoCuentas() {
+    public ArrayList<TipoCuenta> listTipoCuentas(BDOpciones.LimitOp limitOp, BDOpciones.Orden orden, int limite) {
         try {
-            ArrayList<TipoCuenta> tipos = new ArrayList<>();
-            ResultSet rs = consultas.listItems();
-            while (rs.next()) {
-                TipoCuenta tc = new TipoCuenta(rs.getString("nombre"));
-                tc.setId_tipo(rs.getInt("id_tipo"));
-                tipos.add(tc);
-            }
+            ArrayList<TipoCuenta> tipos = consultas.listData(orden, limitOp, limite);
             return tipos;
         } catch (Exception e) {
             return new ArrayList<>();

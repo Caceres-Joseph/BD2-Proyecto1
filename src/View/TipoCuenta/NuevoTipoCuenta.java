@@ -92,7 +92,7 @@ public class NuevoTipoCuenta implements Initializable {
  
 
     public boolean editar(String nombre) {
-        return a.updateTipoCuenta(this.itemModificar.getId_tipo(), this.itemModificar.getNombre());
+        return a.updateTipoCuenta(this.itemModificar.getId_tipo(), nombre);
     }
 
 }
