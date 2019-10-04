@@ -122,6 +122,7 @@ CREATE TABLE usuario (
     id_usuario   INTEGER NOT NULL,
     usuario      VARCHAR2(32 CHAR) NOT NULL,
     password     VARCHAR2(32 CHAR) NOT NULL,
+    estado_usuario INTEGER NOT NULL,
     rol_permiso_rol_id_rol           INTEGER NOT NULL,
     rol_permiso_permiso_id_permiso   INTEGER NOT NULL
 );

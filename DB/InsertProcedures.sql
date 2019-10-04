@@ -35,13 +35,15 @@ CREATE OR REPLACE PROCEDURE INSERT_CLIENTE(
 	p_correo IN CLIENTE.CORREO%TYPE,
 	p_telefono IN CLIENTE.TELEFONO%TYPE,
 	p_fecha_nacimiento IN CLIENTE.FECHA_NACIMIENTO%TYPE,
-	p_estado_cliente IN CLIENTE.ESTADO_CLIENTE%TYPE
+	p_estado_cliente IN CLIENTE.ESTADO_CLIENTE%TYPE,
+    p_foto_cliente IN CLIENTE.FOTO%TYPE,
+    p_firma_cliente IN CLIENTE.FIRMA%TYPE
 	
 )
 IS
 BEGIN
-	INSERT INTO CLIENTE(DPI_CLIENTE,NOMBRE,APELLIDO,DIRECCION,CORREO, TELEFONO, FECHA_NACIMIENTO, ESTADO_CLIENTE) 
-	VALUES(p_dpi_cliente, p_nombre, p_apellido, p_direccion, p_correo, p_telefono, p_fecha_nacimiento, p_estado_cliente);
+	INSERT INTO CLIENTE(DPI_CLIENTE,NOMBRE,APELLIDO,DIRECCION,CORREO, TELEFONO, FECHA_NACIMIENTO, ESTADO_CLIENTE, FOTO,FIRMA) 
+	VALUES(p_dpi_cliente, p_nombre, p_apellido, p_direccion, p_correo, p_telefono, p_fecha_nacimiento, p_estado_cliente,p_foto_cliente,p_firma_cliente);
 	COMMIT;
 END;
 /

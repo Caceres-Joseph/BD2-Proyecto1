@@ -37,11 +37,14 @@ CREATE OR REPLACE PROCEDURE UPDATE_CLIENTE(
 	p_correo IN CLIENTE.CORREO%TYPE,
 	p_telefono IN CLIENTE.TELEFONO%TYPE,
 	p_fecha_nacimiento IN CLIENTE.FECHA_NACIMIENTO%TYPE,
-	p_estado_cliente IN CLIENTE.ESTADO_CLIENTE%TYPE
+	p_estado_cliente IN CLIENTE.ESTADO_CLIENTE%TYPE,
+    p_foto_cliente IN CLIENTE.FOTO %TYPE,
+    p_firma_cliente IN CLIENTE.FIRMA%TYPE
+    
 )
 IS
 BEGIN
-	UPDATE CLIENTE SET NOMBRE=p_nombre, APELLIDO=p_apellido, DIRECCION=p_direccion, CORREO=p_correo, TELEFONO=p_telefono, FECHA_NACIMIENTO=p_fecha_nacimiento, ESTADO_CLIENTE=p_estado_cliente 
+	UPDATE CLIENTE SET NOMBRE=p_nombre, APELLIDO=p_apellido, DIRECCION=p_direccion, CORREO=p_correo, TELEFONO=p_telefono, FECHA_NACIMIENTO=p_fecha_nacimiento, ESTADO_CLIENTE=p_estado_cliente, FOTO = p_foto_cliente, FIRMA = p_firma_cliente
 	WHERE DPI_CLIENTE=p_dpi_cliente;
 	COMMIT;
 END;
