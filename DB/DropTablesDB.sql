@@ -11,4 +11,6 @@ drop table terminal cascade constraints;
 drop table tipo_cuenta cascade constraints;
 drop table transaccion cascade constraints;
 drop table usuario cascade constraints;
+drop table chequera cascade constraints;
+drop table cheque cascade constraints;
 -----------------------------------------------

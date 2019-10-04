@@ -31,7 +31,9 @@ CREATE TABLE cliente (
     correo       VARCHAR2(32 CHAR) NOT NULL,
     telefono     VARCHAR2(32 CHAR) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    estado_cliente   INTEGER NOT NULL
+    estado_cliente   INTEGER NOT NULL,
+    foto    VARCHAR2(50 CHAR) NOT NULL,
+    firma   VARCHAR2(50 CHAR) NOT NULL
 );
 
 ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( dpi_cliente );
@@ -120,10 +122,27 @@ CREATE TABLE usuario (
     id_usuario   INTEGER NOT NULL,
     usuario      VARCHAR2(32 CHAR) NOT NULL,
     password     VARCHAR2(32 CHAR) NOT NULL,
-    estado_usuario   INTEGER NOT NULL
+    rol_permiso_rol_id_rol           INTEGER NOT NULL,
+    rol_permiso_permiso_id_permiso   INTEGER NOT NULL
 );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id_usuario );
+
+CREATE TABLE chequera (
+    id_chequera   INTEGER NOT NULL,
+    no_cuenta      INTEGER NOT NULL,
+    estado_chequera INTEGER NOT NULL
+);
+
+ALTER TABLE chequera ADD CONSTRAINT chequera_pk PRIMARY KEY ( id_chequera );
+
+CREATE TABLE cheque (
+    id_cheque   INTEGER NOT NULL,
+    id_chequera      INTEGER NOT NULL,
+    estado_cheque     VARCHAR2(32 CHAR) NOT NULL
+);
+
+ALTER TABLE cheque ADD CONSTRAINT cheque_pk PRIMARY KEY ( id_cheque );
 
 ALTER TABLE agencia
     ADD CONSTRAINT agencia_banco_fk FOREIGN KEY ( banco_id_banco )
@@ -185,7 +204,22 @@ ALTER TABLE transaccion
         REFERENCES usuario ( id_usuario )
             ON DELETE CASCADE;
 
+ALTER TABLE usuario
+    ADD CONSTRAINT usuario_rol_permiso_fk FOREIGN KEY ( rol_permiso_rol_id_rol,
+                                                        rol_permiso_permiso_id_permiso )
+        REFERENCES rol_permiso ( rol_id_rol,
+                                 permiso_id_permiso )
+            ON DELETE CASCADE;
+            
+ALTER TABLE chequera
+    ADD CONSTRAINT chequera_cuenta_fk FOREIGN KEY ( no_cuenta )
+        REFERENCES cuenta ( no_cuenta )
+            ON DELETE CASCADE;
 
+ALTER TABLE cheque
+    ADD CONSTRAINT cheque_chequera_fk FOREIGN KEY ( id_chequera )
+        REFERENCES chequera ( id_chequera )
+            ON DELETE CASCADE;
 
 -- Informe de Resumen de Oracle SQL Developer Data Modeler: 
 -- 
