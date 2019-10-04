@@ -23,7 +23,7 @@ public class ConsultasClientes extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_CLIENTE(?,?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_CLIENTE(?,?,?,?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, cliente.getId_cliente());
             call.setString(2, cliente.getNombre());
@@ -33,6 +33,8 @@ public class ConsultasClientes extends Conexion{
             call.setString(6, cliente.getTelefono());
             call.setDate(7, cliente.getFecha_nacimiento());
             call.setInt(8, cliente.getEstado_cliente());
+            call.setString(9, cliente.getFoto());
+            call.setString(10, cliente.getFirma());
             call.execute();
             call.close();
             return true;
@@ -55,7 +57,7 @@ public class ConsultasClientes extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_CLIENTE(?,?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_CLIENTE(?,?,?,?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, cliente.getId_cliente());
             call.setString(2, cliente.getNombre());
@@ -65,6 +67,8 @@ public class ConsultasClientes extends Conexion{
             call.setString(6, cliente.getTelefono());
             call.setDate(7, cliente.getFecha_nacimiento());
             call.setInt(8, cliente.getEstado_cliente());
+            call.setString(9, cliente.getFoto());
+            call.setString(10, cliente.getFirma());
             call.execute();
             call.close();
             return true;
@@ -98,7 +102,9 @@ public class ConsultasClientes extends Conexion{
                 c = new Cliente(rs.getInt("dpi_cliente"), rs.getString("nombre"), rs.getString("apellido")
                         , rs.getString("direccion"), rs.getString("correo")
                         , rs.getString("telefono")
-                        , rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente"));
+                        , rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente")
+                        , rs.getString("firma"), rs.getString("foto")
+                );
             }
             return c;
         } catch (Exception e) {
@@ -153,7 +159,9 @@ public class ConsultasClientes extends Conexion{
             {
                 Cliente c = new Cliente(rs.getInt("dpi_cliente")
                         ,rs.getString("nombre"), rs.getString("apellido"), rs.getString("direccion"), rs.getString("correo")
-                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente"));
+                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente")
+                        , rs.getString("firma"), rs.getString("foto")
+                );
                 clientes.add(c);
             }
             return clientes;
@@ -184,7 +192,9 @@ public class ConsultasClientes extends Conexion{
             {
                 Cliente c = new Cliente(rs.getInt("dpi_cliente")
                         ,rs.getString("nombre"), rs.getString("apellido"), rs.getString("direccion"), rs.getString("correo")
-                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente"));
+                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente")
+                        , rs.getString("firma"), rs.getString("foto")
+                );
                 clientes.add(c);
             }
             return clientes;

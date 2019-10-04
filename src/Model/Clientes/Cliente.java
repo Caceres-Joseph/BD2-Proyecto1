@@ -20,6 +20,8 @@ public class Cliente {
     private String telefono;
     private Date fecha_nacimiento;
     private int estado_cliente;
+    private String foto;
+    private String firma;
     
     public Cliente(String nombre, String direccion)
     {
@@ -28,7 +30,8 @@ public class Cliente {
     }
     
     public Cliente(int id_cliente, String nombre, String apellido, String direccion,
-                String correo, String telefono, Date fecha_nacimiento, int estado_cliente
+                String correo, String telefono, Date fecha_nacimiento, int estado_cliente,
+                String firma, String foto
             )
     {
         this.id_cliente = id_cliente;
@@ -39,6 +42,8 @@ public class Cliente {
         this.telefono = telefono;
         this.fecha_nacimiento = fecha_nacimiento;
         this.estado_cliente = estado_cliente;
+        this.foto = foto;
+        this.firma = firma;
     }
 
     public int getId_cliente() {
@@ -103,6 +108,22 @@ public class Cliente {
 
     public void setEstado_cliente(int estado_cliente) {
         this.estado_cliente = estado_cliente;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
     }
     
     

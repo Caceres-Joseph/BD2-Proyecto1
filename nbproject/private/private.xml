@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Gui/Componentes/MaskField.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Login/login.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Gui/Componentes/MaskedTextField.java</file>
-            <file>file:/C:/Users/Notebook/Documents/Bases2/Proyecto/BD2-Proyecto1/src/View/Clientes/NuevoCliente.fxml</file>
+            <file>file:/C:/Users/ricar/OneDrive/Documents/Universidad/2019-2-SEMESTRE/Bases%20de%20Datos%202/Proyecto1/BD2-Proyecto1/src/Controller/TipoCuentasController.java</file>
+            <file>file:/C:/Users/ricar/OneDrive/Documents/Universidad/2019-2-SEMESTRE/Bases%20de%20Datos%202/Proyecto1/BD2-Proyecto1/src/Model/TipoCuentas/ConsultasTipoCuenta.java</file>
+            <file>file:/C:/Users/ricar/OneDrive/Documents/Universidad/2019-2-SEMESTRE/Bases%20de%20Datos%202/Proyecto1/BD2-Proyecto1/src/View/TipoCuenta/TablaTipoCuenta.java</file>
+            <file>file:/C:/Users/ricar/OneDrive/Documents/Universidad/2019-2-SEMESTRE/Bases%20de%20Datos%202/Proyecto1/BD2-Proyecto1/src/View/TipoCuenta/NuevoTipoCuenta.java</file>
+            <file>file:/C:/Users/ricar/OneDrive/Documents/Universidad/2019-2-SEMESTRE/Bases%20de%20Datos%202/Proyecto1/BD2-Proyecto1/src/View/Roles/NuevoRol.java</file>
         </group>
     </open-files>
 </project-private>
