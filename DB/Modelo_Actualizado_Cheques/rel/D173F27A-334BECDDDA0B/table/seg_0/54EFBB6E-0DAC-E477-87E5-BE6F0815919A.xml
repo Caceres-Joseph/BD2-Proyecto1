@@ -1,0 +1,129 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="54EFBB6E-0DAC-E477-87E5-BE6F0815919A" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="AGENCIA">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>AGENCIA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:15 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_AGENCIA" id="590E7FC1-7019-5DEC-C1AA-94BAE0E1D206">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>AGENCIA</sourceObjSchema>
+<sourceObjName>ID_AGENCIA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="95DFBA4D-0C13-1846-CF28-B37CC7A4F179">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>AGENCIA</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DIRECCION" id="AA77E43B-A0D7-CF62-1F28-6CDF98CED18B">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>AGENCIA</sourceObjSchema>
+<sourceObjName>DIRECCION</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BANCO_ID_BANCO" id="5DE2992E-222A-CC87-5907-604F16103FF8">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>AGENCIA</sourceObjSchema>
+<sourceObjName>BANCO_ID_BANCO</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4263C119-46BF-B6D8-F5EC-97A83EAE786A" referredColumn="E791315C-3FEA-E937-6E87-38420E29BBBB"/>
+</associations>
+</Column>
+<Column name="ESTADO_AGENCIA" id="319D6A6A-6916-ABEE-DAC7-3269F7096C2D">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>AGENCIA</sourceObjSchema>
+<sourceObjName>ESTADO_AGENCIA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5288D913-A6E7-6046-DF62-20160EC1F9C7" name="AGENCIA_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>AGENCIA_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:20 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="590E7FC1-7019-5DEC-C1AA-94BAE0E1D206"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="25F5731C-B6AA-210B-8E40-4584976D56C1" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="AGENCIA_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>AGENCIA_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="590E7FC1-7019-5DEC-C1AA-94BAE0E1D206"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3AD6A801-C92E-0AF3-EF97-01CA9473AC48" name="AGENCIA_BANCO_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5DE2992E-222A-CC87-5907-604F16103FF8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

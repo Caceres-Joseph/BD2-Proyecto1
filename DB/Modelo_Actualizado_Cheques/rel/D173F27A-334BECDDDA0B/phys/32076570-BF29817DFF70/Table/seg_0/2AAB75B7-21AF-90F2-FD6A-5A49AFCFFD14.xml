@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="USUARIO" directorySegmentName="seg_0" id="2AAB75B7-21AF-90F2-FD6A-5A49AFCFFD14">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<schemaObject>B885FA3D-F9BF-B806-2218-E84B201D110E</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>55885E62-5ADE-AF11-FB78-617B3C29A570</segment>
+<tableSpace>A2E70462-C3EA-9AE1-27FE-F5305612E086</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ROL_PERMISO_ROL_ID_ROL" id="0AE65166-E079-66A5-E378-EE02A6A24D4E">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="USUARIO" id="0C94A32D-0DEE-8154-5763-813B12AD803B">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PASSWORD" id="1693E05F-F55C-DC2E-30D6-9583F11DF7DD">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_USUARIO" id="5E0BD92D-721F-4D36-4A19-BB80FD43BB89">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ESTADO_USUARIO" id="607542EB-3F23-9565-E338-F660EFABED2B">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ROL_PERMISO_PERMISO_ID_PERMISO" id="B4CAEB03-F501-787D-D086-BB4A86C4BFCD">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="USUARIO_PK" id="DB3A4A89-42B1-AD10-5E00-AABA1296C840">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<schemaObject>B885FA3D-F9BF-B806-2218-E84B201D110E</schemaObject>
+<segment>B871027A-B356-6EDD-61CC-E7C6150D085D</segment>
+<tableSpace>A2E70462-C3EA-9AE1-27FE-F5305612E086</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="USUARIO_ROL_PERMISO_FK" id="8F446F03-4FFA-67F4-999A-D3EB2A3C0605">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="USUARIO_PK" id="662C974C-4C51-45D0-B6EC-A09B8BE1E54D">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:21 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<segment>B871027A-B356-6EDD-61CC-E7C6150D085D</segment>
+<tableSpace>A2E70462-C3EA-9AE1-27FE-F5305612E086</tableSpace>
+<existingIndex>DB3A4A89-42B1-AD10-5E00-AABA1296C840</existingIndex>
+<indexSegment>B871027A-B356-6EDD-61CC-E7C6150D085D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

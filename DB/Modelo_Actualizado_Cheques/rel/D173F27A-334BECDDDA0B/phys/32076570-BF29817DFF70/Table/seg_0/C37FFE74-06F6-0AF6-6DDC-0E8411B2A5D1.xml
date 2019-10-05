@@ -1,0 +1,54 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="TIPO_CUENTA" directorySegmentName="seg_0" id="C37FFE74-06F6-0AF6-6DDC-0E8411B2A5D1">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<schemaObject>B885FA3D-F9BF-B806-2218-E84B201D110E</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>55885E62-5ADE-AF11-FB78-617B3C29A570</segment>
+<tableSpace>A2E70462-C3EA-9AE1-27FE-F5305612E086</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NOMBRE" id="4A828F27-25CE-874C-2995-9FB5268BC28E">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_TIPO" id="4B8AA56A-8A1A-62A3-6C0F-E837E11FB64D">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ESTADO_TIPO_CUENTA" id="95F7FF7D-0E22-4356-6D89-AD166AF53AFB">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="TIPO_CUENTA_PK" id="283E10A7-3279-969E-FA70-40D6C0C8DD59">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<schemaObject>B885FA3D-F9BF-B806-2218-E84B201D110E</schemaObject>
+<segment>B871027A-B356-6EDD-61CC-E7C6150D085D</segment>
+<tableSpace>A2E70462-C3EA-9AE1-27FE-F5305612E086</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TIPO_CUENTA_PK" id="A08ED717-A45B-150F-A099-E769957D2C1C">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:21 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<segment>B871027A-B356-6EDD-61CC-E7C6150D085D</segment>
+<tableSpace>A2E70462-C3EA-9AE1-27FE-F5305612E086</tableSpace>
+<existingIndex>283E10A7-3279-969E-FA70-40D6C0C8DD59</existingIndex>
+<indexSegment>B871027A-B356-6EDD-61CC-E7C6150D085D</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

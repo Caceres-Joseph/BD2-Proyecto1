@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="EF6DB9CF-6707-A09E-9C4E-75E1A50F33B7" containerWithKeyObject="2AAB75B7-21AF-90F2-FD6A-5A49AFCFFD14" localFKIndex="8F446F03-4FFA-67F4-999A-D3EB2A3C0605" name="USUARIO_ROL_PERMISO_FK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>USUARIO_ROL_PERMISO_FK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<referredTableLongName>SYSTEM.ROL_PERMISO</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>8DD3811F-959C-543A-65BC-1F0C6643877A</referredTableID>
+<keyObject>292919FE-779D-BDB9-C9F9-99E96431074B</keyObject>
+<referredKeyID>292919FE-779D-BDB9-C9F9-99E96431074B</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ROL_ID_ROL,PERMISO_ID_PERMISO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

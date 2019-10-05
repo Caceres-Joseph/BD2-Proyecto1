@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="2566DF07-FF2C-B4DC-5345-C0CACFD5BF3B" containerWithKeyObject="017D656A-58C3-812B-E70E-0D89E7DAF996" localFKIndex="CC3B47AE-BD35-AED9-1EA9-34462FF6C0E3" name="TERMINAL_AGENCIA_FK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>TERMINAL_AGENCIA_FK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<referredTableLongName>SYSTEM.AGENCIA</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>54EFBB6E-0DAC-E477-87E5-BE6F0815919A</referredTableID>
+<keyObject>5288D913-A6E7-6046-DF62-20160EC1F9C7</keyObject>
+<referredKeyID>5288D913-A6E7-6046-DF62-20160EC1F9C7</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_AGENCIA</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

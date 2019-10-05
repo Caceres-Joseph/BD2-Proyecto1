@@ -1,0 +1,129 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="017D656A-58C3-812B-E70E-0D89E7DAF996" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="TERMINAL">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>TERMINAL</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_TERMINAL" id="2E395A1D-E700-0D25-1A7C-E5934DA73B3C">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>TERMINAL</sourceObjSchema>
+<sourceObjName>ID_TERMINAL</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="AGENCIA_ID_AGENCIA" id="B0DCA21E-38F1-E2A7-316B-43D4A20F33B6">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>TERMINAL</sourceObjSchema>
+<sourceObjName>AGENCIA_ID_AGENCIA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2566DF07-FF2C-B4DC-5345-C0CACFD5BF3B" referredColumn="590E7FC1-7019-5DEC-C1AA-94BAE0E1D206"/>
+</associations>
+</Column>
+<Column name="USUARIO_ID_USUARIO" id="A966D173-66FF-B2A5-8972-C635E94A334F">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>TERMINAL</sourceObjSchema>
+<sourceObjName>USUARIO_ID_USUARIO</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4A24A4EB-A846-4126-6CF0-C5E5A56A6059" referredColumn="5E0BD92D-721F-4D36-4A19-BB80FD43BB89"/>
+</associations>
+</Column>
+<Column name="ESTADO_TERMINAL" id="D939DFF5-BF8D-328E-6E8E-C5D8A1F2D0DE">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>TERMINAL</sourceObjSchema>
+<sourceObjName>ESTADO_TERMINAL</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0BA60A27-FB17-5F34-DE5C-53E6FA01622A" name="TERMINAL_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>TERMINAL_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:21 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2E395A1D-E700-0D25-1A7C-E5934DA73B3C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6CFB1062-0F28-FCE0-BC3C-62EB7F9A6ABE" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="TERMINAL_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>TERMINAL_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2E395A1D-E700-0D25-1A7C-E5934DA73B3C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CC3B47AE-BD35-AED9-1EA9-34462FF6C0E3" name="TERMINAL_AGENCIA_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B0DCA21E-38F1-E2A7-316B-43D4A20F33B6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="676A97AD-3760-1395-2300-68FE7614525B" name="TERMINAL_USUARIO_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A966D173-66FF-B2A5-8972-C635E94A334F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

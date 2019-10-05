@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="EAF3B34D-3E0B-98FA-4133-C724FD94A77B" containerWithKeyObject="8DD3811F-959C-543A-65BC-1F0C6643877A" localFKIndex="292EA776-B0DC-A34D-54BC-BCA522C6317B" name="ROL_PERMISO_ROL_FK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>ROL_PERMISO_ROL_FK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<referredTableLongName>SYSTEM.ROL</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>F5CC1AA4-5335-16B2-546E-7CA9F7F95BE6</referredTableID>
+<keyObject>192C6B90-D765-622A-C82A-4D001E06CB51</keyObject>
+<referredKeyID>192C6B90-D765-622A-C82A-4D001E06CB51</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_ROL</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

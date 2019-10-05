@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E739A6EB-3225-1FE1-6948-A30A27942094" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="MANCOMUNADA">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>MANCOMUNADA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CLIENTE_DPI_CLIENTE" id="15FA2C5F-9A1C-CC02-3550-252B24C18691">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>MANCOMUNADA</sourceObjSchema>
+<sourceObjName>CLIENTE_DPI_CLIENTE</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9429C0EC-A4E0-8576-EFF9-2EC4705FC96A" referredColumn="2525B010-7AA6-CCA6-2A41-CCB46D03AA3D"/>
+</associations>
+</Column>
+<Column name="CUENTA_NO_CUENTA" id="9CC507DB-8F13-A3F6-15BD-A5A22930D56A">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>MANCOMUNADA</sourceObjSchema>
+<sourceObjName>CUENTA_NO_CUENTA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C614C56C-19A7-4291-12AF-5D57FD05C818" referredColumn="0902AE9B-6601-EA9A-8975-DF1F04681E63"/>
+</associations>
+</Column>
+<Column name="ESTADO_MANCOMUNADA" id="7CE41D02-F4D4-9108-66E2-78CD72F3FE8F">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>MANCOMUNADA</sourceObjSchema>
+<sourceObjName>ESTADO_MANCOMUNADA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="70C8F58C-784C-2AC2-3E4C-856D8ECB956E" name="MANCOMUNADA_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>MANCOMUNADA_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:20 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="15FA2C5F-9A1C-CC02-3550-252B24C18691"/>
+<colUsage columnID="9CC507DB-8F13-A3F6-15BD-A5A22930D56A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E8957F63-575E-73C0-1A06-40B9B439EFEB" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="MANCOMUNADA_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>MANCOMUNADA_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="15FA2C5F-9A1C-CC02-3550-252B24C18691"/>
+<colUsage columnID="9CC507DB-8F13-A3F6-15BD-A5A22930D56A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F654F747-9FEA-97DC-9220-15E3BD06983E" name="MANCOMUNADA_CLIENTE_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="15FA2C5F-9A1C-CC02-3550-252B24C18691"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="56298039-F90F-1803-423C-07F499CA4088" name="MANCOMUNADA_CUENTA_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9CC507DB-8F13-A3F6-15BD-A5A22930D56A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FD008BED-C9DA-F06F-E946-5B38B5C8EE66" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="CHEQUE">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>CHEQUE</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_CHEQUE" id="7348151F-0D8D-145A-E319-7FFC94B9DFA6">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>CHEQUE</sourceObjSchema>
+<sourceObjName>ID_CHEQUE</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_CHEQUERA" id="6461E1E0-80F7-30F8-7AA0-329C0FAEAE47">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>CHEQUE</sourceObjSchema>
+<sourceObjName>ID_CHEQUERA</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E711BB03-75DF-0EDA-DC54-DC82F73BAEEC" referredColumn="ACFECF2E-D999-CD36-A022-F48C08EBB4AA"/>
+</associations>
+</Column>
+<Column name="ESTADO_CHEQUE" id="F68BCDDD-BCC9-0F04-A37B-8A133A604B17">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>CHEQUE</sourceObjSchema>
+<sourceObjName>ESTADO_CHEQUE</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32 CHAR</dataTypeSize>
+<ownDataTypeParameters>32 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3AFE60B6-95DA-2D42-0828-033C0552FB9B" name="CHEQUE_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>CHEQUE_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:20 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7348151F-0D8D-145A-E319-7FFC94B9DFA6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="13DBE962-BBA3-5278-16BA-8A9B9B5E3520" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="CHEQUE_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>CHEQUE_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7348151F-0D8D-145A-E319-7FFC94B9DFA6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="44B355EF-168C-1250-7066-77D0377A2D7D" name="CHEQUE_CHEQUERA_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6461E1E0-80F7-30F8-7AA0-329C0FAEAE47"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

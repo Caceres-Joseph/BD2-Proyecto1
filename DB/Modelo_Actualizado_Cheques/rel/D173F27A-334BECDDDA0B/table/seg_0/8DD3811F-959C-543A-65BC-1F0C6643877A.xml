@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="8DD3811F-959C-543A-65BC-1F0C6643877A" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="ROL_PERMISO">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>ROL_PERMISO</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:16 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ROL_ID_ROL" id="A4B92C6A-C4DA-FD10-3F39-A5FF257F9F18">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>ROL_PERMISO</sourceObjSchema>
+<sourceObjName>ROL_ID_ROL</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="EAF3B34D-3E0B-98FA-4133-C724FD94A77B" referredColumn="DA5A2D88-0926-E187-2262-985BD61008A9"/>
+</associations>
+</Column>
+<Column name="PERMISO_ID_PERMISO" id="10AD61C8-6C79-84D2-CF99-A424FE349369">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>ROL_PERMISO</sourceObjSchema>
+<sourceObjName>PERMISO_ID_PERMISO</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="81CB1B7F-B5EF-2BAB-270D-B1044AA34A37" referredColumn="04A50841-A0DA-5902-8DDF-BA7DF8BA7EE1"/>
+</associations>
+</Column>
+<Column name="ESTADO_ROL_PERMISO" id="C15E70D9-A687-213C-F57C-34BBDB9F1AEC">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>ROL_PERMISO</sourceObjSchema>
+<sourceObjName>ESTADO_ROL_PERMISO</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="292919FE-779D-BDB9-C9F9-99E96431074B" name="ROL_PERMISO_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>ROL_PERMISO_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:21 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A4B92C6A-C4DA-FD10-3F39-A5FF257F9F18"/>
+<colUsage columnID="10AD61C8-6C79-84D2-CF99-A424FE349369"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C9D49984-1DB8-0A3E-9032-65AB3041E229" schemaObject="B885FA3D-F9BF-B806-2218-E84B201D110E" name="ROL_PERMISO_PK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>ROL_PERMISO_PK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:17 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A4B92C6A-C4DA-FD10-3F39-A5FF257F9F18"/>
+<colUsage columnID="10AD61C8-6C79-84D2-CF99-A424FE349369"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C35489D0-4A24-C87D-1901-9CCAB0882403" name="ROL_PERMISO_PERMISO_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="10AD61C8-6C79-84D2-CF99-A424FE349369"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="292EA776-B0DC-A34D-54BC-BCA522C6317B" name="ROL_PERMISO_ROL_FK">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A4B92C6A-C4DA-FD10-3F39-A5FF257F9F18"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

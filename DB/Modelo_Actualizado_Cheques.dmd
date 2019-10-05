@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Modelo_Actualizado_Cheques" id="8BAC0819-E48E-D3A9-534C-C4C31DF68C68" version="3.5">
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:08:20 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>8BAC0819-E48E-D3A9-534C-C4C31DF68C68</designId>
+</OSDM_Design>

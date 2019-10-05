@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="600365F1-9525-AF6F-4221-5E3DCF56B5F9" containerWithKeyObject="E3B35F1A-01FA-F9E6-6A8D-69F28AF2653B" localFKIndex="3DED19EE-3C08-AFCD-EFF4-41621A2603D9" name="CUENTA_TIPO_CUENTA_FK">
+<sourceConnName>ConexionDB</sourceConnName>
+<sourceObjSchema>SYSTEM</sourceObjSchema>
+<sourceObjName>CUENTA_TIPO_CUENTA_FK</sourceObjName>
+<createdBy>Daniel</createdBy>
+<createdTime>2019-10-05 23:13:22 UTC</createdTime>
+<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
+<referredTableLongName>SYSTEM.TIPO_CUENTA</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>C37FFE74-06F6-0AF6-6DDC-0E8411B2A5D1</referredTableID>
+<keyObject>A08ED717-A45B-150F-A099-E769957D2C1C</keyObject>
+<referredKeyID>A08ED717-A45B-150F-A099-E769957D2C1C</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_TIPO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
