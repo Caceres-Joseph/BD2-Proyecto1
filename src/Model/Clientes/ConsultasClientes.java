@@ -6,6 +6,7 @@
 package Model.Clientes;
 
 import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -92,7 +93,7 @@ public class ConsultasClientes extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM cliente WHERE dpi_cliente=?";
+            String sql = "SELECT * FROM cliente WHERE dpi_cliente=? AND estado_cliente=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -152,7 +153,13 @@ public class ConsultasClientes extends Conexion{
             ArrayList<Cliente> clientes = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM cliente "+BDOpciones.getLimit(OpcLimite, limite)+" OREDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_cliente", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+            }
+            String sql = "SELECT * FROM cliente WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -185,7 +192,7 @@ public class ConsultasClientes extends Conexion{
             ArrayList<Cliente> clientes = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM cliente WHERE nombre LIKE '%"+LikeString+"%' OR apellido LIKE '%"+LikeString+"%' OR correo LIKE '%"+LikeString+"%'  OREDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM cliente WHERE nombre LIKE '%"+LikeString+"%' OR apellido LIKE '%"+LikeString+"%' OR correo LIKE '%"+LikeString+"%' AND esatdo_cliente=1 ORDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())

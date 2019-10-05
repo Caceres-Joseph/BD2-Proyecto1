@@ -7,6 +7,7 @@ package Model.Agencias;
 
 import Model.BD.BDOpciones;
 import Model.BD.Conexion;
+import Model.BD.ColumnaTabla;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,7 +82,7 @@ public class ConsultasAgencia extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM agencia WHERE id_agencia=?";
+            String sql = "SELECT * FROM agencia WHERE id_agencia=? "+BDOpciones.getByState("AND", 1, "estado_agencia");
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -145,7 +146,13 @@ public class ConsultasAgencia extends Conexion{
             ArrayList<Agencia> agencias = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM agencia "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_agencia "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_agencia", "0", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(BDOpciones.LimitOp.NO_LIMIT == OpcLimite)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+            }
+            String sql = "SELECT * FROM agencia WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_agencia "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -183,7 +190,7 @@ public class ConsultasAgencia extends Conexion{
             ArrayList<Agencia> agencias = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM agencia WHERE nombre LIKE '%"+LikeString+"%' OR direccion LIKE '%"+LikeString+"%' ORDER BY id_agencia "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM agencia WHERE nombre LIKE '%"+LikeString+"%' OR direccion LIKE '%"+LikeString+"%' "+BDOpciones.getByState("AND", 1,"estado_agencia")+" ORDER BY id_agencia "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -218,7 +225,7 @@ public class ConsultasAgencia extends Conexion{
             ResultSet rs = null;
             String sql = "SELECT agencia.id_agencia, agencia.nombre, agencia.direccion, agencia.banco_id_banco, agencia.estado_agencia, banco.nombre as banco_nombre" +
                         " FROM agencia, banco" + 
-                        " WHERE agencia.estado_agencia = 1 AND agencia.banco_id_banco = banco.id_banco AND banco.estado_banco = 1"+
+                        " WHERE "+BDOpciones.getByState("", 1,"agencia.estado_agencia")+" AND agencia.banco_id_banco = banco.id_banco AND banco.estado_banco = 1"+
                         " ORDER BY agencia.id_agencia "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
