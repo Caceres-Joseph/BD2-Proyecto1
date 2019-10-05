@@ -49,13 +49,13 @@ CREATE TABLE cuenta (
 ALTER TABLE cuenta ADD CONSTRAINT cuenta_pk PRIMARY KEY ( no_cuenta );
 
 CREATE TABLE mancomunada (
-    id_mancomunada       INTEGER NOT NULL,
     cliente_dpi_cliente   INTEGER NOT NULL,
     cuenta_no_cuenta     INTEGER NOT NULL,
     estado_mancomunada   INTEGER NOT NULL
 );
 
-ALTER TABLE mancomunada ADD CONSTRAINT mancomunada_pk PRIMARY KEY ( id_mancomunada );
+ALTER TABLE mancomunada ADD CONSTRAINT mancomunada_pk PRIMARY KEY ( cliente_dpi_cliente,
+                                                                    cuenta_no_cuenta);
 
 CREATE TABLE permiso (
     id_permiso    INTEGER NOT NULL,
