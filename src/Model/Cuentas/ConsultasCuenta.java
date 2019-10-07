@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
+import Model.Cuentas.CuentaBancoTipo;
 /**
  *
  * @author ricar
@@ -186,6 +186,51 @@ public class ConsultasCuenta extends Conexion{
                 c.setNo_cuenta(rs.getInt("no_cuenta"));
                 c.setEstado_cuenta(rs.getInt("estado_cuenta"));
                 cuentas.add(c);
+            }
+            return cuentas;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<CuentaBancoTipo> listCuentaTipo(int dpi_cliente, int estado)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<CuentaBancoTipo> cuentas = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql ="SELECT CLIENTE.DPI_CLIENTE AS DPI, CLIENTE.NOMBRE, CLIENTE.APELLIDO, CUENTA.NO_CUENTA, CUENTA.SALDO, BANCO.NOMBRE AS BANCO, TIPO_CUENTA.NOMBRE AS TIPO, CUENTA.ESTADO_CUENTA "+
+                        "FROM CUENTA, BANCO, TIPO_CUENTA, CLIENTE, MANCOMUNADA "+
+                        "WHERE "+
+                        "CUENTA.TIPO_CUENTA_ID_TIPO = TIPO_CUENTA.ID_TIPO AND "+
+                        "CUENTA.BANCO_ID_BANCO = BANCO.ID_BANCO AND "+
+                        "CUENTA.NO_CUENTA = MANCOMUNADA.CUENTA_NO_CUENTA AND " +
+                        "CLIENTE.DPI_CLIENTE = MANCOMUNADA.CLIENTE_DPI_CLIENTE AND "+
+                        "CUENTA.ESTADO_CUENTA = ? AND " +
+                        "CUENTA.NO_CUENTA = ?"
+                        ;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, estado);
+            ps.setInt(2, dpi_cliente);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                CuentaBancoTipo cb = new CuentaBancoTipo(rs.getInt("dpi"), rs.getString("nombre"), 
+                        rs.getString("apellido"), 
+                        rs.getInt("no_cuenta"), rs.getDouble("saldo"), 
+                        rs.getString("banco"), 
+                        rs.getString("tipo"), 
+                        rs.getInt("estado_cuenta"));
+                cuentas.add(cb);
             }
             return cuentas;
         } catch (Exception e) {
