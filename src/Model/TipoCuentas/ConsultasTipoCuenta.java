@@ -140,7 +140,7 @@ public class ConsultasTipoCuenta extends Conexion{
             columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_tipo_cuenta", "1", BDOpciones.OperadorAritmeticos.EQUAL));
             if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
             {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
             String sql = "SELECT * FROM tipo_cuenta WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);

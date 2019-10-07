@@ -49,7 +49,7 @@ public class ConsultasChequera extends Conexion{
             columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"no_cuenta", String.valueOf(no_cuenta), BDOpciones.OperadorAritmeticos.EQUAL));
             if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
             {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
             String sql = "SELECT * FROM chequera WHERE "+BDOpciones.getFilters(columnas)+
                     " ORDER BY id_chequera "+BDOpciones.getOrder(Opcorden);

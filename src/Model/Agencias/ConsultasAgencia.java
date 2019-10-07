@@ -147,10 +147,10 @@ public class ConsultasAgencia extends Conexion{
             PreparedStatement ps = null;
             ResultSet rs = null;
             ArrayList<ColumnaTabla> columnas = new ArrayList<>();
-            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_agencia", "0", BDOpciones.OperadorAritmeticos.EQUAL));
-            if(BDOpciones.LimitOp.NO_LIMIT == OpcLimite)
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_agencia", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite != BDOpciones.LimitOp.NO_LIMIT)
             {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
             String sql = "SELECT * FROM agencia WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_agencia "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);

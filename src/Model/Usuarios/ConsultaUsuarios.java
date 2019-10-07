@@ -163,7 +163,7 @@ public class ConsultaUsuarios extends Conexion {
             columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_usuario", "1", BDOpciones.OperadorAritmeticos.EQUAL));
             if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
             {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
             String sql = "SELECT * FROM usuario WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);

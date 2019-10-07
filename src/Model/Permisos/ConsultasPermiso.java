@@ -138,7 +138,7 @@ public class ConsultasPermiso extends Conexion{
             columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_permiso", "1", BDOpciones.OperadorAritmeticos.EQUAL));
             if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
             {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
             String sql = "SELECT * FROM permiso WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);

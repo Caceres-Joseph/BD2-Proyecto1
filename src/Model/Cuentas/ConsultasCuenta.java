@@ -144,14 +144,14 @@ public class ConsultasCuenta extends Conexion{
             columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_cuenta", "1", BDOpciones.OperadorAritmeticos.EQUAL));
             if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
             {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
-            String sql = "SELECT * FROM cuenta "+BDOpciones.getFilters(columnas)+" ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM cuenta WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
             {
-                Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
+                Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("banco_id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
                 c.setNo_cuenta(rs.getInt("no_cuenta"));
                 c.setEstado_cuenta(rs.getInt("estado_cuenta"));
                 cuentas.add(c);

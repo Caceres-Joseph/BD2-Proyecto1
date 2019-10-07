@@ -56,9 +56,9 @@ public class ConsultasCheque extends Conexion{
             columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"id_chequera", String.valueOf(IdChequera), BDOpciones.OperadorAritmeticos.EQUAL));
             if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
             {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.EQUAL));
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
-            String sql = "SELECT * FROM cheques WHERE "+BDOpciones.getFilters(columnas)+
+            String sql = "SELECT * FROM cheque WHERE "+BDOpciones.getFilters(columnas)+
                     " ORDER BY id_cheque "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
