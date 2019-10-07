@@ -6,6 +6,7 @@
 package Model.Roles;
 
 import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -77,7 +78,7 @@ public class ConsultasRoles extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM rol WHERE id_rol=?";
+            String sql = "SELECT * FROM rol WHERE id_rol=? AND estado_rol=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -134,7 +135,13 @@ public class ConsultasRoles extends Conexion{
             ArrayList<Rol> roles = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM rol "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_rol", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM rol WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -165,7 +172,7 @@ public class ConsultasRoles extends Conexion{
             ArrayList<Rol> roles = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM rol WHERE nombre LIKE '%"+LikeString+"%'  ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM rol WHERE nombre LIKE '%"+LikeString+"%' AND estado_rol=1 ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())

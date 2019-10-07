@@ -6,6 +6,7 @@
 package Model.TipoCuentas;
 
 import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -78,7 +79,7 @@ public class ConsultasTipoCuenta extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM tipo_cuenta WHERE id_tipo=?";
+            String sql = "SELECT * FROM tipo_cuenta WHERE id_tipo=? AND estado_tipo_cuenta=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -135,7 +136,13 @@ public class ConsultasTipoCuenta extends Conexion{
             ArrayList<TipoCuenta> tcs = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM tipo_cuenta "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_tipo_cuenta", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM tipo_cuenta WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -166,7 +173,7 @@ public class ConsultasTipoCuenta extends Conexion{
             ArrayList<TipoCuenta> tcs = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM tipo_cuenta WHERE nombre LIKE '%"+LikeString+"%' ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM tipo_cuenta WHERE nombre LIKE '%"+LikeString+"%' AND estado_tipo_cuenta=1 ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())

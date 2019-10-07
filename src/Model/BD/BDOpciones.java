@@ -5,6 +5,8 @@
  */
 package Model.BD;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ricar
@@ -19,6 +21,23 @@ public class BDOpciones {
     public static enum LimitOp {
         NO_LIMIT,
         LIMIT
+    }
+    
+    public static enum OperadoresLogicos
+    {
+        AND,
+        OR,
+        NAC
+    }
+    
+    public static enum OperadorAritmeticos
+    {
+        GREATER,
+        GREATER_EQUAL,
+        LOWER,
+        LOWER_EQUAL,
+        EQUAL,
+        NAN
     }
     
     public static String getLimit(LimitOp limite, int limit)
@@ -48,5 +67,20 @@ public class BDOpciones {
         }
     }
     
+    public static String getByState(String Operador, int Estado, String nombre_estado)
+    {
+        String cadena = Operador + " "+nombre_estado+"="+String.valueOf(Estado)+ " ";
+        return cadena;
+    }
+    
+    public static String getFilters(ArrayList<ColumnaTabla> columnas)
+    {
+        String cad = "";
+        for(int x = 0; x < columnas.size(); x++)
+        {
+            cad = cad + columnas.get(x).toString()+" ";
+        }
+        return cad;
+    }
     
 }

@@ -6,6 +6,7 @@
 package Model.Usuarios;
 
 import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.Statement;
 import java.sql.CallableStatement;
@@ -73,7 +74,7 @@ public class ConsultaUsuarios extends Conexion {
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM usuario WHERE id_usuario=?";
+            String sql = "SELECT * FROM usuario WHERE id_usuario=? AND estado_usuario=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -158,7 +159,13 @@ public class ConsultaUsuarios extends Conexion {
             ArrayList<Usuario> users = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM usuario "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_usuario", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM usuario WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -189,7 +196,7 @@ public class ConsultaUsuarios extends Conexion {
             ArrayList<Usuario> users = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM usuario WHERE usuario LIKE '%"+LikeString+"%' ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM usuario WHERE usuario LIKE '%"+LikeString+"%' AND estado_usuario=1 ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())

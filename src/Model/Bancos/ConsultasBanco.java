@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 
 public class ConsultasBanco extends Conexion{
     
@@ -89,7 +90,7 @@ public class ConsultasBanco extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM banco WHERE id_banco=?";
+            String sql = "SELECT * FROM banco WHERE id_banco=? "+BDOpciones.getByState("AND", 1, "estado_banco");
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -157,7 +158,14 @@ public class ConsultasBanco extends Conexion{
             ArrayList<Banco> bancos = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM banco "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_banco "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_banco", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM banco WHERE "+BDOpciones.getFilters(columnas)+
+                    " ORDER BY id_banco "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -195,7 +203,8 @@ public class ConsultasBanco extends Conexion{
             ArrayList<Banco> bancos = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM banco WHERE nombre LIKE '%"+LikeString+"%' ORDER BY id_banco "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM banco WHERE nombre LIKE '%"+LikeString+"%' "+BDOpciones.getByState("AND", 1, "estado_banco")+
+                    " ORDER BY id_banco "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())

@@ -6,6 +6,7 @@
 package Model.Permisos;
 
 import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -77,7 +78,7 @@ public class ConsultasPermiso extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM permiso WHERE id_permiso=?";
+            String sql = "SELECT * FROM permiso WHERE id_permiso=? AND estado_permiso=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -133,7 +134,13 @@ public class ConsultasPermiso extends Conexion{
             ArrayList<Permiso> permisos = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM permiso "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_permiso", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM permiso WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
@@ -164,7 +171,7 @@ public class ConsultasPermiso extends Conexion{
             ArrayList<Permiso> permisos = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM permiso WHERE nombre LIKE '%"+LikeString+"%' ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM permiso WHERE nombre LIKE '%"+LikeString+"%' AND estado_permiso=1 ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())

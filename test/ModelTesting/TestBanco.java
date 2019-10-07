@@ -9,11 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import Model.Bancos.Banco;
 import Model.Bancos.ConsultasBanco;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author ricar
@@ -24,12 +20,6 @@ public class TestBanco {
     public TestBanco()
     {
         consultas = new ConsultasBanco();
-    }
-    
-    @Test
-    public void testSave()
-    {
-        //assertTrue(consultas.save(new Banco("BancoTest")));
     }
     
     @Test

@@ -6,6 +6,7 @@
 package Model.Cuentas;
 
 import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -82,7 +83,7 @@ public class ConsultasCuenta extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM cuenta WHERE no_cuenta=?";
+            String sql = "SELECT * FROM cuenta WHERE no_cuenta=? AND estado_cuenta=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -139,12 +140,18 @@ public class ConsultasCuenta extends Conexion{
             ArrayList<Cuenta> cuentas = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM cuenta "+BDOpciones.getLimit(OpcLimite, limite)+" ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_cuenta", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM cuenta WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
             {
-                Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
+                Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("banco_id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
                 c.setNo_cuenta(rs.getInt("no_cuenta"));
                 c.setEstado_cuenta(rs.getInt("estado_cuenta"));
                 cuentas.add(c);
@@ -170,7 +177,7 @@ public class ConsultasCuenta extends Conexion{
             ArrayList<Cuenta> cuentas = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM cuenta WHERE no_cuenta LIKE '%"+LikeString+"%' ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM cuenta WHERE no_cuenta LIKE '%"+LikeString+"%' AND estado_cuenta=1 ORDER BY no_cuenta "+BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next())
