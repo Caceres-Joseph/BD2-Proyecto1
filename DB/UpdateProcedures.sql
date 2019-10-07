@@ -118,3 +118,17 @@ BEGIN
 	COMMIT;
 END;
 /
+
+
+-- ACTUALIZAR REGISTRO CHEQUE//////////////////////////////////////////////////////////////////////////////////////////////////
+CREATE OR REPLACE PROCEDURE UPDATE_CHEQUE(
+	p_id_cheque IN CHEQUE.ID_CHEQUERA%TYPE,
+	P_id_chequera IN CHEQUE.ID_CHEQUERA%TYPE,
+	p_estado_cheque IN CHEQUE.ESTADO_CHEQUE%TYPE
+)
+IS
+BEGIN
+	UPDATE CHEQUE SET ESTADO_CHEQUE=p_estado_cheque WHERE ID_CHEQUE=p_id_cheque AND ID_CHEQUERA=p_id_chequera;
+	COMMIT;
+END;
+/

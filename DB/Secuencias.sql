@@ -121,3 +121,21 @@ BEGIN
     INTO :new.id_usuario
     FROM dual;
 END;
+
+-- CHEQUE
+CREATE SEQUENCE cheque_sequence;
+CREATE OR REPLACE TRIGGER cheque_on_insert
+BEGIN
+    SELECT cheque_sequence.nextval
+    INTO :new.id_cheque
+    FROM dual;
+END;
+
+--CHEQUERA
+CREATE SEQUENCE chequera_sequence;
+CREATE OR REPLACE TRIGGER chequra_on_insert
+BEGIN
+    SELECT chequera_sequence.nextval
+    INTO :new.id_cheque
+    FROM dual;
+END;

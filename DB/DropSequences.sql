@@ -20,3 +20,7 @@ DROP SEQUENCE tipo_cuenta_sequence;
 DROP SEQUENCE transaccion_sequence;
 
 DROP SEQUENCE usuario_sequence;
+
+DROP SEQUENCE cheque_sequence;
+
+DROP SEQUENCE chequera_sequence;
