@@ -140,7 +140,7 @@ ALTER TABLE chequera ADD CONSTRAINT chequera_pk PRIMARY KEY ( id_chequera );
 CREATE TABLE cheque (
     id_cheque   INTEGER NOT NULL,
     id_chequera      INTEGER NOT NULL,
-    estado_cheque     VARCHAR2(32 CHAR) NOT NULL
+    estado_cheque     INTEGER NOT NULL
 );
 
 ALTER TABLE cheque ADD CONSTRAINT cheque_pk PRIMARY KEY ( id_cheque );

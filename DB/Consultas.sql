@@ -1,8 +1,17 @@
+--AUDITOR-----------------------------------------------------------------------------------------------------------------------
+SELECT * FROM transaccion
+WHERE tipo = 'parametro_tipo' AND fecha = 'parametro_fecha' AND usuario_id_usuario = 'parametro_usuario' AND terminal_id_terminal = 'parametro_terminal';
+
+--GERENCIA----------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------CONSULTA 1
 --CONSULTA SALDOS POR AGENCIA
 SELECT agencia.id_agencia,agencia.nombre,SUM(SALDO_FINAL - SALDO_INICIAL) FROM TRANSACCION,TERMINAL,AGENCIA
 WHERE transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia
 GROUP BY agencia.id_agencia,agencia.nombre;
+
+----------------------------------------------------------------------------------------------------------------------CONSULTA 2
+SELECT cuenta.no_cuenta,cuenta.saldo,cliente.nombre FROM CUENTA,CLIENTE, MANCOMUNADA
+WHERE cuenta.no_cuenta = mancomunada.cuenta_no_cuenta AND cliente.dpi_cliente = mancomunada.cliente_dpi_cliente;
 
 ----------------------------------------------------------------------------------------------------------------------CONSULTA 3
 --CONSULTA CANTIDAD MÁXIMA DE DEPOSITOS HECHOS POR AGENCIA
