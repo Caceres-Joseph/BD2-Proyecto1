@@ -25,11 +25,12 @@ public class ConsultaUsuarios extends Conexion {
     public boolean save(Usuario usuario) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_USUARIO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_USUARIO(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, usuario.getUsuario());
             call.setString(2, usuario.getPassword());
             call.setInt(3, usuario.getEstado_usuario());
+            call.setInt(4, usuario.getRol_id_rol());
             call.execute();
             call.close();
             return true;
@@ -48,12 +49,13 @@ public class ConsultaUsuarios extends Conexion {
     public boolean update(Usuario usuario) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_USUARIO(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_USUARIO(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, usuario.getId_usuario());
             call.setString(2, usuario.getUsuario());
             call.setString(3, usuario.getPassword());
             call.setInt(4, usuario.getEstado_usuario());
+            call.setInt(5, usuario.getRol_id_rol());
             call.execute();
             call.close();
             return true;
@@ -83,6 +85,7 @@ public class ConsultaUsuarios extends Conexion {
                 us = new Usuario(rs.getString("usuario"), rs.getString("password"));
                 us.setId_usuario(rs.getInt("id_usuario"));
                 us.setEstado_usuario(rs.getInt("estado_usuario"));
+                us.setRol_id_rol(rs.getInt("rol_id_rol"));
             }
             return us;
         } catch (Exception e) {
@@ -173,6 +176,7 @@ public class ConsultaUsuarios extends Conexion {
                 Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
                 u.setId_usuario(rs.getInt("id_usuario"));
                 u.setEstado_usuario(rs.getInt("estado_usuario"));
+                u.setRol_id_rol(rs.getInt("rol_id_rol"));
                 users.add(u);
             }
             return users;
@@ -204,6 +208,7 @@ public class ConsultaUsuarios extends Conexion {
                 Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
                 u.setId_usuario(rs.getInt("id_usuario"));
                 u.setEstado_usuario(rs.getInt("estado_usuario"));
+                u.setRol_id_rol(rs.getInt("rol_id_rol"));
                 users.add(u);
             }
             return users;

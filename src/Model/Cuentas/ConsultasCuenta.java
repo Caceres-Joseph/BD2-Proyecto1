@@ -216,7 +216,7 @@ public class ConsultasCuenta extends Conexion{
                         "CUENTA.NO_CUENTA = MANCOMUNADA.CUENTA_NO_CUENTA AND " +
                         "CLIENTE.DPI_CLIENTE = MANCOMUNADA.CLIENTE_DPI_CLIENTE AND "+
                         "CUENTA.ESTADO_CUENTA = ? AND " +
-                        "CUENTA.NO_CUENTA = ?"
+                        "CLIENTE.DPI_CLIENTE = ?"
                         ;
             ps = con.prepareStatement(sql);
             ps.setInt(1, estado);

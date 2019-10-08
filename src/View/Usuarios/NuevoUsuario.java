@@ -105,11 +105,11 @@ public class NuevoUsuario implements Initializable {
     
      */
     public boolean insertar(String nombre, String password) {
-        return u.creatUsuario(nombre, password);
+        return u.creatUsuario(nombre, password, 1);
     }
 
     public boolean editar(String nombre, String password) {
-        return u.updateUsuario(itemModificar.getId_usuario(), nombre, password);
+        return u.updateUsuario(itemModificar.getId_usuario(), nombre, password, 1);
     }
     
     

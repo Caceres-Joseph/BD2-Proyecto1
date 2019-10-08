@@ -14,12 +14,21 @@ public class Usuario {
     private String usuario;
     private String password;
     private int estado_usuario;
+    private int rol_id_rol;
     
     public Usuario(String usuario, String password)
     {
         this.usuario = usuario;
         this.password = password;
         this.estado_usuario = 1;
+    }
+    
+    public Usuario(String usuario, String password, int rol_id_rol)
+    {
+        this.usuario = usuario;
+        this.password = password;
+        this.estado_usuario = 1;
+        this.rol_id_rol = rol_id_rol;
     }
 
     public int getId_usuario() {
@@ -52,6 +61,14 @@ public class Usuario {
 
     public void setEstado_usuario(int estado_usuario) {
         this.estado_usuario = estado_usuario;
+    }
+
+    public int getRol_id_rol() {
+        return rol_id_rol;
+    }
+
+    public void setRol_id_rol(int rol_id_rol) {
+        this.rol_id_rol = rol_id_rol;
     }
     
     

@@ -28,11 +28,12 @@ public class UsuariosController {
      *
      * @param nombre
      * @param password
+     * @param rol_id_rol
      * @return
      */
-    public boolean creatUsuario(String nombre, String password) {
+    public boolean creatUsuario(String nombre, String password, int rol_id_rol) {
         try {
-            return consultas.save(new Usuario(nombre, password));
+            return consultas.save(new Usuario(nombre, password, rol_id_rol));
         } catch (Exception e) {
             return false;
         }
@@ -44,11 +45,12 @@ public class UsuariosController {
      * @param id_usuario
      * @param nombre
      * @param password
+     * @param rol_id_rol
      * @return
      */
-    public boolean updateUsuario(int id_usuario, String nombre, String password) {
+    public boolean updateUsuario(int id_usuario, String nombre, String password, int rol_id_rol) {
         try {
-            Usuario u = new Usuario(nombre, password);
+            Usuario u = new Usuario(nombre, password, rol_id_rol);
             u.setId_usuario(id_usuario);
             return consultas.update(u);
         } catch (Exception e) {
