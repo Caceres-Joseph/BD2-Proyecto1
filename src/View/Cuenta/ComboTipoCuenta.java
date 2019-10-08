@@ -3,50 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.Agencia;
+package View.Cuenta;
 
-import Controller.BancosController;
+import Controller.TipoCuentasController;
 import Model.BD.BDOpciones;
-import Model.Bancos.Banco;
-import View.Roles.TablaRol;
+import Model.TipoCuentas.TipoCuenta;
 import com.jfoenix.controls.JFXComboBox;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 /**
  *
  * @author Notebook
  */
-public class ComboAgencia {
+public class ComboTipoCuenta {
+    
+    private ObservableList<TipoCuenta> contenidoTabla = FXCollections.observableArrayList();
+    private JFXComboBox<TipoCuenta> cbAgencia;
 
-    private ObservableList<Banco> contenidoTabla = FXCollections.observableArrayList();
-    private JFXComboBox<Banco> cbAgencia;
+    public int id_TipoCuenta = -1;
 
-    public int id_Banco = -1;
-
-    public ComboAgencia(JFXComboBox<Banco> cbAgencia) {
+    public ComboTipoCuenta(JFXComboBox<TipoCuenta> cbAgencia) {
 
         this.cbAgencia = cbAgencia;
         inicializarTabla();
 
-        StringConverter<Banco> converter = new StringConverter<Banco>() {
+        StringConverter<TipoCuenta> converter = new StringConverter<TipoCuenta>() {
             @Override
-            public String toString(Banco bank) {
+            public String toString(TipoCuenta bank) {
                 return bank.getNombre();
             }
 
             @Override
-            public Banco fromString(String id) {
+            public TipoCuenta fromString(String id) {
                 return contenidoTabla.stream()
                         //.filter(item -> item.getNo().equals(id))
-                        .filter(item -> item.getId_banco() == Integer.valueOf(id))
+                        .filter(item -> item.getId_tipo()== Integer.valueOf(id))
                         //.collect(Collectors.toList()).get(0);
                         .collect(Collectors.toList()).get(0);
             }
@@ -58,11 +53,11 @@ public class ComboAgencia {
         // Print the name of the Bank that is selected
         cbAgencia.getSelectionModel().selectedItemProperty().addListener((o, ol, nw) -> {
 
-            Banco elemento = cbAgencia.getSelectionModel().selectedItemProperty().get();
-            System.out.println(elemento.getId_banco());
+            TipoCuenta elemento = cbAgencia.getSelectionModel().selectedItemProperty().get();
+            System.out.println(elemento.getId_tipo());
             System.out.println(elemento.getNombre());
 
-            this.id_Banco = elemento.getId_banco();
+            this.id_TipoCuenta = elemento.getId_tipo();
 
         });
 
@@ -74,13 +69,12 @@ public class ComboAgencia {
      * @param Stack
      */
     
-    public void mostrarBancos(BancosController b) {
+    void mostrarTipoCuentas(TipoCuentasController b) {
         //limpiando tabla
         contenidoTabla.clear();
-        ArrayList<Banco> listarBancos = b.listBancos(BDOpciones.LimitOp.NO_LIMIT, BDOpciones.Orden.DESC, -1);
-        //ArrayList<Banco> listarBancos = b.listBancosTest();
-        for (int i = 0; i < listarBancos.size(); i++) {
-            Banco temp = listarBancos.get(i);
+        ArrayList<TipoCuenta> listarTipoCuentas = b.listTipoCuentas(BDOpciones.LimitOp.NO_LIMIT, BDOpciones.Orden.DESC, -1);
+        for (int i = 0; i < listarTipoCuentas.size(); i++) {
+            TipoCuenta temp = listarTipoCuentas.get(i);
             contenidoTabla.add(temp);
         }
     }
@@ -97,6 +91,4 @@ public class ComboAgencia {
     public void clean() {
         contenidoTabla.clear();
     }
-
-
 }

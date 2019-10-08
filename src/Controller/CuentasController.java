@@ -89,4 +89,24 @@ public class CuentasController {
             return new ArrayList<>();
         }
     }
+    
+    
+    /**
+     * Funcion que lista las cuentas en la BD TEST
+     * @return 
+     */
+    public ArrayList<Cuenta> listCuentasTest()
+    {
+        try {
+            ArrayList<Cuenta> cuentas = new ArrayList<>();
+            ResultSet rs = consultas.listItems();
+            Cuenta nueva=new Cuenta(0.0, 1, 1);
+            cuentas.add(nueva);
+            
+            
+            return cuentas;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 }

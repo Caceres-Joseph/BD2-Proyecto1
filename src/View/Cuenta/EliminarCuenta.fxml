@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Cuenta.ListarCuenta">
+   <children>
+      <GridPane styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="179.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="10.0" prefWidth="145.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="262.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
+               <children>
+                  <Label styleClass="title" text="Litado de Cuentas">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <JFXButton fx:id="btnEditar" disable="true" onAction="#clckEditar" ripplerFill="WHITE" style="-fx-background-color: white;" text="Editar" visible="false" GridPane.columnIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnEliminar" onAction="#clckEliminar" ripplerFill="WHITE" style="-fx-background-color: white;" text="Eliminar" textFill="RED" GridPane.columnIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </GridPane>
+      <TableView fx:id="tb" editable="true" prefHeight="200.0" prefWidth="267.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
+         <columns>
+            <TableColumn fx:id="tc1" prefWidth="295.0" text="No. Cuenta" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
