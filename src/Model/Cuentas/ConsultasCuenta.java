@@ -48,6 +48,79 @@ public class ConsultasCuenta extends Conexion{
         }
     }
     
+    public boolean save(Cuenta cuenta, int dpi_cliente)
+    {
+        Connection con = getConexion();
+        try {
+            String cmd = "{CALL INSERT_CUENTA_CLIENTE(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setDouble(1, cuenta.getSaldo());
+            call.setInt(2, cuenta.getBanco_id_banco());
+            call.setInt(3, cuenta.getTipo_cuenta_id_tipo());
+            call.setInt(4, cuenta.getEstado_cuenta());
+            call.setInt(5, dpi_cliente);
+            call.execute();
+            call.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e);
+            return false;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public CuentaBancoTipo  getLastCuentaFrom(int dpi_cliente, int estado)
+    {
+        Connection con = getConexion();
+        try {
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql ="SELECT CLIENTE.DPI_CLIENTE AS DPI, CLIENTE.NOMBRE, CLIENTE.APELLIDO, CUENTA.NO_CUENTA, CUENTA.SALDO, BANCO.NOMBRE AS BANCO, TIPO_CUENTA.NOMBRE AS TIPO, CUENTA.ESTADO_CUENTA "+
+                        "FROM CUENTA, BANCO, TIPO_CUENTA, CLIENTE, MANCOMUNADA "+
+                        "WHERE "+
+                        "CUENTA.TIPO_CUENTA_ID_TIPO = TIPO_CUENTA.ID_TIPO AND "+
+                        "CUENTA.BANCO_ID_BANCO = BANCO.ID_BANCO AND "+
+                        "CUENTA.NO_CUENTA = MANCOMUNADA.CUENTA_NO_CUENTA AND " +
+                        "CLIENTE.DPI_CLIENTE = MANCOMUNADA.CLIENTE_DPI_CLIENTE AND "+
+                        "CUENTA.ESTADO_CUENTA = ? AND " +
+                        "CLIENTE.DPI_CLIENTE = ? ORDER BY CUENTA.NO_CUENTA DESC"
+                        ;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, estado);
+            ps.setInt(2, dpi_cliente);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                CuentaBancoTipo cb = new CuentaBancoTipo(rs.getInt("dpi"), rs.getString("nombre"), 
+                        rs.getString("apellido"), 
+                        rs.getInt("no_cuenta"), rs.getDouble("saldo"), 
+                        rs.getString("banco"), 
+                        rs.getString("tipo"), 
+                        rs.getInt("estado_cuenta"));
+                return cb;
+            }
+            return null;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
     public boolean update(Cuenta cuenta)
     {
         Connection con = getConexion();

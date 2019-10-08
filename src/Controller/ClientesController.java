@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.BD.BDOpciones;
 import Model.Clientes.Cliente;
 import Model.Clientes.ConsultasClientes;
 import java.sql.ResultSet;
@@ -26,13 +27,12 @@ public class ClientesController {
     /**
      * Funcion para crear un cliente
      *
-     * @param nombre
-     * @param direccion
+     * @param cliente
      * @return
      */
-    public boolean createCliente(String nombre, String direccion) {
+    public boolean createCliente(Cliente cliente) {
         try {
-            return consultas.save(new Cliente(nombre, direccion));
+            return consultas.save(cliente);
         } catch (Exception e) {
             return false;
         }
@@ -41,16 +41,13 @@ public class ClientesController {
     /**
      * Funcion para actualizar un cliente
      *
-     * @param id_cliente
-     * @param nombre
-     * @param direccion
+     * @param cliente
      * @return
      */
-    public boolean updateCliente(int id_cliente, String nombre, String direccion) {
+    public boolean updateCliente(Cliente cliente) {
         try {
-            Cliente c = new Cliente(nombre, direccion);
-            c.setId_cliente(id_cliente);
-            return consultas.update(c);
+            
+            return consultas.update(cliente);
         } catch (Exception e) {
             return false;
         }
@@ -99,7 +96,7 @@ public class ClientesController {
         try {
             ArrayList<Cliente> clientes = new ArrayList<>();
 
-            Date date = new Date();
+            /*Date date = new Date();
             java.sql.Date dateNacimiento = new java.sql.Date(date.getTime());
 
             Cliente cliente = new Cliente(
@@ -114,9 +111,9 @@ public class ClientesController {
                     "C:\\Users\\Notebook\\Pictures\\234.jpg",
                     "C:\\Users\\Notebook\\Pictures\\234.jpg"
             );
-            clientes.add(cliente);
+            clientes.add(cliente);*/
 
-            return clientes;
+            return consultas.listData(BDOpciones.Orden.DESC, BDOpciones.LimitOp.NO_LIMIT, -1);
         } catch (Exception e) {
             return new ArrayList<>();
         }

@@ -6,6 +6,7 @@
 package Controller;
 import Model.Cuentas.Cuenta;
 import Model.Cuentas.ConsultasCuenta;
+import Model.Cuentas.CuentaBancoTipo;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 /**
@@ -35,6 +36,16 @@ public class CuentasController {
             return false;
         }
     }
+    
+    public boolean createCuenta(Double saldo, int banco_id_banco, int tipo_cuenta_id_tipo, int dpi_cliente)
+    {
+        try {
+            return consultas.save(new Cuenta(saldo, banco_id_banco, tipo_cuenta_id_tipo), dpi_cliente);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+            
     
     /**
      * Funcion para poder actualizar la cuenta
@@ -87,6 +98,25 @@ public class CuentasController {
             return cuentas;
         } catch (Exception e) {
             return new ArrayList<>();
+        }
+    }
+    
+    public ArrayList<CuentaBancoTipo> listCuentasBancoTipo(int dpi_cliente, int estado_cuenta)
+    {
+        try {
+            return consultas.listCuentaTipo(dpi_cliente, 1);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+    
+    public CuentaBancoTipo getLastCuentaFrom(int dpi_cliente, int estado_cuenta)
+    {
+        try {
+            return consultas.getLastCuentaFrom(dpi_cliente, estado_cuenta);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 }
