@@ -80,4 +80,24 @@ public class RolesController {
             return new ArrayList<>();
         }
     }
+    
+    
+    
+    /**
+     * Funcion que lista los roles  TEST
+     * @return 
+     */
+    public ArrayList<Rol> listRolesTest()
+    {
+        try {
+            ArrayList<Rol> roles = new ArrayList<>();
+            
+            Rol rol=new Rol("Gerente");
+            roles.add(rol);
+            
+            return roles;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 }
