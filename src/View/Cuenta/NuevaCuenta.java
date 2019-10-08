@@ -11,6 +11,7 @@ import Controller.TipoCuentasController;
 import Main.B2;
 import Model.Bancos.Banco;
 import Model.Cuentas.Cuenta;
+import Model.Cuentas.CuentaBancoTipo;
 import Model.TipoCuentas.TipoCuenta;
 import View.Agencia.ComboAgencia;
 import View.Gui.Componentes.mascaras;
@@ -69,8 +70,8 @@ public class NuevaCuenta implements Initializable {
         if (this.itemModificar == null) {
 
             if (insertar(Integer.valueOf(dpi), comboTipo.id_TipoCuenta, comboAgencia.id_Banco)) {
-
-                B2.GuiController.mensajeConsola("Cuenta insertada exitosamente, No Cuenta: ");
+                CuentaBancoTipo cuenta = c.getLastCuentaFrom(Integer.valueOf(dpi), 1);
+                B2.GuiController.mensajeConsola("Cuenta insertada exitosamente, No Cuenta: "+String.valueOf(cuenta.getNo_cuenta()));
             } else {
 
                 B2.GuiController.mensajeConsola("Ocurrió un error al insertar la Agencia");
@@ -115,8 +116,9 @@ public class NuevaCuenta implements Initializable {
     
      */
     public boolean insertar(int dpi, int id_Tipo, int id_Banco) {
-
-        return c.createCuenta(0.00, id_Banco, id_Tipo, dpi);
+        boolean result = c.createCuenta(0.00, id_Banco, id_Tipo, dpi);
+        
+        return result;
     }
 
 }
