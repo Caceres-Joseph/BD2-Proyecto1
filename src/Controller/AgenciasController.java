@@ -89,4 +89,23 @@ public class AgenciasController {
             return new ArrayList<>();
         }
     }
+
+    /**
+     * Lista todas las agencias  TEST
+     * @return 
+     */
+    public ArrayList<Agencia> listAgenciasTest() {
+    
+        try {
+            ArrayList<Agencia> agencias = new ArrayList<>();
+            ResultSet rs = consultas.listItems();
+             
+            
+            Agencia nueva=new Agencia("Guate", "Guate", 1);
+            agencias.add(nueva);
+            return agencias;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 }
