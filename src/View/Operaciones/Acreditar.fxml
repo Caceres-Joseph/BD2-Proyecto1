@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Operaciones.Acreditar">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Operaciones.Acreditar">
    <children>
       <GridPane styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -52,7 +51,12 @@
             </JFXButton>
          </children>
       </GridPane>
-      <JFXTextField fx:id="txtDpi" labelFloat="true" layoutX="39.0" layoutY="90.0" prefHeight="34.0" prefWidth="425.0" promptText="DPI del cliente">
+      <JFXTextField fx:id="txtMonto" labelFloat="true" layoutX="39.0" layoutY="214.0" prefHeight="34.0" prefWidth="425.0" promptText="Monto">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtCuenta" labelFloat="true" layoutX="39.0" layoutY="117.0" prefHeight="34.0" prefWidth="425.0" promptText="No. Cuenta">
          <font>
             <Font size="15.0" />
          </font>
