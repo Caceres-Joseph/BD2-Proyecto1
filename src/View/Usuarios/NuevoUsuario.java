@@ -5,6 +5,7 @@
  */
 package View.Usuarios;
 
+import Controller.RolesController;
 import Main.B2;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -14,7 +15,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import Controller.UsuariosController;
+import Model.Roles.Rol;
 import Model.Usuarios.Usuario;
+import View.Roles.ComboRol;
+import com.jfoenix.controls.JFXComboBox;
 /**
  * FXML Controller class
  *
@@ -22,9 +26,15 @@ import Model.Usuarios.Usuario;
  */
 public class NuevoUsuario implements Initializable {
     UsuariosController u = new UsuariosController();
+    RolesController r=new RolesController();
     
+    ComboRol comboRol;
     
 
+    @FXML
+    private JFXComboBox<Rol> cbRol;
+    
+    
     @FXML
     private JFXTextField txtNombre;
 
@@ -41,6 +51,14 @@ public class NuevoUsuario implements Initializable {
         String pass1 = txtPassword.getText();
         String pass2 = txtPassword2.getText();
 
+        
+        if (comboRol.id_Rol == -1) {
+
+            B2.GuiController.mensajeConsola("Debe seleccionar un rol");
+            return;
+        }
+        
+        
         if (!pass1.equals(pass2)) {
             B2.GuiController.mensajeConsola("Las contraseñas no coinciden");
             txtPassword.setText("");
@@ -50,7 +68,7 @@ public class NuevoUsuario implements Initializable {
 
         if (this.itemModificar == null) {
 
-            if (insertar(nombre, pass1)) {
+            if (insertar(nombre, pass1,comboRol.id_Rol)) {
 
                 B2.GuiController.mensajeConsola("Usuario insertado exitosamente");
             } else {
@@ -59,7 +77,7 @@ public class NuevoUsuario implements Initializable {
             }
         } else {
 
-            if (editar(nombre, pass1)) {
+            if (editar(nombre, pass1,comboRol.id_Rol)) {
 
                 B2.GuiController.mensajeConsola("Usuario actualizado exitosamente");
             } else {
@@ -95,7 +113,9 @@ public class NuevoUsuario implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        comboRol = new ComboRol(cbRol);
+        comboRol.mostrarRols(r);
     }
 
     /*
@@ -104,12 +124,12 @@ public class NuevoUsuario implements Initializable {
     +---------------------------------------
     
      */
-    public boolean insertar(String nombre, String password) {
-        return u.creatUsuario(nombre, password, 1);
+    public boolean insertar(String nombre, String password, int idRol) {
+        return u.creatUsuario(nombre, password,idRol);
     }
 
-    public boolean editar(String nombre, String password) {
-        return u.updateUsuario(itemModificar.getId_usuario(), nombre, password, 1);
+    public boolean editar(String nombre, String password, int idRol) {
+        return u.updateUsuario(itemModificar.getId_usuario(), nombre, password, idRol);
     }
     
     

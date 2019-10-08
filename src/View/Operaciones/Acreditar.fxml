@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -15,18 +13,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Usuarios.NuevoUsuario">
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Operaciones.Acreditar">
    <children>
-      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="46.0" layoutY="97.0" prefHeight="34.0" prefWidth="425.0" promptText="Nombre de Usuario">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </JFXTextField>
-      <GridPane layoutX="10.0" layoutY="10.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="212.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="298.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1054.0" minWidth="10.0" prefWidth="137.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="279.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1054.0" minWidth="10.0" prefWidth="156.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -34,7 +28,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
                <children>
-                  <Label styleClass="title" text="Rol">
+                  <Label styleClass="title" text="Acreditar">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -58,16 +52,10 @@
             </JFXButton>
          </children>
       </GridPane>
-      <JFXPasswordField fx:id="txtPassword" layoutX="46.0" layoutY="161.0" prefHeight="31.0" prefWidth="425.0" promptText="Password">
+      <JFXTextField fx:id="txtDpi" labelFloat="true" layoutX="39.0" layoutY="90.0" prefHeight="34.0" prefWidth="425.0" promptText="DPI del cliente">
          <font>
             <Font size="15.0" />
          </font>
-      </JFXPasswordField>
-      <JFXPasswordField fx:id="txtPassword2" layoutX="46.0" layoutY="227.0" prefHeight="31.0" prefWidth="425.0" promptText="Password">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </JFXPasswordField>
-      <JFXComboBox fx:id="cbRol" layoutX="46.0" layoutY="293.0" prefHeight="37.0" prefWidth="425.0" promptText="Rol" />
+      </JFXTextField>
    </children>
 </AnchorPane>
