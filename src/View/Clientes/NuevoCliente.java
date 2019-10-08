@@ -82,26 +82,28 @@ public class NuevoCliente implements Initializable {
 
         //Hay que corregir esto
         String dpi = "dpi";
-        try {
-            Cliente cliente = new Cliente(
-                    Integer.valueOf(txtDPI.getText()),
-                    txtNombre.getText(),
-                    txtApellido.getText(),
-                    txtDireccion.getText(),
-                    txtCorreo.getText(),
-                    txtTelefono.getText(),
-                    dateNacimiento,
-                    1,
-                    pathImageFirma,
-                    pathImageFoto
-            );
+        Cliente cliente = new Cliente(
+                Integer.valueOf(txtDPI.getText()),
+                txtNombre.getText(),
+                txtApellido.getText(),
+                txtDireccion.getText(),
+                txtCorreo.getText(),
+                txtTelefono.getText(),
+                dateNacimiento,
+                1,
+                pathImageFirma,
+                pathImageFoto
+        );
 
-            if (this.itemModificar == null) {
-                if (insertar(cliente)) {
-                    B2.GuiController.mensajeConsola("Cliente insertado exitosamente");
-                } else {
-                    B2.GuiController.mensajeConsola("Ocurrió un error al insertar el Cliente");
-                }
+        if (this.itemModificar == null) {
+            if (insertar(cliente)) {
+                B2.GuiController.mensajeConsola("Cliente insertado exitosamente");
+            } else {
+                B2.GuiController.mensajeConsola("Ocurrió un error al insertar el Cliente");
+            }
+        } else {
+            if (editar(cliente)) {
+                B2.GuiController.mensajeConsola("Cliente actualizado exitosamente");
             } else {
                 if (editar(cliente)) {
                     B2.GuiController.mensajeConsola("Cliente actualizado exitosamente");

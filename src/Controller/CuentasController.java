@@ -55,10 +55,11 @@ public class CuentasController {
      * @param tipo_cuenta_id_tipo
      * @return 
      */
-    public boolean updateCuenta(int id_cuenta, Double saldo, int banco_id_banco, int tipo_cuenta_id_tipo)
+    public boolean updateCuenta(int id_cuenta, Double saldo, int banco_id_banco, int tipo_cuenta_id_tipo, int estado)
     {
         try {
             Cuenta c = new Cuenta(saldo, banco_id_banco, tipo_cuenta_id_tipo);
+            c.setEstado_cuenta(estado);
             c.setNo_cuenta(id_cuenta);
             return consultas.update(c);
         } catch (Exception e) {
