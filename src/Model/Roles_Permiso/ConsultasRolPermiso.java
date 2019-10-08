@@ -24,9 +24,11 @@ public class ConsultasRolPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_ROL(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_ROL_PERMISO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
-            
+            call.setInt(1, rolpermiso.getRol_id_rol());
+            call.setInt(2, rolpermiso.getPermiso_id_permiso());
+            call.setInt(3, rolpermiso.getEstado_rol_permiso());
             call.execute();
             call.close();
             return true;
@@ -48,9 +50,11 @@ public class ConsultasRolPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_ROL(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_ROL_PERMISO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
-            
+            call.setInt(1, rolpermiso.getRol_id_rol());
+            call.setInt(2, rolpermiso.getPermiso_id_permiso());
+            call.setInt(3, rolpermiso.getEstado_rol_permiso());
             call.execute();
             call.close();
             return true;
@@ -68,7 +72,7 @@ public class ConsultasRolPermiso extends Conexion{
         }
     }
     
-    public ArrayList<RolPermiso> listData()
+    public ArrayList<RolPermiso> listData(int id_Rol)
     {
         Connection con = getConexion();
         try {
@@ -79,6 +83,7 @@ public class ConsultasRolPermiso extends Conexion{
                          "WHERE ROL.ID_ROL = ROL_PERMISO.ROL_ID_ROL AND ROL.ID_ROL = ?"
                         ;
             ps = con.prepareStatement(sql);
+            ps.setInt(1, id_Rol);
             rs = ps.executeQuery();
             while(rs.next())
             {

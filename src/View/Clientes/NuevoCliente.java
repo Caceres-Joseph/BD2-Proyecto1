@@ -5,6 +5,7 @@
  */
 package View.Clientes;
 
+import Controller.ClientesController;
 import Main.B2;
 import static Main.B2.sta;
 import Model.Clientes.Cliente;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant; 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -37,6 +38,8 @@ import javafx.stage.FileChooser;
  * @author Notebook
  */
 public class NuevoCliente implements Initializable {
+
+    ClientesController controller = new ClientesController();
 
     int id_Cliente = -1;
 
@@ -79,7 +82,6 @@ public class NuevoCliente implements Initializable {
 
         //Hay que corregir esto
         String dpi = "dpi";
-
         Cliente cliente = new Cliente(
                 Integer.valueOf(txtDPI.getText()),
                 txtNombre.getText(),
@@ -103,9 +105,16 @@ public class NuevoCliente implements Initializable {
             if (editar(cliente)) {
                 B2.GuiController.mensajeConsola("Cliente actualizado exitosamente");
             } else {
-                B2.GuiController.mensajeConsola("Ocurrió un error al actualizar el Cliente");
+                if (editar(cliente)) {
+                    B2.GuiController.mensajeConsola("Cliente actualizado exitosamente");
+                } else {
+                    B2.GuiController.mensajeConsola("Ocurrió un error al actualizar el Cliente");
+                }
             }
+        } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
         }
+
     }
 
     @FXML
@@ -251,18 +260,18 @@ public class NuevoCliente implements Initializable {
     }
 
     /*
-    +--------------------------------------
-    | Metodos de inserción o modificación
-    +---------------------------------------
+     +--------------------------------------
+     | Metodos de inserción o modificación
+     +---------------------------------------
     
      */
     public boolean insertar(Cliente cliente) {
 
-        return true;
+        return controller.createCliente(cliente);
     }
 
     public boolean editar(Cliente cliente) {
-        return true;
+        return controller.updateCliente(cliente);
     }
 
     Cliente itemModificar;
@@ -284,14 +293,13 @@ public class NuevoCliente implements Initializable {
         this.cargarFoto(item.getFoto());
 
         //enviando la fecha
-        Date date = item.getFecha_nacimiento(); 
+        Date date = item.getFecha_nacimiento();
         DateFormat dateFormat = new SimpleDateFormat("d/MM/yyyy");
-        String fecha = dateFormat.format(date); 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy"); 
-	LocalDate localDate = LocalDate.parse(fecha, formatter); 
+        String fecha = dateFormat.format(date);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(fecha, formatter);
         txtNacimiento.setValue(localDate);
-        
-        
+
     }
 
 }

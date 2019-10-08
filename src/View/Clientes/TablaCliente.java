@@ -92,7 +92,7 @@ public class TablaCliente {
         contenidoTabla.clear();
 
         //Llenando la tabla
-        ArrayList<Cliente> listaCliente = r.listClientes();
+        ArrayList<Cliente> listaCliente = r.listClientesTest();
         contenidoTabla.addAll(listaCliente);
     }
 }
