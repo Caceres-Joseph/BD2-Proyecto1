@@ -249,7 +249,7 @@ public class JsonPermiso {
                     rutaControlador = "/View/Clientes/ListarCliente.fxml";
 
                 } else if (permiso.equals("modificar")) {
-                    rutaControlador = "/View/Bancos/EditarBanco.fxml";
+                    rutaControlador = "/View/Clientes/EditarCliente.fxml";
 
                 } else if (permiso.equals("eliminar")) {
                     

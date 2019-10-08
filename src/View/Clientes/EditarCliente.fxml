@@ -12,9 +12,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Clientes.ListarCliente">
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Clientes.ListarCliente">
    <children>
-      <GridPane layoutX="20.0" layoutY="20.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="179.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="10.0" prefWidth="145.0" />
@@ -36,7 +37,7 @@
                   <Insets />
                </GridPane.margin>
             </HBox>
-            <JFXButton fx:id="btnEditar" disable="true" onAction="#clckEditar" ripplerFill="WHITE" style="-fx-background-color: white;" text="Editar" visible="false" GridPane.columnIndex="1">
+            <JFXButton fx:id="btnEditar" onAction="#clckEditar" ripplerFill="WHITE" style="-fx-background-color: white;" text="Editar" GridPane.columnIndex="1">
                <font>
                   <Font size="16.0" />
                </font>
@@ -48,7 +49,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <TableView fx:id="tbTabla" editable="true" layoutX="49.0" layoutY="126.0" prefHeight="200.0" prefWidth="267.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
+      <TableView fx:id="tbTabla" editable="true" prefHeight="200.0" prefWidth="267.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
          <columns>
             <TableColumn fx:id="tc0" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="56.0" text="Dpi" />
             <TableColumn fx:id="tc1" prefWidth="155.0" text="Nombre" />
