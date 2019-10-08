@@ -224,4 +224,39 @@ public class ConsultaUsuarios extends Conexion {
             }
         }
     }
+    
+    public UsuarioSession usuarioEnSession(String usuario)
+    {
+        Connection con = getConexion();
+        try {
+            UsuarioSession u = null;
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT USUARIO.ID_USUARIO, USUARIO.USUARIO,  TERMINAL.ID_TERMINAL, AGENCIA.ID_AGENCIA, BANCO.ID_BANCO, AGENCIA.NOMBRE AS AGENCIA, BANCO.NOMBRE AS BANCO "
+                    +"FROM USUARIO, AGENCIA, BANCO, TERMINAL "
+                    +"WHERE USUARIO.ID_USUARIO = TERMINAL.USUARIO_ID_USUARIO AND AGENCIA.ID_AGENCIA = TERMINAL.AGENCIA_ID_AGENCIA AND "
+                    +"BANCO.ID_BANCO = AGENCIA.BANCO_ID_BANCO AND "
+                    +"USUARIO.USUARIO = '"+usuario+"'"
+                    ;
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                u = new UsuarioSession(rs.getInt("id_usuario"), usuario, rs.getInt("id_terminal"), rs.getInt("id_agencia"), 
+                        rs.getInt("id_banco"), rs.getString("agencia"), rs.getString("banco"));
+                
+            }
+            return u;
+        } catch (Exception e) {
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
 }
