@@ -83,7 +83,9 @@ public class ListarCuenta implements Initializable {
      */
     public boolean eliminar(Cuenta cuenta) {
 
-//        c.updateCuenta(cuenta.getNo_cuenta(), 0.00, cuenta.getBanco_id_banco(), cuenta.getTipo_cuenta_id_tipo());
+        
+        c.updateCuenta(cuenta.getNo_cuenta(), 0.00, cuenta.getBanco_id_banco(), cuenta.getTipo_cuenta_id_tipo(),0);
+        
         return true;
     }
 
