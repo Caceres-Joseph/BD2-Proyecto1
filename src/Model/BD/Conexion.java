@@ -14,9 +14,9 @@ import java.sql.DriverManager;
  */
 public class Conexion {
     
-    private final String base = "bd2p1"; //NOMBRE DE LA BASE DE DATOS
-    private final String user = "system";  // USUARIO
-    private final String password = "ricardcutzh-777"; // PASSWORD
+    private final String base = "orcl"; //NOMBRE DE LA BASE DE DATOS
+    private final String user = "System";  // USUARIO
+    private final String password = "Informatica10"; // PASSWORD
     private final String url = "jdbc:oracle:thin:@localhost:1521";
     private Connection con = null;
     
