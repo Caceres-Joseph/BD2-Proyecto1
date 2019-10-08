@@ -48,4 +48,17 @@ public class TerminalController {
             return new ArrayList<>();
         }
     }
+    
+    
+    public ArrayList<Terminal> listTerminalTest()
+    {
+        ArrayList<Terminal> retorno=new ArrayList<>();
+        
+        Terminal term=new Terminal(1, 1, 1);
+        
+        retorno.add(term);
+        
+        
+        return retorno;
+    }
 }
