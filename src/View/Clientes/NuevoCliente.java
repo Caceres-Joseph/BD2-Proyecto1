@@ -79,36 +79,37 @@ public class NuevoCliente implements Initializable {
         if (!validar()) {
             return;
         }
+        try {
+            //Hay que corregir esto
+            String dpi = "dpi";
+            Cliente cliente = new Cliente(
+                    Integer.valueOf(txtDPI.getText()),
+                    txtNombre.getText(),
+                    txtApellido.getText(),
+                    txtDireccion.getText(),
+                    txtCorreo.getText(),
+                    txtTelefono.getText(),
+                    dateNacimiento,
+                    1,
+                    pathImageFirma,
+                    pathImageFoto
+            );
 
-        //Hay que corregir esto
-        String dpi = "dpi";
-        Cliente cliente = new Cliente(
-                Integer.valueOf(txtDPI.getText()),
-                txtNombre.getText(),
-                txtApellido.getText(),
-                txtDireccion.getText(),
-                txtCorreo.getText(),
-                txtTelefono.getText(),
-                dateNacimiento,
-                1,
-                pathImageFirma,
-                pathImageFoto
-        );
-
-        if (this.itemModificar == null) {
-            if (insertar(cliente)) {
-                B2.GuiController.mensajeConsola("Cliente insertado exitosamente");
-            } else {
-                B2.GuiController.mensajeConsola("Ocurrió un error al insertar el Cliente");
-            }
-        } else {
-            if (editar(cliente)) {
-                B2.GuiController.mensajeConsola("Cliente actualizado exitosamente");
+            if (this.itemModificar == null) {
+                if (insertar(cliente)) {
+                    B2.GuiController.mensajeConsola("Cliente insertado exitosamente");
+                } else {
+                    B2.GuiController.mensajeConsola("Ocurrió un error al insertar el Cliente");
+                }
             } else {
                 if (editar(cliente)) {
                     B2.GuiController.mensajeConsola("Cliente actualizado exitosamente");
                 } else {
-                    B2.GuiController.mensajeConsola("Ocurrió un error al actualizar el Cliente");
+                    if (editar(cliente)) {
+                        B2.GuiController.mensajeConsola("Cliente actualizado exitosamente");
+                    } else {
+                        B2.GuiController.mensajeConsola("Ocurrió un error al actualizar el Cliente");
+                    }
                 }
             }
         } catch (Exception e) {

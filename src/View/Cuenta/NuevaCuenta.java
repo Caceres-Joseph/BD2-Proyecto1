@@ -116,7 +116,7 @@ public class NuevaCuenta implements Initializable {
      */
     public boolean insertar(int dpi, int id_Tipo, int id_Banco) {
 
-        return c.createCuenta(0.00, id_Banco, id_Tipo);
+        return c.createCuenta(0.00, id_Banco, id_Tipo, dpi);
     }
 
 }

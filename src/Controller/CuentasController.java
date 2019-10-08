@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Controller;
+import Model.BD.BDOpciones;
 import Model.Cuentas.Cuenta;
 import Model.Cuentas.ConsultasCuenta;
 import Model.Cuentas.CuentaBancoTipo;
@@ -88,15 +89,8 @@ public class CuentasController {
     public ArrayList<Cuenta> listCuentas()
     {
         try {
-            ArrayList<Cuenta> cuentas = new ArrayList<>();
-            ResultSet rs = consultas.listItems();
-            while(rs.next())
-            {
-                Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("banco_id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
-                c.setNo_cuenta(rs.getInt("no_cuenta"));
-                cuentas.add(c);
-            }
-            return cuentas;
+            
+            return consultas.listData(BDOpciones.Orden.DESC, BDOpciones.LimitOp.NO_LIMIT, -1);
         } catch (Exception e) {
             return new ArrayList<>();
         }

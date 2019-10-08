@@ -70,7 +70,7 @@ public class TablaCuenta {
         contenidoTabla.clear();
 
         //Llenando la tabla
-        ArrayList<Cuenta> listaCuenta = r.listCuentasTest();
+        ArrayList<Cuenta> listaCuenta = r.listCuentas();
         contenidoTabla.addAll(listaCuenta); 
     }
 }
