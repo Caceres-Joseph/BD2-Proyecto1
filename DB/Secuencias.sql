@@ -10,7 +10,7 @@ BEGIN
     INTO :new.id_agencia
     FROM dual;
 END;
-
+/
 
 -- BANCO
 CREATE SEQUENCE banco_sequence;
@@ -22,6 +22,7 @@ BEGIN
     INTO :new.id_banco
     FROM dual;
 END;
+/
 
 --CLIENTE
 --CREATE SEQUENCE cliente_sequence;
@@ -44,17 +45,19 @@ BEGIN
     INTO :new.no_cuenta
     FROM dual;
 END;
+/
 
 --MANCOMUNADA
-CREATE SEQUENCE mancomunada_sequence;
-CREATE OR REPLACE TRIGGER mancomunada_on_insert
-    BEFORE INSERT ON mancomunada
-    FOR EACH ROW
-BEGIN
-    SELECT mancomunada_sequence.nextval
-    INTO :new.id_mancomunada
-    FROM dual;
-END;
+--CREATE SEQUENCE mancomunada_sequence;
+--CREATE OR REPLACE TRIGGER mancomunada_on_insert
+--    BEFORE INSERT ON mancomunada
+--    FOR EACH ROW
+--BEGIN
+--    SELECT mancomunada_sequence.nextval
+--    INTO :new.id_mancomunada
+--   FROM dual;
+--END;
+--/
 
 --PERMISO
 CREATE SEQUENCE permiso_sequence;
@@ -66,6 +69,7 @@ BEGIN
     INTO :new.id_permiso
     FROM dual;
 END;
+/
 
 --ROL
 CREATE SEQUENCE rol_sequence;
@@ -77,6 +81,7 @@ BEGIN
     INTO :new.id_rol
     FROM dual;
 END;
+/
 
 --TERMINAL
 CREATE SEQUENCE terminal_sequence;
@@ -88,6 +93,7 @@ BEGIN
     INTO :new.id_terminal
     FROM dual;
 END;
+/
 
 --TIPO CUENTA 
 CREATE SEQUENCE tipo_cuenta_sequence;
@@ -99,6 +105,7 @@ BEGIN
     INTO :new.id_tipo
     FROM dual;
 END;
+/
 
 -- TRANSACCION
 CREATE SEQUENCE transaccion_sequence;
@@ -110,6 +117,7 @@ BEGIN
     INTO :new.id_transaccion
     FROM dual;
 END;
+/
 
 -- USUARIO
 CREATE SEQUENCE usuario_sequence;
@@ -121,21 +129,29 @@ BEGIN
     INTO :new.id_usuario
     FROM dual;
 END;
+/
 
 -- CHEQUE
 CREATE SEQUENCE cheque_sequence;
 CREATE OR REPLACE TRIGGER cheque_on_insert
+    BEFORE INSERT ON cheque
+    FOR EACH ROW
 BEGIN
     SELECT cheque_sequence.nextval
     INTO :new.id_cheque
     FROM dual;
 END;
+/
 
 --CHEQUERA
 CREATE SEQUENCE chequera_sequence;
-CREATE OR REPLACE TRIGGER chequra_on_insert
+CREATE OR REPLACE TRIGGER chequera_on_insert
+    BEFORE INSERT ON chequera
+    FOR EACH ROW
 BEGIN
     SELECT chequera_sequence.nextval
-    INTO :new.id_cheque
+    INTO :new.id_chequera
     FROM dual;
 END;
+/
+

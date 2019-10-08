@@ -1,8 +1,10 @@
-
 -- Generado por Oracle SQL Developer Data Modeler 19.2.0.182.1216
 --   en:        2019-09-14 17:06:06 CST
 --   sitio:      Oracle Database 11g
 --   tipo:      Oracle Database 11g
+
+
+
 CREATE TABLE agencia (
     id_agencia       INTEGER NOT NULL,
     nombre           VARCHAR2(32 CHAR) NOT NULL,
@@ -138,7 +140,7 @@ ALTER TABLE chequera ADD CONSTRAINT chequera_pk PRIMARY KEY ( id_chequera );
 CREATE TABLE cheque (
     id_cheque   INTEGER NOT NULL,
     id_chequera      INTEGER NOT NULL,
-    estado_cheque     VARCHAR2(32 CHAR) NOT NULL
+    estado_cheque     INTEGER NOT NULL
 );
 
 ALTER TABLE cheque ADD CONSTRAINT cheque_pk PRIMARY KEY ( id_cheque );
@@ -261,8 +263,8 @@ ALTER TABLE cheque
 -- ORDS ENABLE OBJECT                       0
 -- 
 -- ERRORS                                   0
--- WARNINGS                                 0 
--- INSERTING DATA
+-- WARNINGS                                 0
+
 --INSERTAR CLIENTE ---------------------------------------------------------------------------------------------------3 CLIENTES
 INSERT INTO CLIENTE(dpi_cliente,nombre, apellido, direccion, correo, telefono, fecha_nacimiento, estado_cliente,foto,firma) values 
 (1,'Daniel','Garcia', 'Guatemala', 'danielgarcia0976@gmail.com','12345678','10-Sep-02',1,'foto','firma');

@@ -60,7 +60,7 @@ ALTER TABLE mancomunada ADD CONSTRAINT mancomunada_pk PRIMARY KEY ( cliente_dpi_
 CREATE TABLE permiso (
     id_permiso    INTEGER NOT NULL,
     nombre        VARCHAR2(32 CHAR) NOT NULL,
-    descripcion   VARCHAR2(32 CHAR),
+    descripcion   VARCHAR2(250 CHAR),
     estado_permiso   INTEGER NOT NULL
 );
 
@@ -123,8 +123,7 @@ CREATE TABLE usuario (
     usuario      VARCHAR2(32 CHAR) NOT NULL,
     password     VARCHAR2(32 CHAR) NOT NULL,
     estado_usuario INTEGER NOT NULL,
-    rol_permiso_rol_id_rol           INTEGER NOT NULL,
-    rol_permiso_permiso_id_permiso   INTEGER NOT NULL
+    rol_id_rol INTEGER NOT NULL
 );
 
 ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id_usuario );
@@ -206,10 +205,8 @@ ALTER TABLE transaccion
             ON DELETE CASCADE;
 
 ALTER TABLE usuario
-    ADD CONSTRAINT usuario_rol_permiso_fk FOREIGN KEY ( rol_permiso_rol_id_rol,
-                                                        rol_permiso_permiso_id_permiso )
-        REFERENCES rol_permiso ( rol_id_rol,
-                                 permiso_id_permiso )
+    ADD CONSTRAINT usuario_rol_fk FOREIGN KEY ( rol_id_rol )
+        REFERENCES rol ( id_rol )
             ON DELETE CASCADE;
             
 ALTER TABLE chequera
