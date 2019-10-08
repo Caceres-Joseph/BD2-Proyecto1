@@ -1,3 +1,5 @@
+package View.Gui.Componentes;
+
 /*
  * Copyright (c) 2015 VA programming
  *
@@ -14,8 +16,7 @@
  * limitations under the License.
  *
  */
-
-package View.Gui.Componentes;
+ 
 
 
 import javafx.beans.property.SimpleStringProperty;

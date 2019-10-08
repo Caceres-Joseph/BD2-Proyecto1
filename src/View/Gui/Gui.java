@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -31,6 +32,11 @@ import javafx.scene.web.WebView;
  */
 public class Gui extends ideVistaArbol {
 
+    
+    @FXML
+    private ScrollPane contentRenderScroll;
+    
+    
     @FXML
     private AnchorPane contentRender;
 
@@ -142,11 +148,12 @@ public class Gui extends ideVistaArbol {
     
     public void renderizar(AnchorPane root){
         
-        root.setPrefWidth(contentRender.getWidth());
+        root.setPrefWidth(contentRender.getWidth()-20);
         root.setPrefHeight(contentRender.getHeight());
 
         //contentRender.getChildren().setAll(FXMLLoader.load(getClass().getResource("/View/Gui/Gui.fxml")));
-        contentRender.getChildren().setAll(root);
+        //contentRenderScroll.getChildren().setAll(root);
+        contentRenderScroll.setContent(root);
     }
 
     @FXML
