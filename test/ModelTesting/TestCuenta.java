@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import Model.BD.BDOpciones;
 import Model.Cuentas.ConsultasCuenta;
 import Model.Cuentas.Cuenta;
+import Model.Cuentas.CuentaBancoTipo;
 /**
  *
  * @author ricar
@@ -35,5 +36,12 @@ public class TestCuenta {
     {
         ArrayList<Cuenta> cuentas = consultas.listData(BDOpciones.Orden.DESC, BDOpciones.LimitOp.LIMIT, 2);
         assertEquals(2, cuentas.size());
+    }
+    
+    @Test
+    public void listDataCuentaBanco()
+    {
+        ArrayList<CuentaBancoTipo> cuentas = consultas.listCuentaTipo(1, 1);
+        assertEquals(1, cuentas.size());
     }
 }
