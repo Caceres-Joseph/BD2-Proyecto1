@@ -81,7 +81,7 @@ public class NuevoCliente implements Initializable {
         String dpi = "dpi";
 
         Cliente cliente = new Cliente(
-                1,
+                Integer.valueOf(txtDPI.getText()),
                 txtNombre.getText(),
                 txtApellido.getText(),
                 txtDireccion.getText(),

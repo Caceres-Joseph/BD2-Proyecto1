@@ -44,10 +44,11 @@ public class CuentasController {
      * @param tipo_cuenta_id_tipo
      * @return 
      */
-    public boolean updateCuenta(int id_cuenta, Double saldo, int banco_id_banco, int tipo_cuenta_id_tipo)
+    public boolean updateCuenta(int id_cuenta, Double saldo, int banco_id_banco, int tipo_cuenta_id_tipo, int estado)
     {
         try {
             Cuenta c = new Cuenta(saldo, banco_id_banco, tipo_cuenta_id_tipo);
+            c.setEstado_cuenta(estado);
             c.setNo_cuenta(id_cuenta);
             return consultas.update(c);
         } catch (Exception e) {
@@ -84,6 +85,26 @@ public class CuentasController {
                 c.setNo_cuenta(rs.getInt("no_cuenta"));
                 cuentas.add(c);
             }
+            return cuentas;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+    
+    
+    /**
+     * Funcion que lista las cuentas en la BD TEST
+     * @return 
+     */
+    public ArrayList<Cuenta> listCuentasTest()
+    {
+        try {
+            ArrayList<Cuenta> cuentas = new ArrayList<>();
+            ResultSet rs = consultas.listItems();
+            Cuenta nueva=new Cuenta(0.0, 1, 1);
+            cuentas.add(nueva);
+            
+            
             return cuentas;
         } catch (Exception e) {
             return new ArrayList<>();
