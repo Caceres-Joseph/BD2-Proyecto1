@@ -7,7 +7,7 @@ package View.Gui.Componentes;
 
 import Main.B2;
 import Model.Permisos.JsonPermiso;
-import View.Roles.NuevoRol;
+import Model.Reportes.*;
 import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javax.swing.JFrame;
 
 /**
  *
@@ -44,13 +45,43 @@ public class ideVistaArbol extends ideMensaje {
 // 
 
             //Que no sea el modulo como tal
-            if (nodVist.ruta != "/") {
+            if (nodVist.ruta.equals("reporte1")) {
+                Grafica grafica = new Grafica("Grafica1");
+                grafica.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                grafica.show();
+            } else if (nodVist.ruta.equals("reporte2")) {
+
+                Grafica2 grafica = new Grafica2("Grafica2");
+                grafica.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                grafica.show();
+            } else if (nodVist.ruta.equals("reporte3")) {
+                Grafica3 grafica = new Grafica3("Grafica3");
+                grafica.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                grafica.show();
+
+            } else if (nodVist.ruta.equals("reporte4")) {
+                Grafica4 grafica = new Grafica4();
+                grafica.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                grafica.show();
+
+            } else if (nodVist.ruta.equals("reporte5")) {
+                Grafica5 grafica = new Grafica5("Reporte 5");
+                grafica.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                grafica.show();
+
+            } else if (nodVist.ruta.equals("auditoria")) {
+
+                Auditoria grafica = new Auditoria();
+                grafica.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                grafica.show();
+
+            } else if (nodVist.ruta != "/") {
 
                 //hay que abrir el otro formulario para ediatar
                 //Parent root = FXMLLoader.load(getClass().getResource("/View/Login/login.fxml"));
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(nodVist.ruta));
                 AnchorPane root = (AnchorPane) loader.load();
- 
+
                 B2.GuiController.renderizar(root);
 
                 System.out.println(nodVist.ruta);

@@ -64,19 +64,19 @@ public class B2 extends Application {
      */
     public static void main(String[] args) {
                
-        //launch(args);
+        launch(args);
         //Auditoria auditoria = new Auditoria();
         //auditoria.show();
-        Grafica grafica = new Grafica("Grafica1");
-        grafica.show();
-        Grafica2 grafica2 = new Grafica2("Grafica2");
-        grafica2.show();
-        Grafica3 grafica3 = new Grafica3("Grafica3");
-        grafica3.show();
-        Grafica4 grafica4 = new Grafica4();
-        grafica4.show();
-        Grafica5 grafica5 = new Grafica5("Grafica5");
-        grafica5.show();
+//        Grafica grafica = new Grafica("Grafica1");
+//        grafica.show();
+//        Grafica2 grafica2 = new Grafica2("Grafica2");
+//        grafica2.show();
+//        Grafica3 grafica3 = new Grafica3("Grafica3");
+//        grafica3.show();
+//        Grafica4 grafica4 = new Grafica4();
+//        grafica4.show();
+//        Grafica5 grafica5 = new Grafica5("Grafica5");
+//        grafica5.show();
     }
 
 }
