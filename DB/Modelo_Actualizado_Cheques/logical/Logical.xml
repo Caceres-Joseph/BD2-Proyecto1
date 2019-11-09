@@ -1,7 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="2E500160-8772-8324-6339-22F46F1E4778" mainViewID="AD07B812-9DB9-2041-359B-809EADCFC760">
-<createdBy>Daniel</createdBy>
-<createdTime>2019-10-05 23:08:20 UTC</createdTime>
-<ownerDesignName>Modelo_Actualizado_Cheques</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-</LogicalDesign>

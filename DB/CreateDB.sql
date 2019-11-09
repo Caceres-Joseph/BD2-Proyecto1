@@ -41,6 +41,8 @@ ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( dpi_cliente );
 CREATE TABLE cuenta (
     no_cuenta             INTEGER NOT NULL,
     saldo                 REAL NOT NULL,
+    saldo_disponible      REAL NOT NULL,
+    saldo_reserva         REAL NOT NULL,
     banco_id_banco        INTEGER NOT NULL,
     tipo_cuenta_id_tipo   INTEGER NOT NULL,
     estado_cuenta         INTEGER NOT NULL
@@ -139,10 +141,23 @@ ALTER TABLE chequera ADD CONSTRAINT chequera_pk PRIMARY KEY ( id_chequera );
 CREATE TABLE cheque (
     id_cheque   INTEGER NOT NULL,
     id_chequera      INTEGER NOT NULL,
-    estado_cheque     INTEGER NOT NULL
+    estado_cheque     INTEGER NOT NULL,
+    id_lote     INTEGER
 );
 
 ALTER TABLE cheque ADD CONSTRAINT cheque_pk PRIMARY KEY ( id_cheque );
+
+CREATE TABLE lote (
+    id_lote   INTEGER NOT NULL,
+    fecha DATE,
+    id_banco INTEGER NOT NULL,
+    no_doc INTEGER NOT NULL,
+    valor_estimado INTEGER NOT NULL
+);
+
+ALTER TABLE lote ADD CONSTRAINT lote_pk PRIMARY KEY ( id_lote );
+
+
 
 ALTER TABLE agencia
     ADD CONSTRAINT agencia_banco_fk FOREIGN KEY ( banco_id_banco )
@@ -218,6 +233,17 @@ ALTER TABLE cheque
     ADD CONSTRAINT cheque_chequera_fk FOREIGN KEY ( id_chequera )
         REFERENCES chequera ( id_chequera )
             ON DELETE CASCADE;
+            
+ALTER TABLE cheque
+    ADD CONSTRAINT chque_lote_fk FOREIGN KEY ( id_lote )
+        REFERENCES lote ( id_lote )
+            ON DELETE CASCADE;
+            
+ALTER TABLE lote
+    ADD CONSTRAINT lote_banco_fk FOREIGN KEY ( id_banco )
+        REFERENCES banco ( id_banco )
+            ON DELETE CASCADE;
+            
 
 -- Informe de Resumen de Oracle SQL Developer Data Modeler: 
 -- 
