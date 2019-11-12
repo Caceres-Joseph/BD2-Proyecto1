@@ -302,18 +302,59 @@ END;
 /
 
 CREATE OR REPLACE PROCEDURE ACREDITAR(
-
+	p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
+	p_monto IN CUENTA.NO_CUENTA%TYPE,
+	p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
+	p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
 )
 IS
+	cuenta_existe INTEGER;
+	saldo_final CUENTA.SALDO%TYPE;
+	saldo_inicial CUENTA.SALDO%TYPE;
 BEGIN
+	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+	IF p_no_cuenta_destino = 1 THEN
+		SELECT SALDO.SALDO INTO saldo_inicial FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+		saldo_final := saldo_inicial + p_monto;
+		INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
+		VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'credito', saldo_inicial, saldo_final, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
+		UPDATE CUENTA SET SALDO = saldo_final WHERE NO_CUENTA = p_no_cuenta_destino;
+		COMMIT;
+	ELSE
+		-- ERROR
+		raise_application_error(-20456,'Acreditacion no posible, Cuenta no existe');
+		ROLLBACK;
+	END IF;
 END;
 /
 
 CREATE OR REPLACE PROCEDURE DEBITAR(
-
+	p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
+	p_monto IN CUENTA.NO_CUENTA%TYPE,
+	p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
+	p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
 )
 IS
+	cuenta_existe INTEGER;
+	saldo_final CUENTA.SALDO%TYPE;
+	saldo_inicial CUENTA.SALDO%TYPE;
 BEGIN
+	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+	IF p_no_cuenta_destino = 1 THEN
+		IF saldo_inicial >= monto THEN
+			saldo_final := saldo_inicial - monto;
+			INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
+			VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'debito', saldo_inicial, saldo_final, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
+			UPDATE CUENTA SET SALDO = saldo_final WHERE NO_CUENTA = p_no_cuenta_destino;
+			COMMIT;
+		ELSE
+			-- ERROR
+			raise_application_error(-20456,'El saldo de la cuenta es insuficiente para realizar la transaccion');
+		END IF;
+	ELSE
+		-- ERROR'
+		raise_application_error(-20456,'El debito no es posible, Cuenta no existe');
+	END IF;
 END;
 /
 
