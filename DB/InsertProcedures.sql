@@ -38,11 +38,11 @@ CREATE OR REPLACE PROCEDURE INSERT_CLIENTE(
 	p_estado_cliente IN CLIENTE.ESTADO_CLIENTE%TYPE,
     p_foto_cliente IN CLIENTE.FOTO%TYPE,
     p_firma_cliente IN CLIENTE.FIRMA%TYPE
-	
+
 )
 IS
 BEGIN
-	INSERT INTO CLIENTE(DPI_CLIENTE,NOMBRE,APELLIDO,DIRECCION,CORREO, TELEFONO, FECHA_NACIMIENTO, ESTADO_CLIENTE, FOTO,FIRMA) 
+	INSERT INTO CLIENTE(DPI_CLIENTE,NOMBRE,APELLIDO,DIRECCION,CORREO, TELEFONO, FECHA_NACIMIENTO, ESTADO_CLIENTE, FOTO,FIRMA)
 	VALUES(p_dpi_cliente, p_nombre, p_apellido, p_direccion, p_correo, p_telefono, p_fecha_nacimiento, p_estado_cliente,p_foto_cliente,p_firma_cliente);
 	COMMIT;
 END;
@@ -57,7 +57,7 @@ CREATE OR REPLACE PROCEDURE INSERT_CUENTA(
 )
 IS
 BEGIN
-	INSERT INTO CUENTA(SALDO, BANCO_ID_BANCO, TIPO_CUENTA_ID_TIPO, ESTADO_CUENTA) VALUES(p_saldo, p_banco_id_banco, p_tipo_cuenta, p_estado_cuenta);
+	INSERT INTO CUENTA(SALDO, SALDO_DISPONIBLE, SALDO_RESERVA, BANCO_ID_BANCO, TIPO_CUENTA_ID_TIPO, ESTADO_CUENTA) VALUES(p_saldo, p_saldo, 0, p_banco_id_banco, p_tipo_cuenta, p_estado_cuenta);
 	COMMIT;
 END;
 /
@@ -83,7 +83,7 @@ END;
 CREATE OR REPLACE PROCEDURE INSERT_PERMISO(
 	p_nombre IN PERMISO.NOMBRE%TYPE,
 	p_descripcion IN PERMISO.DESCRIPCION%TYPE,
-	p_estado_permiso IN PERMISO.ESTADO_PERMISO%TYPE 
+	p_estado_permiso IN PERMISO.ESTADO_PERMISO%TYPE
 )
 IS
 BEGIN
@@ -133,21 +133,27 @@ END;
 -- INSERTAR NUEVA CHEQUERA
 CREATE OR REPLACE PROCEDURE INSERT_CHEQUERA(
 	p_no_cuenta IN CHEQUERA.NO_CUENTA%TYPE,
-	p_estado_chequera IN CHEQUERA.ESTADO_CHEQUERA%TYPE,
-	p_no_cheques INTEGER
+	p_estado_chequera IN CHEQUERA.ESTADO_CHEQUERA%TYPE
 )
-IS 
-	p_id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
+IS
+	cuenta_existe INTEGER;
+	num_chequeras INTEGER;
+	r_inf CHEQUERA.RANGO_INF%TYPE;
+	r_sup CHEQUERA.RANGO_SUP%TYPE;
 BEGIN
-	INSERT INTO CHEQUERA(NO_CUENTA, ESTADO_CHEQUERA) VALUES(p_no_cuenta, p_estado_chequera);
-	SELECT chequera_sequence.currval INTO p_id_chequera FROM dual;
-	-- CREANDO LOS CHEQUES DE CADA CHEQUERA
-	FOR lc IN 1..p_no_cheques
-	LOOP
-		INSERT INTO CHEQUE(ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_id_chequera, 1);
-	END LOOP
-	-- ALMACENANDO CAMBIOS
-	COMMIT;
+	-- VERIFICANDO QUE LA CUENTA EXISTE...
+	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta;
+	IF cuenta_existe = 1 THEN
+		SELECT COUNT(*) INTO num_chequeras FROM CHEQUERA; --CONTANDO CHQUERAS
+		r_inf := (num_chequeras * 100) + 1; -- CALCULANDO RANGO INFERIOR
+		r_sup := r_inf + 99; -- CALCULANDO RANGO SUPERIOR
+		INSERT INTO CHEQUERA(NO_CUENTA, ESTADO_CHEQUERA, RANGO_INF, RANGO_SUP) VALUES(p_no_cuenta, p_estado_chequera, r_inf, r_sup); -- CREANDO LA CHEQUERA
+		COMMIT; -- COMMITIANDO LOS CAMBIOS
+	ELSE
+		raise_application_error(-20456,'Chequera no solicitada, Cuenta indicada no existe!');
+		ROLLBACK;
+	END IF;
+	-- FIN VERIFICANDO
 END;
 /
 
@@ -189,10 +195,10 @@ CREATE OR REPLACE PROCEDURE TRANSFERIR(
 IS
     saldo_inicial_origen CUENTA.SALDO%TYPE;
     saldo_final_origen CUENTA.SALDO%TYPE;
-    
+
     saldo_inicial_destino CUENTA.SALDO%TYPE;
     saldo_final_destino CUENTA.SALDO%TYPE;
-    
+
 BEGIN
     -- TOMANDO DE LA CUENTA DE ORIGEN LOS DATOS:
         SELECT CUENTA.SALDO INTO saldo_inicial_origen FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
@@ -205,7 +211,7 @@ BEGIN
             saldo_final_origen := saldo_inicial_origen - monto;
             -- ACREDITO AL DESTINO
             saldo_final_destino := saldo_inicial_destino + monto;
-            -- INSERTANDO LOS DEBITOS  
+            -- INSERTANDO LOS DEBITOS
             INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'debito', saldo_inicial_origen, saldo_final_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1);
             -- INSERTANDO LOS CREDITOS
@@ -213,7 +219,7 @@ BEGIN
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'credito', saldo_inicial_destino, saldo_final_destino, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
             UPDATE CUENTA SET SALDO = saldo_final_origen WHERE NO_CUENTA = p_no_cuenta_origen;
             UPDATE CUENTA SET SALDO = saldo_final_destino WHERE NO_CUENTA = p_no_cuenta_destino;
-            
+
             COMMIT;
         ELSE
             -- NO PROCEDE LA TRANSACCION
@@ -238,13 +244,13 @@ IS
     saldo_final_origen CUENTA.SALDO%TYPE;
     
     estado_cheque CHEQUE.ESTADO_CHEQUE%TYPE;
-    
+
 BEGIN
     -- TOMANDO DE LA CUENTA DE ORIGEN LOS DATOS:
         SELECT CUENTA.SALDO INTO saldo_inicial_origen FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
     -- VERIFICANDO EL ESTADO DEL CHEQUE:
         SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.ID_CHEQUE = p_id_cheque;
-        -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÁ DENTRO DEL RANGO) (5)
+        -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÃ DENTRO DEL RANGO) (5)
         IF(estado_cheque = 1) THEN
         -- EL CHEQUE FUE REPORTADO COMO ROBADO
         INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
@@ -261,11 +267,12 @@ BEGIN
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE PERDIDO');
         
         ELSIF (estado_cheque = 4) THEN 
+
         -- EL CHEQUE FUE REPORTADO COMO PERDIDO
         INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE YA HA SIDO PAGADO');
-        
-        ELSE 
+
+        ELSE
             -- REALIZANDO COMPROBACION SI EXISTEN FONDOS
             IF saldo_inicial_origen >= monto THEN
                 -- ES VALIDA LA TRANSACCION
@@ -281,8 +288,64 @@ BEGIN
             END IF;
         END IF;
 END;
+/
 
+CREATE OR REPLACE PROCEDURE ACREDITAR(
+	p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
+	p_monto IN CUENTA.NO_CUENTA%TYPE,
+	p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
+	p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
+)
+IS
+	cuenta_existe INTEGER;
+	saldo_final CUENTA.SALDO%TYPE;
+	saldo_inicial CUENTA.SALDO%TYPE;
+BEGIN
+	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+	IF p_no_cuenta_destino = 1 THEN
+		SELECT SALDO.SALDO INTO saldo_inicial FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+		saldo_final := saldo_inicial + p_monto;
+		INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
+		VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'credito', saldo_inicial, saldo_final, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
+		UPDATE CUENTA SET SALDO = saldo_final WHERE NO_CUENTA = p_no_cuenta_destino;
+		COMMIT;
+	ELSE
+		-- ERROR
+		raise_application_error(-20456,'Acreditacion no posible, Cuenta no existe');
+		ROLLBACK;
+	END IF;
+END;
+/
 
+CREATE OR REPLACE PROCEDURE DEBITAR(
+	p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
+	p_monto IN CUENTA.NO_CUENTA%TYPE,
+	p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
+	p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
+)
+IS
+	cuenta_existe INTEGER;
+	saldo_final CUENTA.SALDO%TYPE;
+	saldo_inicial CUENTA.SALDO%TYPE;
+BEGIN
+	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+	IF p_no_cuenta_destino = 1 THEN
+		IF saldo_inicial >= monto THEN
+			saldo_final := saldo_inicial - monto;
+			INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
+			VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'debito', saldo_inicial, saldo_final, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
+			UPDATE CUENTA SET SALDO = saldo_final WHERE NO_CUENTA = p_no_cuenta_destino;
+			COMMIT;
+		ELSE
+			-- ERROR
+			raise_application_error(-20456,'El saldo de la cuenta es insuficiente para realizar la transaccion');
+		END IF;
+	ELSE
+		-- ERROR'
+		raise_application_error(-20456,'El debito no es posible, Cuenta no existe');
+	END IF;
+END;
+/
 
 
 
@@ -297,7 +360,7 @@ call INSERT_CUENTA(2000,1,1,1); -- CUTZ = 3
 -- 4 = 1 -- DANIEL
 
 CALL TRANSFERIR(3,2,1000,1,1);  -- CUTZ: 1000 JOSEPH: 4000
-CALL TRANSFERIR(2,1,2000,1,1);  -- JOSEPH: 2000 DANIEL: 7000 
+CALL TRANSFERIR(2,1,2000,1,1);  -- JOSEPH: 2000 DANIEL: 7000
 CALL TRANSFERIR(1,3,3000,1,1);  -- DANIEL: 4000 CUTZ: 4000
 CALL TRANSFERIR(2,3,1000,1,1);  -- JOSEPH: 1000 CUTZ: 5000
 CALL TRANSFERIR(3,2,2000,1,1);  -- CUTZ: 3000 JOSEPH: 3000*
