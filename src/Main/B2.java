@@ -6,6 +6,7 @@
 package Main;
 
 import Model.Permisos.JsonPermiso;
+import Model.Usuarios.UsuarioSession;
 import View.Gui.Gui; 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ public class B2 extends Application {
 
     public static Stage sta;
     public static Gui GuiController;
-
+    public static UsuarioSession usuario;
 
     @Override
     public void start(Stage stage) throws IOException {
