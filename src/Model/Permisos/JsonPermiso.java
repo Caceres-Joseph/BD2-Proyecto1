@@ -82,6 +82,14 @@ public class JsonPermiso {
             + "        ]\n"
             + "    },\n"
             + "    \n"
+            + "	\"cheques\" : {\n"
+            + "		\"permisos\":[\n"
+            + "            \"crear\",\n"
+            + "            \"modificar\",\n"
+            + "            \"listar\"\n"
+            + "        ]\n"
+            + "    },\n"
+            + "    \n"
             + "	\"reportes\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"reporte1\",\n"
@@ -261,6 +269,23 @@ public class JsonPermiso {
 
                 if (permiso.equals("crear")) {
                     rutaControlador = "/View/Agencia/NuevaAgencia.fxml";
+                } else if (permiso.equals("listar")) {
+                    rutaControlador = "/View/Agencia/ListarAgencia.fxml";
+
+                } else if (permiso.equals("modificar")) {
+                    rutaControlador = "/View/Agencia/EditarAgencia.fxml";
+
+                } else if (permiso.equals("eliminar")) {
+
+                    //rutaControlador = "/View/Roles/EliminarRol.fxml";
+                } else {
+
+                    B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+                }
+            }else if (nombreModulo.toLowerCase().equals("cheques")) {
+
+                if (permiso.equals("crear")) {
+                    rutaControlador = "/View/Cheque/NuevoCheque.fxml";
                 } else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Agencia/ListarAgencia.fxml";
 
