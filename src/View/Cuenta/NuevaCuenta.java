@@ -80,6 +80,7 @@ public class NuevaCuenta implements Initializable {
 
         }
     }
+    
     mascaras mskDpi;
 
     /**

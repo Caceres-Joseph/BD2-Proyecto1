@@ -7,6 +7,13 @@ package Main;
 
 import Model.Permisos.JsonPermiso;
 import Model.Usuarios.UsuarioSession;
+import Model.Reportes.Auditoria;
+import Model.Reportes.Grafica;
+import Model.Reportes.Grafica2;
+import Model.Reportes.Grafica3;
+import Model.Reportes.Grafica4;
+import Model.Reportes.Grafica5;
+import Model.Reportes.ReporteGerencia;
 import View.Gui.Gui; 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -57,7 +64,20 @@ public class B2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+               
         launch(args);
+        //Auditoria auditoria = new Auditoria();
+        //auditoria.show();
+//        Grafica grafica = new Grafica("Grafica1");
+//        grafica.show();
+//        Grafica2 grafica2 = new Grafica2("Grafica2");
+//        grafica2.show();
+//        Grafica3 grafica3 = new Grafica3("Grafica3");
+//        grafica3.show();
+//        Grafica4 grafica4 = new Grafica4();
+//        grafica4.show();
+//        Grafica5 grafica5 = new Grafica5("Grafica5");
+//        grafica5.show();
     }
 
 }
