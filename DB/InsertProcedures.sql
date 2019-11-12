@@ -234,7 +234,6 @@ END;
 
 CREATE OR REPLACE PROCEDURE TRANSFERIR_CHEQUE(
     p_no_cuenta_origen IN CUENTA.NO_CUENTA%TYPE,
-    p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
     monto IN CUENTA.SALDO%TYPE,
     p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
     p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE,
@@ -243,36 +242,32 @@ CREATE OR REPLACE PROCEDURE TRANSFERIR_CHEQUE(
 IS
     saldo_inicial_origen CUENTA.SALDO%TYPE;
     saldo_final_origen CUENTA.SALDO%TYPE;
-
-    saldo_inicial_destino CUENTA.SALDO%TYPE;
-    saldo_final_destino CUENTA.SALDO%TYPE;
-
+    
     estado_cheque CHEQUE.ESTADO_CHEQUE%TYPE;
 
 BEGIN
     -- TOMANDO DE LA CUENTA DE ORIGEN LOS DATOS:
         SELECT CUENTA.SALDO INTO saldo_inicial_origen FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
-    -- TOMANDO DE LA CUENTA DE DESTINO LOS DATOS:
-        SELECT CUENTA.SALDO INTO saldo_inicial_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
     -- VERIFICANDO EL ESTADO DEL CHEQUE:
         SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.ID_CHEQUE = p_id_cheque;
-
-        IF(estado_cheque = 'ROBADO') THEN
+        -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÁ DENTRO DEL RANGO) (5)
+        IF(estado_cheque = 1) THEN
         -- EL CHEQUE FUE REPORTADO COMO ROBADO
         INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'REPORTADO COMO ROBADO');
-
-        ELSIF (estado_cheque = 'BLOQUEADO') THEN
+        
+        ELSIF (estado_cheque = 2) THEN 
         -- EL CHEQUE FUE BLOQUEADO
         INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE BLOQUEADO');
-
-        ELSIF (estado_cheque = 'PERDIDO') THEN
+        
+        ELSIF (estado_cheque = 3) THEN 
         -- EL CHEQUE FUE REPORTADO COMO PERDIDO
         INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE PERDIDO');
+        
+        ELSIF (estado_cheque = 4) THEN 
 
-        ELSIF (estado_cheque = 'PAGADO') THEN
         -- EL CHEQUE FUE REPORTADO COMO PERDIDO
         INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE YA HA SIDO PAGADO');
@@ -283,15 +278,9 @@ BEGIN
                 -- ES VALIDA LA TRANSACCION
                 -- DEBITO DEL ORIGEN...
                 saldo_final_origen := saldo_inicial_origen - monto;
-                -- ACREDITO AL DESTINO
-                saldo_final_destino := saldo_inicial_destino + monto;
-                -- INSERTANDO LOS DEBITOS
+                -- INSERTANDO LOS DEBITOS  
                 INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
                 VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'debito', saldo_inicial_origen, saldo_final_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1);
-                -- INSERTANDO LOS CREDITOS
-                INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'credito', saldo_inicial_destino, saldo_final_destino, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
-                COMMIT;
             ELSE
                 -- NO PROCEDE LA TRANSACCION
                 raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
@@ -361,7 +350,7 @@ END;
 
 
 
-
+/*
 call INSERT_CUENTA(5000,1,1,1); --DANIEL = 1
 call INSERT_CUENTA(3000,1,1,1); -- JOSEPH = 2
 call INSERT_CUENTA(2000,1,1,1); -- CUTZ = 3
@@ -378,4 +367,4 @@ CALL TRANSFERIR(3,2,2000,1,1);  -- CUTZ: 3000 JOSEPH: 3000*
 CALL TRANSFERIR(3,1,1000,1,1);  -- CUTZ: 2000* DANIEL: 5000*
 
 SELECT * FROM CUENTA;
-select * from transaccion;
+select * from transaccion;*/
