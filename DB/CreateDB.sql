@@ -133,7 +133,9 @@ ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id_usuario );
 CREATE TABLE chequera (
     id_chequera   INTEGER NOT NULL,
     no_cuenta      INTEGER NOT NULL,
-    estado_chequera INTEGER NOT NULL
+    estado_chequera INTEGER NOT NULL,
+    rango_inf INTEGER NOT NULL,
+    rango_sup INTEGER NOT NULL
 );
 
 ALTER TABLE chequera ADD CONSTRAINT chequera_pk PRIMARY KEY ( id_chequera );
@@ -223,7 +225,7 @@ ALTER TABLE usuario
     ADD CONSTRAINT usuario_rol_fk FOREIGN KEY ( rol_id_rol )
         REFERENCES rol ( id_rol )
             ON DELETE CASCADE;
-            
+
 ALTER TABLE chequera
     ADD CONSTRAINT chequera_cuenta_fk FOREIGN KEY ( no_cuenta )
         REFERENCES cuenta ( no_cuenta )
@@ -233,20 +235,20 @@ ALTER TABLE cheque
     ADD CONSTRAINT cheque_chequera_fk FOREIGN KEY ( id_chequera )
         REFERENCES chequera ( id_chequera )
             ON DELETE CASCADE;
-            
+
 ALTER TABLE cheque
     ADD CONSTRAINT chque_lote_fk FOREIGN KEY ( id_lote )
         REFERENCES lote ( id_lote )
             ON DELETE CASCADE;
-            
+
 ALTER TABLE lote
     ADD CONSTRAINT lote_banco_fk FOREIGN KEY ( id_banco )
         REFERENCES banco ( id_banco )
             ON DELETE CASCADE;
-            
 
--- Informe de Resumen de Oracle SQL Developer Data Modeler: 
--- 
+
+-- Informe de Resumen de Oracle SQL Developer Data Modeler:
+--
 -- CREATE TABLE                            12
 -- CREATE INDEX                             0
 -- ALTER TABLE                             24
@@ -275,15 +277,15 @@ ALTER TABLE lote
 -- CREATE SYNONYM                           0
 -- CREATE TABLESPACE                        0
 -- CREATE USER                              0
--- 
+--
 -- DROP TABLESPACE                          0
 -- DROP DATABASE                            0
--- 
+--
 -- REDACTION POLICY                         0
--- 
+--
 -- ORDS DROP SCHEMA                         0
 -- ORDS ENABLE SCHEMA                       0
 -- ORDS ENABLE OBJECT                       0
--- 
+--
 -- ERRORS                                   0
 -- WARNINGS                                 0
