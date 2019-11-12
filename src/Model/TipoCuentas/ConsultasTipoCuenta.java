@@ -5,11 +5,14 @@
  */
 package Model.TipoCuentas;
 
+import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,9 +24,10 @@ public class ConsultasTipoCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_TIPO_CUENTA(?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_TIPO_CUENTA(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, tc.getNombre());
+            call.setInt(2, tc.getEstado_tipo_cuenta());
             call.execute();
             call.close();
             return true;
@@ -46,10 +50,11 @@ public class ConsultasTipoCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_TIPO_CUENTA(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, tc.getId_tipo());
             call.setString(2, tc.getNombre());
+            call.setInt(3, tc.getEstado_tipo_cuenta());
             call.execute();
             call.close();
             return true;
@@ -74,7 +79,7 @@ public class ConsultasTipoCuenta extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM tipo_cuenta WHERE id_tipo=?";
+            String sql = "SELECT * FROM tipo_cuenta WHERE id_tipo=? AND estado_tipo_cuenta=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -83,6 +88,7 @@ public class ConsultasTipoCuenta extends Conexion{
             {
                 tc = new TipoCuenta(rs.getString("nombre"));
                 tc.setId_tipo(rs.getInt("id_tipo"));
+                tc.setEstado_tipo_cuenta(rs.getInt("estado_tipo_cuenta"));
             }
             return tc;
         } catch (Exception e) {
@@ -112,6 +118,74 @@ public class ConsultasTipoCuenta extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<TipoCuenta> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<TipoCuenta> tcs = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_tipo_cuenta", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM tipo_cuenta WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                TipoCuenta tc = new TipoCuenta(rs.getString("nombre"));
+                tc.setEstado_tipo_cuenta(rs.getInt("estado_tipo_cuenta"));
+                tc.setId_tipo(rs.getInt("id_tipo"));
+                tcs.add(tc);
+            }
+            return tcs;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<TipoCuenta> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<TipoCuenta> tcs = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM tipo_cuenta WHERE nombre LIKE '%"+LikeString+"%' AND estado_tipo_cuenta=1 ORDER BY id_tipo "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                TipoCuenta tc = new TipoCuenta(rs.getString("nombre"));
+                tc.setEstado_tipo_cuenta(rs.getInt("estado_tipo_cuenta"));
+                tc.setId_tipo(rs.getInt("id_tipo"));
+                tcs.add(tc);
+            }
+            return tcs;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
         finally
         {

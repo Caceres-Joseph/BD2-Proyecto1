@@ -4,98 +4,118 @@
  * and open the template in the editor.
  */
 package Controller;
+
+import Model.BD.BDOpciones;
 import Model.Usuarios.ConsultaUsuarios;
 import Model.Usuarios.Usuario;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
 /**
  *
  * @author ricar
  */
 public class UsuariosController {
+
     ConsultaUsuarios consultas;
-    
-    public UsuariosController()
-    {
+
+    public UsuariosController() {
         consultas = new ConsultaUsuarios();
     }
-    
+
     /**
      * Funcion para crear un nuevo Usuario
+     *
      * @param nombre
      * @param password
-     * @return 
+     * @param rol_id_rol
+     * @return
      */
-    public boolean creatUsuario(String nombre, String password)
-    {
+    public boolean creatUsuario(String nombre, String password, int rol_id_rol) {
         try {
-            return consultas.save(new Usuario(nombre, password));
+            return consultas.save(new Usuario(nombre, password, rol_id_rol));
         } catch (Exception e) {
             return false;
         }
     }
-    
+
     /**
      * Funcion para actualizar el usuario
+     *
      * @param id_usuario
      * @param nombre
      * @param password
-     * @return 
+     * @param rol_id_rol
+     * @return
      */
-    public boolean updateUsuario(int id_usuario, String nombre, String password)
-    {
+    public boolean updateUsuario(int id_usuario, String nombre, String password, int rol_id_rol) {
         try {
-            Usuario u = new Usuario(nombre, password);
+            Usuario u = new Usuario(nombre, password, rol_id_rol);
             u.setId_usuario(id_usuario);
             return consultas.update(u);
         } catch (Exception e) {
             return false;
         }
     }
-    
+
     /**
      * funcion para obtener un usuario en especifico
+     *
      * @param id
-     * @return 
+     * @return
      */
-    public Usuario getUsuario(int id)
-    {
+    public Usuario getUsuario(int id) {
         try {
             return consultas.findById(id);
         } catch (Exception e) {
             return null;
         }
     }
-    
+
     /**
      * Funcion para listar todos los usuraios
-     * @return 
+     *
+     * @return
      */
-    public ArrayList<Usuario> listUsuarios()
-    {
+    public ArrayList<Usuario> listUsuarios(BDOpciones.LimitOp limitOp, BDOpciones.Orden orden, int limite) {
         try {
-            ArrayList<Usuario> usuarios = new ArrayList<>();
-            ResultSet rs = consultas.listItems();
-            while(rs.next())
-            {
-                Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
-                u.setId_usuario(rs.getInt("id_usuario"));
-                usuarios.add(u);
-            }
+            ArrayList<Usuario> usuarios = consultas.listData(orden, limitOp, limite);
             return usuarios;
         } catch (Exception e) {
             return new ArrayList<>();
         }
     }
-    
+
+    /**
+     * Funcion para listar todos los usuraios TEST
+     *
+     * @return
+     */
+    public ArrayList<Usuario> listUsuariosTest() {
+        try {
+            ArrayList<Usuario> usuarios = new ArrayList<>();
+            
+            
+            Usuario u = new Usuario("Ricardo", "ILoveAndrea");
+            u.setId_usuario(1);
+            usuarios.add(u);
+            
+            
+            
+            return usuarios;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     /**
      * Metodo agregado para realizar un login
+     *
      * @param usuario
      * @param password
-     * @return 
+     * @return
      */
-    public boolean UserLogin(String usuario, String password)
-    {
+    public boolean UserLogin(String usuario, String password) {
         try {
             return consultas.usuarioLogIn(new Usuario(usuario, password));
         } catch (Exception e) {

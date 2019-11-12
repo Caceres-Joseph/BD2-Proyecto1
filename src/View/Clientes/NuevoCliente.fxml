@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -13,14 +14,51 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Clientes.NuevoCliente">
+<AnchorPane id="AnchorPane" prefHeight="501.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Clientes.NuevoCliente">
    <children>
-      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="46.0" layoutY="97.0" prefHeight="34.0" prefWidth="425.0" promptText="Nombre del Cliente">
+      <JFXTextField fx:id="txtDPI" labelFloat="true" layoutX="46.0" layoutY="86.0" prefHeight="34.0" prefWidth="451.0" promptText="* DPI">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
+      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="46.0" layoutY="148.0" prefHeight="34.0" prefWidth="211.0" promptText="* Nombres">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtApellido" labelFloat="true" layoutX="284.0" layoutY="148.0" prefHeight="34.0" prefWidth="211.0" promptText="* Apellidos">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtDireccion" labelFloat="true" layoutX="46.0" layoutY="206.0" prefHeight="34.0" prefWidth="451.0" promptText="* Direccion">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtCorreo" labelFloat="true" layoutX="46.0" layoutY="277.0" prefHeight="34.0" prefWidth="211.0" promptText="Correo" style="-fx-background-color: none;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField> 
+      <JFXTextField fx:id="txtTelefono" labelFloat="true" layoutX="284.0" layoutY="277.0" prefHeight="34.0" prefWidth="211.0" promptText="* Telefono (ext)####">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXDatePicker fx:id="txtNacimiento" layoutX="46.0" layoutY="348.0" prefHeight="28.0" prefWidth="234.0" promptText="Fecha de Nacimiento" />
+      <JFXButton buttonType="RAISED" layoutX="63.0" layoutY="415.0" onAction="#clckFirma" style="-fx-background-color: #5882FA;" text="Seleccionar Firma" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="361.0" layoutY="415.0" onAction="#clckFoto" style="-fx-background-color: #5882FA;" text="Seleccionar Foto" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXButton>
+      <ImageView fx:id="imgFoto" fitHeight="180.0" fitWidth="180.0" layoutX="341.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgFirma" fitHeight="180.0" fitWidth="180.0" layoutX="46.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" />
       <GridPane layoutX="10.0" layoutY="10.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="212.0" />
@@ -33,7 +71,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
                <children>
-                  <Label styleClass="title" text="Clientes">
+                  <Label styleClass="title" text="Nuevo Cliente">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -57,10 +95,5 @@
             </JFXButton>
          </children>
       </GridPane>
-      <JFXTextField fx:id="txtDireccion" labelFloat="true" layoutX="46.0" layoutY="183.0" prefHeight="34.0" prefWidth="425.0" promptText="Direccion">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </JFXTextField>
    </children>
 </AnchorPane>

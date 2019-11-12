@@ -5,11 +5,14 @@
  */
 package Model.Permisos;
 
+import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,10 +24,11 @@ public class ConsultasPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_PERMISO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_PERMISO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, permiso.getNombre());
             call.setString(2, permiso.getDescripcion());
+            call.setInt(3, permiso.getEstado_permiso());
             call.execute();
             call.close();
             return true;
@@ -46,11 +50,12 @@ public class ConsultasPermiso extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_PERMISO(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_PERMISO(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, permiso.getId_permiso());
             call.setString(2, permiso.getNombre());
-            call.setString(3, permiso.getDescripcion());    
+            call.setString(3, permiso.getDescripcion()); 
+            call.setInt(4, permiso.getEstado_permiso());
             call.execute();
             call.close();
             return true;
@@ -73,7 +78,7 @@ public class ConsultasPermiso extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM permiso WHERE id_permiso=?";
+            String sql = "SELECT * FROM permiso WHERE id_permiso=? AND estado_permiso=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -82,6 +87,7 @@ public class ConsultasPermiso extends Conexion{
             {
                 p = new Permiso(rs.getString("nombre"), rs.getString("descripcion"));
                 p.setId_permiso(rs.getInt("id_permiso"));
+                p.setEstado_permiso(rs.getInt("estado_permiso"));
             }
             return p;
         } catch (Exception e) {
@@ -110,6 +116,74 @@ public class ConsultasPermiso extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Permiso> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Permiso> permisos = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_permiso", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM permiso WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Permiso p = new Permiso(rs.getString("nombre"), rs.getString("descripcion"));
+                p.setId_permiso(rs.getInt("id_permiso"));
+                p.setEstado_permiso(rs.getInt("estado_permiso"));
+                permisos.add(p);
+            }
+            return permisos;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Permiso> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Permiso> permisos = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM permiso WHERE nombre LIKE '%"+LikeString+"%' AND estado_permiso=1 ORDER BY id_permiso "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Permiso p = new Permiso(rs.getString("nombre"), rs.getString("descripcion"));
+                p.setId_permiso(rs.getInt("id_permiso"));
+                p.setEstado_permiso(rs.getInt("estado_permiso"));
+                permisos.add(p);
+            }
+            return permisos;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
         finally
         {

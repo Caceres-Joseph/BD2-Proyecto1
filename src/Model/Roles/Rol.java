@@ -12,10 +12,12 @@ package Model.Roles;
 public class Rol {
     private int id_rol;
     private String nombre;
+    private int estado_rol;
     
     public Rol(String nombre)
     {
         this.nombre = nombre;
+        this.estado_rol = 1;
     }
 
     public int getId_rol() {
@@ -32,6 +34,14 @@ public class Rol {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getEstado_rol() {
+        return estado_rol;
+    }
+
+    public void setEstado_rol(int estado_rol) {
+        this.estado_rol = estado_rol;
     }
     
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Controller;
+import Model.BD.BDOpciones;
 import Model.Roles.Rol;
 import Model.Roles.ConsultasRoles;
 import java.sql.ResultSet;
@@ -70,17 +71,30 @@ public class RolesController {
      * Funcion que lista los roles
      * @return 
      */
-    public ArrayList<Rol> listRoles()
+    public ArrayList<Rol> listRoles(BDOpciones.LimitOp limitOp, BDOpciones.Orden orden, int limite)
+    {
+        try {
+            ArrayList<Rol> roles = consultas.listData(orden, limitOp, limite);
+            return roles;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+    
+    
+    
+    /**
+     * Funcion que lista los roles  TEST
+     * @return 
+     */
+    public ArrayList<Rol> listRolesTest()
     {
         try {
             ArrayList<Rol> roles = new ArrayList<>();
-            ResultSet rs = consultas.listItems();
-            while(rs.next())
-            {
-                Rol r = new Rol(rs.getString("nombre"));
-                r.setId_rol(rs.getInt("id_rol"));
-                roles.add(r);
-            }
+            
+            Rol rol=new Rol("Gerente");
+            roles.add(rol);
+            
             return roles;
         } catch (Exception e) {
             return new ArrayList<>();

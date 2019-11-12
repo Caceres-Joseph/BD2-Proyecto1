@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Operaciones.Debitar">
+   <children>
+      <GridPane styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="212.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="279.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1054.0" minWidth="10.0" prefWidth="156.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
+               <children>
+                  <Label styleClass="title" text="Debitar">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <JFXButton onAction="#clckAceptar" text="Aceptar" textFill="WHITE" GridPane.columnIndex="1">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Gui/img/baseline_play_arrow_white_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </GridPane>
+      <JFXTextField fx:id="txtMonto" labelFloat="true" layoutX="35.0" layoutY="209.0" prefHeight="34.0" prefWidth="425.0" promptText="Monto" AnchorPane.topAnchor="209.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtCuenta" labelFloat="true" layoutX="35.0" layoutY="107.0" prefHeight="34.0" prefWidth="425.0" promptText="No. Cuenta">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+   </children>
+</AnchorPane>

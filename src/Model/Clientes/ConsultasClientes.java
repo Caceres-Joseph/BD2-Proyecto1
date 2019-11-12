@@ -5,11 +5,14 @@
  */
 package Model.Clientes;
 
+import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,10 +24,18 @@ public class ConsultasClientes extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_CLIENTE(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_CLIENTE(?,?,?,?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
-            call.setString(1, cliente.getNombre());
-            call.setString(2, cliente.getDireccion());
+            call.setInt(1, cliente.getId_cliente());
+            call.setString(2, cliente.getNombre());
+            call.setString(3, cliente.getApellido());
+            call.setString(4, cliente.getDireccion());
+            call.setString(5, cliente.getCorreo());
+            call.setString(6, cliente.getTelefono());
+            call.setDate(7, cliente.getFecha_nacimiento());
+            call.setInt(8, cliente.getEstado_cliente());
+            call.setString(9, cliente.getFoto());
+            call.setString(10, cliente.getFirma());
             call.execute();
             call.close();
             return true;
@@ -47,11 +58,18 @@ public class ConsultasClientes extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL UPDATE_CLIENTE(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL UPDATE_CLIENTE(?,?,?,?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
-            call.setInt(1,cliente.getId_cliente());
+            call.setInt(1, cliente.getId_cliente());
             call.setString(2, cliente.getNombre());
-            call.setString(3, cliente.getDireccion());
+            call.setString(3, cliente.getApellido());
+            call.setString(4, cliente.getDireccion());
+            call.setString(5, cliente.getCorreo());
+            call.setString(6, cliente.getTelefono());
+            call.setDate(7, cliente.getFecha_nacimiento());
+            call.setInt(8, cliente.getEstado_cliente());
+            call.setString(9, cliente.getFoto());
+            call.setString(10, cliente.getFirma());
             call.execute();
             call.close();
             return true;
@@ -75,15 +93,19 @@ public class ConsultasClientes extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM cliente WHERE id_cliente=?";
+            String sql = "SELECT * FROM cliente WHERE dpi_cliente=? AND estado_cliente=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             Cliente c = null;
             if(rs.next())
             {
-                c = new Cliente(rs.getString("nombre"), rs.getString("direccion"));
-                c.setId_cliente(rs.getInt("id_cliente"));
+                c = new Cliente(rs.getInt("dpi_cliente"), rs.getString("nombre"), rs.getString("apellido")
+                        , rs.getString("direccion"), rs.getString("correo")
+                        , rs.getString("telefono")
+                        , rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente")
+                        , rs.getString("firma"), rs.getString("foto")
+                );
             }
             return c;
         } catch (Exception e) {
@@ -106,13 +128,85 @@ public class ConsultasClientes extends Conexion{
         try {
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM cliente ORDER BY  id_cliente DESC";
+            String sql = "SELECT * FROM cliente ORDER BY  dpi_cliente DESC";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             return rs;
         } catch (Exception e) {
             System.err.println(e);
             return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Cliente> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Cliente> clientes = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_cliente", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM cliente WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Cliente c = new Cliente(rs.getInt("dpi_cliente")
+                        ,rs.getString("nombre"), rs.getString("apellido"), rs.getString("direccion"), rs.getString("correo")
+                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente")
+                        , rs.getString("firma"), rs.getString("foto")
+                );
+                clientes.add(c);
+            }
+            return clientes;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Cliente> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Cliente> clientes = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM cliente WHERE nombre LIKE '%"+LikeString+"%' OR apellido LIKE '%"+LikeString+"%' OR correo LIKE '%"+LikeString+"%' AND esatdo_cliente=1 ORDER BY dpi_cliente "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Cliente c = new Cliente(rs.getInt("dpi_cliente")
+                        ,rs.getString("nombre"), rs.getString("apellido"), rs.getString("direccion"), rs.getString("correo")
+                        , rs.getString("telefono"),rs.getDate("fecha_nacimiento"), rs.getInt("estado_cliente")
+                        , rs.getString("firma"), rs.getString("foto")
+                );
+                clientes.add(c);
+            }
+            return clientes;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
         finally
         {

@@ -5,11 +5,14 @@
  */
 package Model.Roles;
 
+import Model.BD.BDOpciones;
+import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,9 +24,10 @@ public class ConsultasRoles extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_ROL(?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL INSERT_ROL(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setString(1, rol.getNombre());
+            call.setInt(2, rol.getEstado_rol());
             call.execute();
             call.close();
             return true;
@@ -49,6 +53,7 @@ public class ConsultasRoles extends Conexion{
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, rol.getId_rol());
             call.setString(2, rol.getNombre());
+            call.setInt(3, rol.getEstado_rol());
             call.execute();
             call.close();
             return true;
@@ -73,7 +78,7 @@ public class ConsultasRoles extends Conexion{
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
-            String sql = "SELECT * FROM rol WHERE id_rol=?";
+            String sql = "SELECT * FROM rol WHERE id_rol=? AND estado_rol=1";
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -82,6 +87,7 @@ public class ConsultasRoles extends Conexion{
             {
                 r = new Rol(rs.getString("nombre"));
                 r.setId_rol(rs.getInt("id_rol"));
+                r.setEstado_rol(rs.getInt("estado_rol"));
             }
             return r;
         } catch (Exception e) {
@@ -111,6 +117,74 @@ public class ConsultasRoles extends Conexion{
         } catch (Exception e) {
             System.err.println(e);
             return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Rol> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Rol> roles = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            ArrayList<ColumnaTabla> columnas = new ArrayList<>();
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_rol", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
+            {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            }
+            String sql = "SELECT * FROM rol WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Rol r = new Rol(rs.getString("nombre"));
+                r.setEstado_rol(rs.getInt("estado_rol"));
+                r.setId_rol(rs.getInt("id_rol"));
+                roles.add(r);
+            }
+            return roles;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public ArrayList<Rol> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Rol> roles = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            String sql = "SELECT * FROM rol WHERE nombre LIKE '%"+LikeString+"%' AND estado_rol=1 ORDER BY id_rol "+BDOpciones.getOrder(Opcorden);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Rol r = new Rol(rs.getString("nombre"));
+                r.setEstado_rol(rs.getInt("estado_rol"));
+                r.setId_rol(rs.getInt("id_rol"));
+                roles.add(r);
+            }
+            return roles;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
         finally
         {
