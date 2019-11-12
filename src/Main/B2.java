@@ -6,6 +6,7 @@
 package Main;
 
 import Model.Permisos.JsonPermiso;
+import Model.Usuarios.UsuarioSession;
 import Model.Reportes.Auditoria;
 import Model.Reportes.Grafica;
 import Model.Reportes.Grafica2;
@@ -36,7 +37,7 @@ public class B2 extends Application {
 
     public static Stage sta;
     public static Gui GuiController;
-
+    public static UsuarioSession usuario;
 
     @Override
     public void start(Stage stage) throws IOException {

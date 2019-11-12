@@ -6,6 +6,7 @@
 package Controller;
 import Model.Agencias.Agencia;
 import Model.Agencias.ConsultasAgencia;
+import Model.BD.BDOpciones;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 /**
@@ -76,14 +77,7 @@ public class AgenciasController {
     public ArrayList<Agencia> listAgencias()
     {
         try {
-            ArrayList<Agencia> agencias = new ArrayList<>();
-            ResultSet rs = consultas.listItems();
-            while(rs.next())
-            {
-                Agencia a = new Agencia(rs.getString("nombre"), rs.getString("direccion"), rs.getInt("banco_id_banco"));
-                a.setId_agencia(rs.getInt("id_agencia"));
-                agencias.add(a);
-            }
+            ArrayList<Agencia> agencias = consultas.listData(BDOpciones.Orden.DESC, BDOpciones.LimitOp.NO_LIMIT, -1);
             return agencias;
         } catch (Exception e) {
             return new ArrayList<>();
