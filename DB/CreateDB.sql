@@ -142,6 +142,7 @@ ALTER TABLE chequera ADD CONSTRAINT chequera_pk PRIMARY KEY ( id_chequera );
 
 CREATE TABLE cheque (
     id_cheque   INTEGER NOT NULL,
+    correlativo INTEGER NOT NULL,
     id_chequera      INTEGER NOT NULL,
     estado_cheque     INTEGER NOT NULL,
     id_lote     INTEGER

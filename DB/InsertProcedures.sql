@@ -199,7 +199,13 @@ IS
     saldo_inicial_destino CUENTA.SALDO%TYPE;
     saldo_final_destino CUENTA.SALDO%TYPE;
 
+		origen_existe INTEGER;
+		destino_existe INTEGER;
+
 BEGIN
+		SELECT COUNT(*) INTO origen_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
+		SELECT COUNT(*) INTO destino_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+		IF origen_existe = 1 AND destino_existe = 1 THEN
     -- TOMANDO DE LA CUENTA DE ORIGEN LOS DATOS:
         SELECT CUENTA.SALDO INTO saldo_inicial_origen FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
     -- TOMANDO DE LA CUENTA DE DESTINO LOS DATOS:
@@ -224,20 +230,21 @@ BEGIN
         ELSE
             -- NO PROCEDE LA TRANSACCION
             raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
-			ROLLBACK;
+						ROLLBACK;
         END IF;
+		ELSE
+			-- ALGUNA DE LAS CUENTAS NO EXISTE
+			raise_application_error(-20456,'Una de las cuentas especificadas no existe');
+		END IF;
 END;
 /
-
-
-
 
 CREATE OR REPLACE PROCEDURE TRANSFERIR_CHEQUE(
     p_no_cuenta_origen IN CUENTA.NO_CUENTA%TYPE,
     monto IN CUENTA.SALDO%TYPE,
     p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
     p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE,
-    p_id_cheque IN CHEQUE.ID_CHEQUE%TYPE
+		p_correlativo IN CHEQUE.CORRELATIVO%TYPE
 )
 IS
     saldo_inicial_origen CUENTA.SALDO%TYPE;
@@ -245,48 +252,70 @@ IS
 
     estado_cheque CHEQUE.ESTADO_CHEQUE%TYPE;
 
+		cuenta_existe INTEGER;
+		num_chequeras INTEGER;
+		rango INTEGER;
+		id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
+
+		cheque_existe INTEGER;
+
 BEGIN
-    -- TOMANDO DE LA CUENTA DE ORIGEN LOS DATOS:
-        SELECT CUENTA.SALDO INTO saldo_inicial_origen FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
-    -- VERIFICANDO EL ESTADO DEL CHEQUE:
-        SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.ID_CHEQUE = p_id_cheque;
-        -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÁ DENTRO DEL RANGO) (5)
-        IF(estado_cheque = 1) THEN
-        -- EL CHEQUE FUE REPORTADO COMO ROBADO
-        INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-            VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'REPORTADO COMO ROBADO');
-
-        ELSIF (estado_cheque = 2) THEN
-        -- EL CHEQUE FUE BLOQUEADO
-        INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-            VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE BLOQUEADO');
-
-        ELSIF (estado_cheque = 3) THEN
-        -- EL CHEQUE FUE REPORTADO COMO PERDIDO
-        INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-            VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE PERDIDO');
-
-        ELSIF (estado_cheque = 4) THEN
-
-        -- EL CHEQUE FUE REPORTADO COMO PERDIDO
-        INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-            VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE YA HA SIDO PAGADO');
-
-        ELSE
-            -- REALIZANDO COMPROBACION SI EXISTEN FONDOS
-            IF saldo_inicial_origen >= monto THEN
-                -- ES VALIDA LA TRANSACCION
-                -- DEBITO DEL ORIGEN...
-                saldo_final_origen := saldo_inicial_origen - monto;
-                -- INSERTANDO LOS DEBITOS
-                INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'debito', saldo_inicial_origen, saldo_final_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1);
-            ELSE
-                -- NO PROCEDE LA TRANSACCION
-                raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
-                ROLLBACK;
-            END IF;
-        END IF;
+		SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen; -- COMPROBACION DE QUE LA CUENTA EXISTE
+		IF cuenta_existe = 1 THEN
+			-- TOMANDO SALDO INICIAL
+			SELECT CUENTA.SALDO INTO saldo_inicial_origen FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen FOR UPDATE;
+		 	-- VERIFICANDO QUE EL CHEQUE EXISTE
+			SELECT COUNT(*) INTO num_chequeras FROM CHEQUERA WHERE CHEQUERA.NO_CUENTA = p_no_cuenta_origen;
+			rango := (num_chequeras*100); -- CALCULANDO LOS CHEQUES
+			IF p_correlativo <= rango THEN
+				-- OBTENGO EL ID DE LA CHEQUERA
+				SELECT CHEQUERA.ID_CHEQUERA INTO id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = p_no_cuenta_origen;
+				-- VERIFICANDO SI EL CHEQUE YA EXISTE EN LA TABLA DE CHEQUES
+				SELECT COUNT(*) INTO cheque_existe FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+				IF cheque_existe = 0 THEN
+					-- PUEDO PROCEDER A TRANSFERIR
+					IF saldo_inicial_origen >= monto THEN
+						-- ES VALIDA LA TRANSACCION
+						-- DEBITO DEL ORIGEN...
+						saldo_final_origen := saldo_inicial_origen - monto;
+						INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
+              VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_final_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1);
+						UPDATE CUENTA SET SALDO = saldo_final_origen WHERE NO_CUENTA = p_no_cuenta_origen;
+						INSERT INTO CHEQUE(CORRELATIVO, ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, id_chequera, 4); -- INSERTANDO CHEQUE PAGADO
+						COMMIT;
+					ELSE
+						raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
+						ROLLBACK;
+					END IF;
+				ELSE
+					-- EL CHEQUE YA EXISTE DEBO VERIFICAR SU ESTADO
+					SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+					-- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÁ DENTRO DEL RANGO) (5)
+					IF estado_cheque = 1 THEN
+						-- EL CHEQUE FUE REPORTADO COMO ROBADO
+						INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
+							VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'REPORTADO COMO ROBADO');
+					ELSIF estado_cheque = 2 THEN
+						-- EL CHEQUE FUE BLOQUEADO
+						INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
+            	VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE BLOQUEADO');
+					ELSIF estado_cheque = 3 THEN
+						-- EL CHEQUE FUE REPORTADO COMO PERDIDO
+						INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
+            	VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE PERDIDO');
+					ELSIF estado_cheque = 4 THEN
+						-- EL CHEQUE YA FUE PAGADO
+						INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
+            	VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE YA HA SIDO PAGADO');
+					END IF;
+				END IF;
+			ELSE
+				raise_application_error(-20456, 'Cheque no existe en el sistema para la cuenta especificada');
+			END IF;
+		ELSE
+				-- LA CUENTA NO EXISTE
+				raise_application_error(-20456, 'Cuenta especificada no existe');
+		END IF;
 END;
 /
 
@@ -351,8 +380,44 @@ END;
 /
 
 
-
-
+CREATE OR REPLACE PROCEDURE REPORTAR_CHEQUE(
+	p_correlativo IN CHEQUE.CORRELATIVO%TYPE,
+	no_cuenta IN CUENTA.NO_CUENTA%TYPE,
+	estado_cheque IN CHEQUE.ESTADO_CHEQUE%TYPE
+)
+IS
+	cuenta_existe INTEGER;
+	id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
+	num_chequeras INTEGER;
+	rango CHEQUERA.RANGO_SUP%TYPE;
+	actualiza_cheque INTEGER;
+BEGIN
+	--COMPROBACION DE EXISTE CUENTA
+	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = no_cuenta;
+	IF cuenta_existe = 1 THEN
+		-- COMPROBACION QUE LA CHEQUERA EXISTA
+		SELECT COUNT(*) INTO num_chequeras FROM CHEQUERA WHERE CHEQUERA.NO_CUENTA = no_cuenta;
+		rango := (num_chequeras * 100);
+		IF p_correlativo <= rango THEN
+			SELECT CHEQUERA.ID_CHEQUERA INTO id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = no_cuenta;
+			SELECT COUNT(*) INTO actualiza_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+			IF actualiza_cheque = 0 THEN
+				--EL CHEQUE NO EXISTIA EN LA BD ASI QUE LO CREO
+				INSERT INTO CHEQUE(CORRELATIVO,ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, id_chequera, estado_cheque);
+				COMMIT;
+			ELSE
+				-- EL CHEQUE YA EXISTE EN LA BD ASI QUE ACTUALIZO EL ESTADO
+				UPDATE CHEQUE SET ESTADO_CHEQUE=estado_cheque WHERE ID_CHEQUERA = id_chequera AND CORRELATIVO=p_correlativo;
+				COMMIT;
+			END IF;
+		ELSE
+			raise_application_error(-20456,'Cheque especificado no existe');
+		END IF;
+	ELSE
+		raise_application_error(-20456,'Cuenta solicitada no Existe');
+	END IF;
+END;
+/
 /*
 call INSERT_CUENTA(5000,1,1,1); --DANIEL = 1
 call INSERT_CUENTA(3000,1,1,1); -- JOSEPH = 2
