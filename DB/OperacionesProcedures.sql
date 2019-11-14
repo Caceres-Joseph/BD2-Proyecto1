@@ -68,6 +68,12 @@ IS
     origen_estado CUENTA.ESTADO_CUENTA%TYPE;
     destino_estado CUENTA.ESTADO_CUENTA%TYPE;
 
+    disponible_origen CUENTA.SALDO%TYPE;
+    reserva_origen CUENTA.SALDO%TYPE;
+
+    disponible_destino CUENTA.SALDO%TYPE;
+    reserva_destino CUENTA.SALDO%TYPE;
+
 BEGIN
 		SELECT COUNT(*) INTO origen_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
 		SELECT COUNT(*) INTO destino_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
@@ -94,7 +100,16 @@ BEGIN
             INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
             VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'credito', saldo_inicial_destino, saldo_final_destino, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
             UPDATE CUENTA SET SALDO = saldo_final_origen WHERE NO_CUENTA = p_no_cuenta_origen;
+            -- ACTUALIZO EL ORIGEN
+            SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible_origen, reserva_origen FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
+            UPDATE CUENTA SET SALDO_TOTAL = (disponible_origen + reserva_origen) WHERE NO_CUENTA = p_no_cuenta_origen;
+            ----------------------
+            -- ACTUALIZO EL DESTINO
             UPDATE CUENTA SET SALDO = saldo_final_destino WHERE NO_CUENTA = p_no_cuenta_destino;
+            ----------------------
+            SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible_destino, reserva_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+            UPDATE CUENTA SET SALDO_TOTAL = (disponible_destino + reserva_destino) WHERE NO_CUENTA = p_no_cuenta_destino;
+            ----------------------
             COMMIT;
         ELSE
             -- NO PROCEDE LA TRANSACCION
@@ -133,6 +148,9 @@ IS
 		cheque_existe INTEGER;
 
     estado_cuenta CUENTA.ESTADO_CUENTA%TYPE;
+
+    reserva CUENTA.SALDO%TYPE;
+    disponible CUENTA.SALDO%TYPE;
 BEGIN
 		SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen; -- COMPROBACION DE QUE LA CUENTA EXISTE
 		IF cuenta_existe = 1 THEN
@@ -157,6 +175,10 @@ BEGIN
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
                 VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_final_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1);
               UPDATE CUENTA SET SALDO = saldo_final_origen WHERE NO_CUENTA = p_no_cuenta_origen;
+              ------------------------------------------
+              SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible, reserva FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
+              UPDATE CUENTA SET SALDO_TOTAL = (disponible+reserva) WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
+              ------------------------------------------
               INSERT INTO CHEQUE(CORRELATIVO, ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, id_chequera, 4); -- INSERTANDO CHEQUE PAGADO
               COMMIT;
             ELSE
@@ -209,6 +231,8 @@ IS
 	saldo_final CUENTA.SALDO%TYPE;
 	saldo_inicial CUENTA.SALDO%TYPE;
   estado_cuenta_destino CUENTA.ESTADO_CUENTA%TYPE;
+  reserva CUENTA.SALDO%TYPE;
+  disponible CUENTA.SALDO%TYPE;
 BEGIN
 	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
 	IF p_no_cuenta_destino = 1 THEN
@@ -219,6 +243,10 @@ BEGIN
       INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
       VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'credito', saldo_inicial, saldo_final, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
       UPDATE CUENTA SET SALDO = saldo_final WHERE NO_CUENTA = p_no_cuenta_destino;
+      -------------------------------
+      SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible, reserva FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+      UPDATE CUENTA SET SALDO_TOTAL = (disponible + reserva) WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+      -------------------------------
       COMMIT;
     ELSE
       raise_application_error(-20456, 'La cuenta de destino esta bloqueada, no puede acreditar');
@@ -242,6 +270,8 @@ IS
 	saldo_final CUENTA.SALDO%TYPE;
 	saldo_inicial CUENTA.SALDO%TYPE;
   estado_cuenta_destino CUENTA.ESTADO_CUENTA%TYPE;
+  reserva CUENTA.SALDO%TYPE;
+  disponible CUENTA.SALDO%TYPE;
 BEGIN
 	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
 	IF p_no_cuenta_destino = 1 THEN
@@ -253,6 +283,10 @@ BEGIN
   			INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
   			VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'debito', saldo_inicial, saldo_final, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
   			UPDATE CUENTA SET SALDO = saldo_final WHERE NO_CUENTA = p_no_cuenta_destino;
+        -------------------------------
+        SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible, reserva FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+        UPDATE CUENTA SET SALDO_TOTAL = (disponible + reserva) WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+        -------------------------------
   			COMMIT;
   		ELSE
   			-- ERROR
@@ -329,7 +363,7 @@ BEGIN
 	SELECT COUNT(*) INTO cliente_existe FROM CLIENTE WHERE CLIENTE.DPI_CLIENTE = p_dpi_cliente;
 	IF cliente_existe = 1 THEN
 		-- CREO SU CUENTA
-		INSERT INTO CUENTA(SALDO, SALDO_TOTAL, SALDO_RESERVA, BANCO_ID_BANCO, TIPO_CUENTA_ID_TIPO, ESTADO_CUENTA) VALUES(p_saldo_inicial, 0, 0, p_banco_id_banco, p_tipo_cuenta, p_estado_cuenta)
+		INSERT INTO CUENTA(SALDO, SALDO_TOTAL, SALDO_RESERVA, BANCO_ID_BANCO, TIPO_CUENTA_ID_TIPO, ESTADO_CUENTA) VALUES(p_saldo_inicial, p_saldo_inicial, 0, p_banco_id_banco, p_tipo_cuenta, p_estado_cuenta)
 			RETURNING CUENTA.NO_CUENTA INTO recent_cuenta;
 		-- HAGO LA ASOCIACION
 		INSERT INTO MANCOMUNADA(CLIENTE_DPI_CLIENTE, CUENTA_NO_CUENTA, ESTADO_MANCOMUNADA) VALUES(p_dpi_cliente, recent_cuenta, 1);
