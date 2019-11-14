@@ -41,7 +41,7 @@ ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( dpi_cliente );
 CREATE TABLE cuenta (
     no_cuenta             INTEGER NOT NULL,
     saldo                 REAL NOT NULL,
-    saldo_disponible      REAL NOT NULL,
+    saldo_total           REAL NOT NULL,
     saldo_reserva         REAL NOT NULL,
     banco_id_banco        INTEGER NOT NULL,
     tipo_cuenta_id_tipo   INTEGER NOT NULL,
