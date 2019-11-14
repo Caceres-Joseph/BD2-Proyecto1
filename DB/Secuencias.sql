@@ -95,7 +95,7 @@ BEGIN
 END;
 /
 
---TIPO CUENTA 
+--TIPO CUENTA
 CREATE SEQUENCE tipo_cuenta_sequence;
 CREATE OR REPLACE TRIGGER tipo_cuenta_on_insert
     BEFORE INSERT ON tipo_cuenta
@@ -154,4 +154,3 @@ BEGIN
     FROM dual;
 END;
 /
-
