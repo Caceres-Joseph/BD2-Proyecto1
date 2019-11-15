@@ -47,9 +47,13 @@ public class RecibirConciliacionController {
                 
             }
             input.close();
+            
         } catch (FileNotFoundException ex) {
             System.out.println(ex);
         }
+        
+        //Verificación del lote
+        consulta.verificarLote(lote.getId_lote());
     }
     
     
