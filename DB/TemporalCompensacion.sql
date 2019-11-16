@@ -282,6 +282,8 @@ BEGIN
     
     end loop;
   close c1;
+  
+  UPDATE lote_tmp_1 SET estado = 2 WHERE id_lote = p_id_lote; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
 END;
 /
 
