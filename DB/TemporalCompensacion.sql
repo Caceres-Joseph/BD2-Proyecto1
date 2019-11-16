@@ -288,6 +288,66 @@ END;
 /
 
 
+-- INSERTAR REGISTRO NUEVO CHEQUE COMPENSADO////////////////////////////////////////////////////////////////////////////////////
+CREATE OR REPLACE PROCEDURE LIBERAR_FONDOS(
+    p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
+    monto IN CUENTA.SALDO%TYPE,
+    p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
+    p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
+)
+IS
+    saldo_inicial_destino CUENTA.SALDO%TYPE;
+    saldo_final_destino CUENTA.SALDO%TYPE;
+
+    destino_existe INTEGER;
+
+    destino_estado CUENTA.ESTADO_CUENTA%TYPE;
+
+    disponible_destino CUENTA.SALDO%TYPE;
+    reserva_destino CUENTA.SALDO%TYPE;
+    
+BEGIN
+		SELECT COUNT(*) INTO destino_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+    IF destino_existe = 1 THEN
+    -- VER SI ESTAN DISPONIBLES LAS CUENTAS
+      
+      SELECT CUENTA.ESTADO_CUENTA INTO destino_estado FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+      IF destino_estado = 1 THEN
+        -- TOMANDO DE LA CUENTA DE DESTINO LOS DATOS:
+          SELECT CUENTA.SALDO INTO saldo_inicial_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino FOR UPDATE;
+          
+          SELECT CUENTA.SALDO_RESERVA INTO reserva_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino FOR UPDATE;
+        -- REALIZANDO COMPROBACION SI EXISTEN FONDOS
+        
+            
+            -- ACREDITO AL DESTINO
+            saldo_final_destino := saldo_inicial_destino + monto;
+    
+            -- INSERTANDO LOS CREDITOS
+            INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
+            VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'efectivo', 'credito', saldo_inicial_destino, saldo_final_destino, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_destino, 1);
+            
+            ----------------------
+            -- ACTUALIZO EL DESTINO LIBERO LA RESERVA
+            UPDATE CUENTA SET SALDO = saldo_final_destino WHERE NO_CUENTA = p_no_cuenta_destino;
+            
+            UPDATE CUENTA SET SALDO_RESERVA = reserva_destino - monto WHERE NO_CUENTA = p_no_cuenta_destino;
+            ----------------------
+            SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible_destino, reserva_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
+            UPDATE CUENTA SET SALDO_TOTAL = (disponible_destino + reserva_destino) WHERE NO_CUENTA = p_no_cuenta_destino;
+            ----------------------
+            COMMIT;
+      ELSE
+        raise_application_error(-20456, 'No se puede realizar transaccion con cuenta(s) bloqueadas');
+        ROLLBACK;
+      END IF;
+    ELSE
+			-- ALGUNA DE LAS CUENTAS NO EXISTE
+			raise_application_error(-20456,'Una de las cuentas especificadas no existe');
+    END IF;
+END;
+/
+
 
 /**
  * PRUEBAS PARA COMPENSACION
