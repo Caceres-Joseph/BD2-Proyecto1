@@ -212,20 +212,21 @@ public class ConsultasConciliacion extends Conexion {
     /**
      * Liberación de fondos cuando se recibe el lote de los archivos que 
      * ya fueron conciliados.
-     * @param lote
+     * @param cheque
+     * @param usuario
+     * @param terminal
      * @return 
      */
-    public boolean liberarFondos(ChequeConciliado cheque) {
+    public boolean liberarFondos(ChequeConciliado cheque, int usuario, int terminal) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_CHEQUE_TMP(?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL LIBERAR_FONDOS(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
-            call.setInt(1, cheque.getId_cheque());
-            call.setInt(2, cheque.getLote());
-            call.setInt(3, cheque.getEstado());
-            call.setDouble(4, cheque.getValor());
-            call.setInt(5, cheque.getCuenta());
-            call.setInt(6, cheque.getReferencia());
+            call.setInt(1, cheque.getReferencia());
+            call.setDouble(2, cheque.getValor());
+            call.setInt(3, usuario);
+            call.setInt(4, terminal);
+
             call.execute();
             call.close();
             return true;

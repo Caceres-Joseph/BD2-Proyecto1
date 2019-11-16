@@ -10,8 +10,6 @@ import Model.ReConciliacion.ConsultasConciliacion;
 import Model.ReConciliacion.Lote;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -196,11 +194,14 @@ public class RecibirConciliacionController {
     
     
     /**
-     * Lectura del archivo de conciliación para realizar.
+     * Lectura del archivo de conciliación para realizar la liberación 
+     * de la reserva.
      *
      * @param path
+     * @param usuario
+     * @param terminal
      */
-    public void LeerConciliados(String path) {
+    public void LeerConciliados(String path, int usuario, int terminal) {
 
         Lote lote = getDataLote(path);
         consulta.saveLote(lote);
@@ -212,9 +213,17 @@ public class RecibirConciliacionController {
 
                 String line = input.nextLine();
 
-                ChequeConciliado cheque = getDataCheque(line, lote.getId_lote());
-
-                consulta.saveCheque(cheque);
+                ChequeConciliado cheque = getDataChequeConciliado(line, lote.getId_lote());
+                
+                /**
+                 * Es posible que se encuentre en otro estado
+                 * de ser así no se liberan fondos de reserva
+                 * y el cheque no se toma en cuenta.
+                 */
+                if(cheque.getEstado() == 1){
+                    consulta.liberarFondos(cheque,usuario,terminal);
+                }
+                
 
             }
             input.close();
@@ -222,9 +231,6 @@ public class RecibirConciliacionController {
         } catch (FileNotFoundException ex) {
             System.out.println(ex);
         }
-
-        //Verificación del lote
-        consulta.verificarLote(lote.getId_lote());
     }
     
     
