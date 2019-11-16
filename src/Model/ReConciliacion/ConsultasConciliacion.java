@@ -178,5 +178,35 @@ public class ConsultasConciliacion extends Conexion {
         }
     }
     
+    
+        /**
+     * List todos los elementos de bancos del mas reciente al menos
+     * @return 
+     */
+    public ResultSet listChequesGrabados(int lote)
+    {
+        Connection con = getConexion();
+        try {
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM cheque_tmp_1  WHERE lote = ?";
+             ps = con.prepareStatement(sql);
+            ps.setInt(1, lote);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
 
 }
