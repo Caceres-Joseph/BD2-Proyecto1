@@ -148,7 +148,6 @@ public class RecibirConciliacionController {
 
                     cadena_archivo += banco + "|" + nuevo.getReferencia() + "|" + nuevo.getCuenta() + "|" + nuevo.getId_cheque() + "|" + nuevo.getValor() + "|" + nuevo.getEstado()+"\n";
                     
-                    
                     cheques.add(nuevo);
                 }
                 
@@ -194,4 +193,62 @@ public class RecibirConciliacionController {
             return false;
         }
     }
+    
+    
+    /**
+     * Lectura del archivo de conciliación para realizar.
+     *
+     * @param path
+     */
+    public void LeerConciliados(String path) {
+
+        Lote lote = getDataLote(path);
+        consulta.saveLote(lote);
+
+        try {
+            Scanner input = new Scanner(new File(path));
+
+            while (input.hasNextLine()) {
+
+                String line = input.nextLine();
+
+                ChequeConciliado cheque = getDataCheque(line, lote.getId_lote());
+
+                consulta.saveCheque(cheque);
+
+            }
+            input.close();
+
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex);
+        }
+
+        //Verificación del lote
+        consulta.verificarLote(lote.getId_lote());
+    }
+    
+    
+    
+    /**
+     * Método encargado de crear un nuevo objeto cheque que será insertado en la
+     * tabla temporal de cheques que se reciben para compensación.
+     *
+     * @param line
+     * @param lote
+     * @return retorna un nuevo cheque para guardar en la tabla temporal.
+     */
+    public ChequeConciliado getDataChequeConciliado(String line, int lote) {
+
+        String[] dataCheque = line.split("|");
+
+        int referencia = Integer.parseInt(dataCheque[1]);
+        int cuenta = Integer.parseInt(dataCheque[2]);
+        int id_cheque = Integer.parseInt(dataCheque[3]);
+        double monto = Double.parseDouble(dataCheque[4]);
+        int estado = Integer.parseInt(dataCheque[5]);
+
+        return new ChequeConciliado(id_cheque, cuenta, monto, lote, estado, referencia);
+    }
+    
+    
 }

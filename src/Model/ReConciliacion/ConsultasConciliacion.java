@@ -208,5 +208,38 @@ public class ConsultasConciliacion extends Conexion {
         }
     }
     
+    
+    /**
+     * Liberación de fondos cuando se recibe el lote de los archivos que 
+     * ya fueron conciliados.
+     * @param lote
+     * @return 
+     */
+    public boolean liberarFondos(ChequeConciliado cheque) {
+        Connection con = getConexion();
+        try {
+            String cmd = "{CALL INSERT_CHEQUE_TMP(?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setInt(1, cheque.getId_cheque());
+            call.setInt(2, cheque.getLote());
+            call.setInt(3, cheque.getEstado());
+            call.setDouble(4, cheque.getValor());
+            call.setInt(5, cheque.getCuenta());
+            call.setInt(6, cheque.getReferencia());
+            call.execute();
+            call.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
 
 }
