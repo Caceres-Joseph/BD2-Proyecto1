@@ -145,20 +145,9 @@ CREATE TABLE cheque (
     correlativo INTEGER NOT NULL,
     id_chequera      INTEGER NOT NULL,
     estado_cheque     INTEGER NOT NULL,
-    id_lote     INTEGER
 );
 
 ALTER TABLE cheque ADD CONSTRAINT cheque_pk PRIMARY KEY ( id_cheque );
-
-CREATE TABLE lote (
-    id_lote   INTEGER NOT NULL,
-    fecha DATE,
-    id_banco INTEGER NOT NULL,
-    no_doc INTEGER NOT NULL,
-    valor_estimado INTEGER NOT NULL
-);
-
-ALTER TABLE lote ADD CONSTRAINT lote_pk PRIMARY KEY ( id_lote );
 
 
 
@@ -237,15 +226,6 @@ ALTER TABLE cheque
         REFERENCES chequera ( id_chequera )
             ON DELETE CASCADE;
 
-ALTER TABLE cheque
-    ADD CONSTRAINT chque_lote_fk FOREIGN KEY ( id_lote )
-        REFERENCES lote ( id_lote )
-            ON DELETE CASCADE;
-
-ALTER TABLE lote
-    ADD CONSTRAINT lote_banco_fk FOREIGN KEY ( id_banco )
-        REFERENCES banco ( id_banco )
-            ON DELETE CASCADE;
 
 
 -- Informe de Resumen de Oracle SQL Developer Data Modeler:

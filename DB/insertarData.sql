@@ -61,26 +61,26 @@ COMMIT;
 
 
 --INSERTAR CHEQUERA -------------------------------------------------------------------------------------------------3 CHEQUERAS
-INSERT INTO CHEQUERA(id_chequera,no_cuenta,estado_chequera) values
-(1,123,1);
+INSERT INTO CHEQUERA(id_chequera,no_cuenta,estado_chequera,rango_inf,rango_sup) values
+(1,123,1,1,100);
 COMMIT;
-INSERT INTO CHEQUERA(id_chequera,no_cuenta,estado_chequera) values
-(2,456,1);
+INSERT INTO CHEQUERA(id_chequera,no_cuenta,estado_chequera,rango_inf,rango_sup) values
+(2,456,1,1,100);
 COMMIT;
-INSERT INTO CHEQUERA(id_chequera,no_cuenta,estado_chequera) values
-(3,789,1);
+INSERT INTO CHEQUERA(id_chequera,no_cuenta,estado_chequera,rango_inf,rango_sup) values
+(3,789,1,1,100);
 COMMIT;
 --------------------------------------------------------------------------------------------------------------------------------
 
 --INSERTAR CHEQUE -----------------------------------------------------------------------------------------------------3 CHEQUES
-INSERT INTO CHEQUE(id_cheque,id_chequera,estado_cheque) values
-(1,1,1);
+INSERT INTO CHEQUE(id_cheque,id_chequera,estado_cheque,correlativo) values
+(1,1,1,1);
 COMMIT;
-INSERT INTO CHEQUE(id_cheque,id_chequera,estado_cheque) values
-(2,2,1);
+INSERT INTO CHEQUE(id_cheque,id_chequera,estado_cheque,correlativo) values
+(2,2,1,2);
 COMMIT;
-INSERT INTO CHEQUE(id_cheque,id_chequera,estado_cheque) values
-(3,3,1);
+INSERT INTO CHEQUE(id_cheque,id_chequera,estado_cheque,correlativo) values
+(3,3,1,3);
 COMMIT;
 --------------------------------------------------------------------------------------------------------------------------------
 
