@@ -106,5 +106,27 @@ public class RecibirConciliacionController {
         return new ChequeConciliado(id_cheque,cuenta,monto,lote,0,referencia);
     }
     
+    
+    /**
+     * Grabación del lote que ya ha sido cuadrado
+     * @param lote
+     * @param usuario
+     * @param terminal
+     * @return 
+     */
+    public boolean operarLote(int lote, int usuario, int terminal){
+        
+        
+        try {
+            return consulta.grabarLote(lote,usuario,terminal);
+        } catch (Exception e) {
+            return false;
+        }
+        
+    }
+    
+    
+    
+    
 
 }
