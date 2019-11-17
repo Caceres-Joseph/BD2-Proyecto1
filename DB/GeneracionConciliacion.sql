@@ -1,6 +1,7 @@
 DROP TABLE LOTE_TMP_2 cascade constraints;
 DROP TABLE CHEQUE_TMP_2 cascade constraints;
 DROP SEQUENCE chequetmp2_sequence;
+DROP SEQUENCE lotetmp2_sequence;
 --------------------------------------------------------------------------------
 CREATE SEQUENCE chequetmp2_sequence;
 CREATE OR REPLACE TRIGGER cheque_tmp_2_on_insert
@@ -9,6 +10,17 @@ CREATE OR REPLACE TRIGGER cheque_tmp_2_on_insert
   BEGIN
     SELECT chequetmp2_sequence.nextval
     INTO :new.id_cheque
+    FROM dual;
+END;
+/
+--------------------------------------------------------------------------------
+CREATE SEQUENCE lotetmp2_sequence;
+CREATE OR REPLACE TRIGGER lote_tmp_2_on_insert
+  BEFORE INSERT ON LOTE_TMP_2
+  FOR EACH ROW
+  BEGIN
+    SELECT lotetmp2_sequence.nextval
+    INTO :new.id_lote_2
     FROM dual;
 END;
 /
@@ -59,6 +71,9 @@ IS
 
   lote_existe INTEGER%TYPE;
   id_lote LOTE_TMP_2.ID_lOTE_2%TYPE;
+
+  documentos LOTE_TMP_2.TOTAL_DOCUMENTOS%TYPE;
+  total LOTE_TMP_2.TOTAL_MONTO%TYPE;
 BEGIN
   SELECT COUNT(*) INTO banco_existe FROM BANCO WHERE BANCO.ID_BANCO = p_id_banco;
   IF banco_existe = 1 THEN
@@ -81,7 +96,12 @@ BEGIN
         INSERT INTO LOTE_TMP_2(ID_BANCO) VALUES(p_id_banco) RETURNING LOTE_TMP_2.ID_lOTE_2 INTO id_lote;
       END IF;
       -- PUEDO INSERTAR EL CHEQUE --
+      INSERT INTO CHEQUE_TMP_2(FECHA, CUENTA, VALOR, LOTE, REFERENCIA, CORRELATIVO) VALUES(TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), p_no_cuenta_local, p_monto, id_lote, p_no_cuenta_externa, p_correlativo_cheque);
       -- CALCULO LOS DATOS DEL LOTE
+      SELECT COUNT(*) INTO documentos FROM CHEQUE_TMP_2 WHERE CHEQUE_TMP_2.LOTE = id_lote; -- CONTANDO DOCUMENTOS EN EL LOTE
+      SELECT SUM(VALOR) INTO total FROM CHEQUE_TMP_2 WHERE CHEQUE_TMP_2.LOTE = id_lote; -- SUMANDO EL VALOR DEL LOTE
+      UPDATE LOTE_TMP_2 SET total_documentos = documentos, total_monto = total WHERE LOTE_TMP_2.ID_LOTE_2;
+      COMMIT; -- GUARDANDO CAMBIOS
     ELSE
       raise_application_error(-20456, 'Cuenta especificada no existe en el sistema');
     END IF;
