@@ -1,0 +1,7 @@
+
+ 
+#DB Connection 
+BASE = xe
+USER = joseph
+PASSWORD = oracle
+URL = jdbc:oracle:thin:@34.66.115.191:1521

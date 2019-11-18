@@ -15,13 +15,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author ricar
  */
 public class ConsultaUsuarios extends Conexion {
-
+    
     public boolean save(Usuario usuario) {
         Connection con = getConexion();
         try {
@@ -45,7 +44,7 @@ public class ConsultaUsuarios extends Conexion {
             }
         }
     }
-
+    
     public boolean update(Usuario usuario) {
         Connection con = getConexion();
         try {
@@ -70,7 +69,7 @@ public class ConsultaUsuarios extends Conexion {
             }
         }
     }
-
+    
     public Usuario findById(int id) {
         Connection con = getConexion();
         try {
@@ -99,7 +98,7 @@ public class ConsultaUsuarios extends Conexion {
             }
         }
     }
-
+    
     public ResultSet listItems() {
         Connection con = getConexion();
         try {
@@ -137,12 +136,17 @@ public class ConsultaUsuarios extends Conexion {
             ps.setString(1, usuario.getUsuario());
             ps.setString(2, usuario.getPassword());
             rs = ps.executeQuery();
-            if(rs.next())
-            {
-                return true;
+            
+            boolean bandera = false;
+            
+            while (rs.next()) {
+                bandera = true;          
+                System.out.println("-id usuario--");
+                System.out.println(rs.getString("ID_USUARIO"));
             }
+            
             ps.close();
-            return false;
+            return bandera;
         } catch (Exception e) {
             System.err.println(e);
             return false;
@@ -155,24 +159,21 @@ public class ConsultaUsuarios extends Conexion {
         }
     }
     
-    public ArrayList<Usuario> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite)
-    {
+    public ArrayList<Usuario> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite) {
         Connection con = getConexion();
         try {
             ArrayList<Usuario> users = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
             ArrayList<ColumnaTabla> columnas = new ArrayList<>();
-            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC,"estado_usuario", "1", BDOpciones.OperadorAritmeticos.EQUAL));
-            if(OpcLimite!=BDOpciones.LimitOp.NO_LIMIT)
-            {
-                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND,"ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
+            columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.NAC, "estado_usuario", "1", BDOpciones.OperadorAritmeticos.EQUAL));
+            if (OpcLimite != BDOpciones.LimitOp.NO_LIMIT) {
+                columnas.add(new ColumnaTabla(BDOpciones.OperadoresLogicos.AND, "ROWNUM", String.valueOf(limite), BDOpciones.OperadorAritmeticos.LOWER_EQUAL));
             }
-            String sql = "SELECT * FROM usuario WHERE "+BDOpciones.getFilters(columnas)+" ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM usuario WHERE " + BDOpciones.getFilters(columnas) + " ORDER BY id_usuario " + BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
                 u.setId_usuario(rs.getInt("id_usuario"));
                 u.setEstado_usuario(rs.getInt("estado_usuario"));
@@ -182,9 +183,7 @@ public class ConsultaUsuarios extends Conexion {
             return users;
         } catch (Exception e) {
             return new ArrayList<>();
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
@@ -193,18 +192,16 @@ public class ConsultaUsuarios extends Conexion {
         }
     }
     
-    public ArrayList<Usuario> listDataLike(BDOpciones.Orden Opcorden, String LikeString)
-    {
+    public ArrayList<Usuario> listDataLike(BDOpciones.Orden Opcorden, String LikeString) {
         Connection con = getConexion();
         try {
             ArrayList<Usuario> users = new ArrayList<>();
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT * FROM usuario WHERE usuario LIKE '%"+LikeString+"%' AND estado_usuario=1 ORDER BY id_usuario "+BDOpciones.getOrder(Opcorden);
+            String sql = "SELECT * FROM usuario WHERE usuario LIKE '%" + LikeString + "%' AND estado_usuario=1 ORDER BY id_usuario " + BDOpciones.getOrder(Opcorden);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Usuario u = new Usuario(rs.getString("usuario"), rs.getString("password"));
                 u.setId_usuario(rs.getInt("id_usuario"));
                 u.setEstado_usuario(rs.getInt("estado_usuario"));
@@ -214,9 +211,7 @@ public class ConsultaUsuarios extends Conexion {
             return users;
         } catch (Exception e) {
             return new ArrayList<>();
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
@@ -225,33 +220,28 @@ public class ConsultaUsuarios extends Conexion {
         }
     }
     
-    public UsuarioSession usuarioEnSession(String usuario)
-    {
+    public UsuarioSession usuarioEnSession(String usuario) {
         Connection con = getConexion();
         try {
             UsuarioSession u = null;
             ResultSet rs = null;
             PreparedStatement ps = null;
             String sql = "SELECT USUARIO.ID_USUARIO, USUARIO.USUARIO,  TERMINAL.ID_TERMINAL, AGENCIA.ID_AGENCIA, BANCO.ID_BANCO, AGENCIA.NOMBRE AS AGENCIA, BANCO.NOMBRE AS BANCO "
-                    +"FROM USUARIO, AGENCIA, BANCO, TERMINAL "
-                    +"WHERE USUARIO.ID_USUARIO = TERMINAL.USUARIO_ID_USUARIO AND AGENCIA.ID_AGENCIA = TERMINAL.AGENCIA_ID_AGENCIA AND "
-                    +"BANCO.ID_BANCO = AGENCIA.BANCO_ID_BANCO AND "
-                    +"USUARIO.USUARIO = '"+usuario+"'"
-                    ;
+                    + "FROM USUARIO, AGENCIA, BANCO, TERMINAL "
+                    + "WHERE USUARIO.ID_USUARIO = TERMINAL.USUARIO_ID_USUARIO AND AGENCIA.ID_AGENCIA = TERMINAL.AGENCIA_ID_AGENCIA AND "
+                    + "BANCO.ID_BANCO = AGENCIA.BANCO_ID_BANCO AND "
+                    + "USUARIO.USUARIO = '" + usuario + "'";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
-                u = new UsuarioSession(rs.getInt("id_usuario"), usuario, rs.getInt("id_terminal"), rs.getInt("id_agencia"), 
+            while (rs.next()) {
+                u = new UsuarioSession(rs.getInt("id_usuario"), usuario, rs.getInt("id_terminal"), rs.getInt("id_agencia"),
                         rs.getInt("id_banco"), rs.getString("agencia"), rs.getString("banco"));
                 
             }
             return u;
         } catch (Exception e) {
             return null;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {

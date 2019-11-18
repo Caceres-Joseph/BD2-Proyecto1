@@ -65,4 +65,17 @@ public class Cuenta {
     }
     
     
+    public void imprimir(){
+        System.out.println("-- Cuenta---");
+        System.out.println("No. "+String.valueOf(no_cuenta));
+        System.out.println("Saldo "+String.valueOf(saldo));
+        System.out.println("IdBanco. "+String.valueOf(banco_id_banco));
+        System.out.println("TipoCuenta. "+String.valueOf(tipo_cuenta_id_tipo));
+        System.out.println("Estado. "+String.valueOf(estado_cuenta));
+        
+         
+    
+    
+    }
+    
 }

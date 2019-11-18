@@ -101,6 +101,14 @@ public class JsonPermiso {
             + "        ]\n"
             + "    },\n"
             + "    \n"
+            + "	\"transacciones\" : {\n"
+            + "		\"permisos\":[\n"
+            + "            \"depositar\",\n"
+            + "            \"retirar\",\n"
+            + "            \"transferencia\"\n"
+            + "        ]\n"
+            + "    },\n"
+            + "    \n"
             + "	\"cuentas\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"crear\",\n"
@@ -282,7 +290,7 @@ public class JsonPermiso {
 
                     B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
                 }
-            }else if (nombreModulo.toLowerCase().equals("cheques")) {
+            } else if (nombreModulo.toLowerCase().equals("cheques")) {
 
                 if (permiso.equals("crear")) {
                     rutaControlador = "/View/Cheque/NuevoCheque.fxml";
@@ -376,6 +384,22 @@ public class JsonPermiso {
 
                     B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
                 }
+            } else if (nombreModulo.toLowerCase().equals("transacciones")) {
+
+                if (permiso.equals("depositar")) {
+                    rutaControlador = "/View/Transacciones/Depositar.fxml";
+
+                }else if (permiso.equals("retirar")) {
+                    rutaControlador = "/View/Clientes/NuevoCliente.fxml";
+
+                }else if (permiso.equals("transferencia")) {
+                    rutaControlador = "/View/Clientes/NuevoCliente.fxml";
+
+                } else {
+                    System.out.println("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+
+                    B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+                }
             } else if (nombreModulo.toLowerCase().equals("clientes")) {
 
                 if (permiso.equals("crear")) {
@@ -420,6 +444,13 @@ public class JsonPermiso {
 //
 //            } 
 //            
+            if (rutaControlador == "") {
+
+                B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+
+                return;
+            }
+
             root.getChildren().add(new TreeItem<>(new nodoVistaArbol(permiso, rutaControlador), ima));
         }
     }

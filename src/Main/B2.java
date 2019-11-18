@@ -14,8 +14,15 @@ import Model.Reportes.Grafica3;
 import Model.Reportes.Grafica4;
 import Model.Reportes.Grafica5;
 import Model.Reportes.ReporteGerencia;
-import View.Gui.Gui; 
+import View.Gui.Gui;
+import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvBuilder;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -41,12 +48,10 @@ public class B2 extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        
+
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Gui/Gui.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Login/login.fxml"));
         Parent root = loader.load();
-    
-
 
         stage.setTitle("Bases 2");
         Scene scene = new Scene(root);
@@ -63,21 +68,9 @@ public class B2 extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-               
-        launch(args);
-        //Auditoria auditoria = new Auditoria();
-        //auditoria.show();
-//        Grafica grafica = new Grafica("Grafica1");
-//        grafica.show();
-//        Grafica2 grafica2 = new Grafica2("Grafica2");
-//        grafica2.show();
-//        Grafica3 grafica3 = new Grafica3("Grafica3");
-//        grafica3.show();
-//        Grafica4 grafica4 = new Grafica4();
-//        grafica4.show();
-//        Grafica5 grafica5 = new Grafica5("Grafica5");
-//        grafica5.show();
+    public static void main(String[] args)  {
+  
+        launch(args); 
     }
 
 }
