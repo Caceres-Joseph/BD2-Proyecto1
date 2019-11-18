@@ -144,7 +144,7 @@ CREATE TABLE cheque (
     id_cheque   INTEGER NOT NULL,
     correlativo INTEGER NOT NULL,
     id_chequera      INTEGER NOT NULL,
-    estado_cheque     INTEGER NOT NULL,
+    estado_cheque     INTEGER NOT NULL
 );
 
 ALTER TABLE cheque ADD CONSTRAINT cheque_pk PRIMARY KEY ( id_cheque );
