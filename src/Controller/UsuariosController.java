@@ -8,6 +8,7 @@ package Controller;
 import Model.BD.BDOpciones;
 import Model.Usuarios.ConsultaUsuarios;
 import Model.Usuarios.Usuario;
+import Model.Usuarios.UsuarioSession;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -120,6 +121,15 @@ public class UsuariosController {
             return consultas.usuarioLogIn(new Usuario(usuario, password));
         } catch (Exception e) {
             return false;
+        }
+    }
+    
+    public UsuarioSession getUser(String usuario)
+    {
+        try {
+            return consultas.usuarioEnSession(usuario);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

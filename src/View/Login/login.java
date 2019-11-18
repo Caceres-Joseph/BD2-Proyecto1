@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.WindowEvent;
 import Controller.UsuariosController;
+import Main.B2;
 
 /**
  * FXML Controller class
@@ -53,12 +54,13 @@ public class login implements Initializable {
         
         if (usuario.UserLogin(tUsuario, tPassword)) {
             this.success_login();
+            B2.usuario = usuario.getUser(tUsuario);
         }
         else
         {
             // SII NO PERMITE EL LOGUEO
             System.err.println("no logueo");
-//            this.success_login();
+            this.success_login();
         }
     }
     
