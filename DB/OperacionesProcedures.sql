@@ -235,7 +235,7 @@ IS
   disponible CUENTA.SALDO%TYPE;
 BEGIN
 	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
-	IF p_no_cuenta_destino = 1 THEN
+	IF cuenta_existe = 1 THEN
     SELECT CUENTA.ESTADO_CUENTA INTO estado_cuenta_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
     IF estado_cuenta_destino = 1 THEN
       SELECT CUENTA.SALDO INTO saldo_inicial FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
@@ -274,7 +274,7 @@ IS
   disponible CUENTA.SALDO%TYPE;
 BEGIN
 	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
-	IF p_no_cuenta_destino = 1 THEN
+	IF cuenta_existe = 1 THEN
     SELECT CUENTA.ESTADO_CUENTA INTO estado_cuenta_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
     IF estado_cuenta_destino = 1 THEN
       SELECT CUENTA.SALDO INTO saldo_inicial FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;

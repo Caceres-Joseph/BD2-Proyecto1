@@ -33,8 +33,8 @@ ALTER TABLE cheque_tmp_1
     ADD CONSTRAINT cheque_tmp_1_fk FOREIGN KEY ( lote )
         REFERENCES lote_tmp_1 ( id_lote )
             ON DELETE CASCADE;
-            
-            
+
+
 -- INSERTAR REGISTRO NUEVO LOTE////////////////////////////////////////////////////////////////////////////////////////////////
 CREATE OR REPLACE PROCEDURE INSERT_LOTE_TMP(
 	p_id_lote IN lote_tmp_1.ID_LOTE%TYPE,
@@ -74,38 +74,38 @@ CREATE OR REPLACE PROCEDURE VERIFICAR_LOTE(
 IS
     cantidad_cheques lote_tmp_1.NO_DOCUMENTOS%TYPE;
     monto_total_lote lote_tmp_1.VALOR%TYPE;
-    
+
     cheques_lote lote_tmp_1.NO_DOCUMENTOS%TYPE;
     monto_lote lote_tmp_1.VALOR%TYPE;
-    
+
     lote_existe INTEGER;
 
 BEGIN
 	SELECT COUNT(*) INTO cantidad_cheques FROM  cheque_tmp_1 WHERE lote = p_id_lote;
     SELECT SUM(valor) INTO monto_total_lote FROM cheque_tmp_1 WHERE lote = p_id_lote;
-    
+
     SELECT COUNT(*) INTO lote_existe FROM lote_tmp_1 WHERE lote_tmp_1.id_lote = p_id_lote;
-    
+
     SELECT no_documentos INTO cheques_lote FROM lote_tmp_1 WHERE lote_tmp_1.id_lote = p_id_lote;
-    
+
     SELECT valor INTO monto_lote FROM lote_tmp_1 WHERE lote_tmp_1.id_lote = p_id_lote;
-        
+
     DBMS_OUTPUT.PUT_LINE(cantidad_cheques);
     DBMS_OUTPUT.PUT_LINE(monto_total_lote);
     DBMS_OUTPUT.PUT_LINE(lote_existe);
     DBMS_OUTPUT.PUT_LINE(cheques_lote);
     DBMS_OUTPUT.PUT_LINE(monto_lote);
     IF lote_existe = 1 THEN
-    
+
         IF cantidad_cheques = cheques_lote AND monto_total_lote = monto_lote THEN
             UPDATE lote_tmp_1 SET estado = 1 WHERE id_lote = p_id_lote;
         END IF;
-    
+
     ELSE
         -- ALGUNA DE LAS CUENTAS NO EXISTE
         raise_application_error(-20456,'El lote no existe');
     END IF;
-    
+
 	COMMIT;
 END;
 /
@@ -132,7 +132,7 @@ CREATE OR REPLACE PROCEDURE OPERAR_LOTE(
     p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
 )
 IS
--- DECLARACIÓN DEL CURSOR
+-- DECLARACIÃ“N DEL CURSOR
 CURSOR c1 IS
     SELECT *
     FROM cheque_tmp_1
@@ -145,14 +145,12 @@ CURSOR c1 IS
     c_estado cheque_tmp_1.estado%TYPE;
     c_lote cheque_tmp_1.lote%TYPE;
     c_referencia cheque_tmp_1.referencia%TYPE;
-    c_correlativo cheque_tmp_1.correlativo%TYPE;
-    
+    c_correlativo cheque_tmp_1.correlativo%TYPE;  
     -- PARAMETROS QUE RECIBE LA TRANSACCION 
     p_no_cuenta_origen  CUENTA.NO_CUENTA%TYPE;
     monto CUENTA.SALDO%TYPE;
 
     p_correlativo CHEQUE.CORRELATIVO%TYPE;
-    
     -- PARAMETROS DENTRO DEL PROCEDIMIENTO
     saldo_inicial_origen CUENTA.SALDO%TYPE;
     saldo_final_origen CUENTA.SALDO%TYPE;
@@ -165,12 +163,11 @@ CURSOR c1 IS
     estado_cuenta CUENTA.ESTADO_CUENTA%TYPE;
     reserva CUENTA.SALDO%TYPE;
     disponible CUENTA.SALDO%TYPE;
-    
 BEGIN
-    open c1;    
+    open c1;
     LOOP
         FETCH c1 INTO c_id_cheque, c_fecha, c_cuenta, c_valor, c_estado, c_lote, c_referencia, c_correlativo;
-        
+
         EXIT WHEN c1%NOTFOUND;
     
     p_no_cuenta_origen := c_cuenta;
@@ -206,14 +203,15 @@ BEGIN
               ------------------------------------------
               INSERT INTO CHEQUE(CORRELATIVO, ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, id_chequera, 4); -- INSERTANDO CHEQUE PAGADO
               
-              -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE SE COBRÓ CON ÉXITO
+              -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE SE COBRÃ“ CON Ã‰XITO
                  
               UPDATE cheque_tmp_1 SET estado = 1 WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
               COMMIT;
             ELSE
               raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
+
               
-              -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR SALDO INSUFICIENTE
+              -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÃ“ CON Ã‰XITO POR SALDO INSUFICIENTE
               
               UPDATE cheque_tmp_1 SET estado = 2 WHERE id_cheque = c_id_cheque; -- ESTADO 2 (CHEQUE NO COBRADO POR SALDO INSUFICIENTE)
               ROLLBACK;
@@ -222,13 +220,13 @@ BEGIN
           ELSE
             -- EL CHEQUE YA EXISTE DEBO VERIFICAR SU ESTADO
             SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
-            -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÃ? DENTRO DEL RANGO) (5)
+            -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÃƒ? DENTRO DEL RANGO) (5)
             IF estado_cheque = 1 THEN
               -- EL CHEQUE FUE REPORTADO COMO ROBADO
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
                 VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'REPORTADO COMO ROBADO');
                 
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE ROBADO
+                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÃ“ CON Ã‰XITO POR CHEQUE ROBADO
                 
                 UPDATE cheque_tmp_1 SET estado = 3 WHERE id_cheque = c_id_cheque; -- ESTADO 3 (CHEQUE NO COBRADO REPORTADO COMO ROBADO)
             ELSIF estado_cheque = 2 THEN
@@ -236,7 +234,7 @@ BEGIN
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
                 VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE BLOQUEADO');
                 
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE BLOQUEADO
+                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÃ“ CON Ã‰XITO POR CHEQUE BLOQUEADO
                 
                 UPDATE cheque_tmp_1 SET estado = 4 WHERE id_cheque = c_id_cheque; -- ESTADO 4 (CHEQUE NO COBRADO BLOQUEADO)
             ELSIF estado_cheque = 3 THEN
@@ -244,15 +242,16 @@ BEGIN
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
                 VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE PERDIDO');
                 
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE PERDIDO
+                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÃ“ CON Ã‰XITO POR CHEQUE PERDIDO
                 
                 UPDATE cheque_tmp_1 SET estado = 5 WHERE id_cheque = c_id_cheque; -- ESTADO 5 (CHEQUE NO COBRADO REPORTADO COMO PERDIDO)
             ELSIF estado_cheque = 4 THEN
               -- EL CHEQUE YA FUE PAGADO
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
                 VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE YA HA SIDO PAGADO');
+
                 
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE COBRADO
+                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÃ“ CON Ã‰XITO POR CHEQUE COBRADO
                 
                 UPDATE cheque_tmp_1 SET estado = 6 WHERE id_cheque = c_id_cheque; -- ESTADO 6 (CHEQUE NO COBRADO YA FUE COBRADO)
             END IF;
@@ -267,15 +266,15 @@ BEGIN
       ELSE
         raise_application_error(-20456, 'La cuenta especificada no esta activa');
         
-        -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CUENTA INACTIVA
+        -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÃ“ CON Ã‰XITO POR CUENTA INACTIVA
         
         UPDATE cheque_tmp_1 SET estado = 8 WHERE id_cheque = c_id_cheque; -- ESTADO 8 (CHEQUE NO COBRADO CUENTA INACTIVA)
       END IF;
     ELSE
 				-- LA CUENTA NO EXISTE
 				raise_application_error(-20456, 'Cuenta especificada no existe');
-                
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CUENTA INEXISTENTE
+               
+                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÃ“ CON Ã‰XITO POR CUENTA INEXISTENTE
                 
                 UPDATE cheque_tmp_1 SET estado = 9 WHERE id_cheque = c_id_cheque; -- ESTADO 9 (CHEQUE NO COBRADO REPORTADO COMO PERDIDO)
     END IF;
@@ -305,12 +304,12 @@ IS
 
     disponible_destino CUENTA.SALDO%TYPE;
     reserva_destino CUENTA.SALDO%TYPE;
-    
+
 BEGIN
 		SELECT COUNT(*) INTO destino_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
     IF destino_existe = 1 THEN
     -- VER SI ESTAN DISPONIBLES LAS CUENTAS
-      
+
       SELECT CUENTA.ESTADO_CUENTA INTO destino_estado FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
       IF destino_estado = 1 THEN
         -- TOMANDO DE LA CUENTA DE DESTINO LOS DATOS:
@@ -364,7 +363,7 @@ CALL INSERT_CHEQUERA(789,1);
 
 SELECT * FROM CHEQUERA;
 
-    
+
 CALL INSERT_LOTE_TMP(1,1,4,10000,0);
 CALL INSERT_CHEQUE_TMP(1,1,1,2500.00,123,123);
 CALL INSERT_CHEQUE_TMP(2,1,1,2500.00,456,123);
@@ -403,6 +402,14 @@ SELECT * FROM TRANSACCION;
 
 
 
+CALL OPERAR_LOTE(2,1,1);
+SELECT * FROM USUARIO;
+SELECT * FROM TERMINAL;
 
+select * from cheque_tmp_1;
+select * from lote_tmp_1;
 
+SELECT * FROM CUENTA;
 
+SELECT * FROM TRANSACCION;
+*/
