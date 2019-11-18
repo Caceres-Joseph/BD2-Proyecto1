@@ -103,8 +103,8 @@ public class JsonPermiso {
             + "    \n"
             + "	\"transacciones\" : {\n"
             + "		\"permisos\":[\n"
-            + "            \"depositar\",\n"
-            + "            \"retirar\",\n"
+            + "            \"acreditar\",\n"
+            + "            \"debitar\",\n"
             + "            \"transferencia\"\n"
             + "        ]\n"
             + "    },\n"
@@ -386,14 +386,14 @@ public class JsonPermiso {
                 }
             } else if (nombreModulo.toLowerCase().equals("transacciones")) {
 
-                if (permiso.equals("depositar")) {
+                if (permiso.equals("acreditar")) {
                     rutaControlador = "/View/Transacciones/Depositar.fxml";
 
-                }else if (permiso.equals("retirar")) {
-                    rutaControlador = "/View/Clientes/NuevoCliente.fxml";
+                }else if (permiso.equals("debitar")) {
+                    rutaControlador = "/View/Transacciones/Debitar.fxml";
 
                 }else if (permiso.equals("transferencia")) {
-                    rutaControlador = "/View/Clientes/NuevoCliente.fxml";
+                    rutaControlador = "/View/Transacciones/Transferir.fxml";
 
                 } else {
                     System.out.println("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);

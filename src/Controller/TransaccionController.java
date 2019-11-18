@@ -7,7 +7,7 @@ package Controller;
 
 import Main.B2;
 import Model.Transaccion.ConsultaTransaccion;
-import Model.Transaccion.Depositar;
+import Model.Transaccion.Transaccion;
 
 /**
  *
@@ -24,7 +24,7 @@ public class TransaccionController {
     public boolean Acreditar(int cuenta, double monto) {
         try {
 
-            return consultas.acreditar(new Depositar(cuenta, monto));
+            return consultas.acreditar(new Transaccion(cuenta, monto));
 
         } catch (Exception e) {
 
@@ -34,22 +34,30 @@ public class TransaccionController {
         return false;
     }
 
-    public boolean Debitar(int no_cuenta, double monto) {
+    public boolean Debitar(int cuenta, double monto) {
         try {
-            return true;
-        } catch (Exception e) {
-            B2.GuiController.mensajeConsola(e.getMessage());
 
+            return consultas.debitar(new Transaccion(cuenta, monto));
+
+        } catch (Exception e) {
+
+//            return consultas.save(new Usuario(nombre, password, rol_id_rol));
+            B2.GuiController.mensajeConsola(e.getMessage());
         }
-        return true;
+        return false;
     }
 
     public boolean Transferencia(int no_cuenta_origen, int no_cuenta_destino, double monto) {
+
         try {
-            return false;
+
+            return consultas.transferir(new Transaccion(no_cuenta_origen, no_cuenta_destino, monto));
+
         } catch (Exception e) {
+
+//            return consultas.save(new Usuario(nombre, password, rol_id_rol));
             B2.GuiController.mensajeConsola(e.getMessage());
         }
-        return true;
+        return false;
     }
 }

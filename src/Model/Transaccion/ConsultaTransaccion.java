@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class ConsultaTransaccion extends Conexion {
 
-    public boolean acreditar(Depositar t) {
+    public boolean acreditar(Transaccion t) {
         Connection con = getConexion();
         try {
             t.imprimir();
@@ -25,7 +25,7 @@ public class ConsultaTransaccion extends Conexion {
             CallableStatement call = con.prepareCall(cmd);
        
  
-            call.setInt(1, t.getCuenta_no_cuenta());
+            call.setInt(1, t.getCuenta_no_cuenta_destino());
             call.setDouble(2, t.getMonto());
             call.setInt(3, t.getUsuario_id_usuario());
             call.setInt(4, t.getTerminal_id_terminal()); 
@@ -52,6 +52,19 @@ public class ConsultaTransaccion extends Conexion {
     public boolean debitar(Transaccion t) {
         Connection con = getConexion();
         try {
+            t.imprimir();
+            String cmd = "{CALL DEBITAR(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+       
+ 
+            call.setInt(1, t.getCuenta_no_cuenta_destino());
+            call.setDouble(2, t.getMonto());
+            call.setInt(3, t.getUsuario_id_usuario());
+            call.setInt(4, t.getTerminal_id_terminal()); 
+            call.execute();
+             
+            call.close();
+            
             return true;
         } catch (Exception e) {
 
@@ -67,10 +80,25 @@ public class ConsultaTransaccion extends Conexion {
             }
         }
     }
-
-    public boolean acreditar(Transaccion cretidito, Transaccion debito) {
+    
+    
+    public boolean transferir(Transaccion t) {
         Connection con = getConexion();
         try {
+            t.imprimir();
+            String cmd = "{CALL TRANSFERIR(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+       
+ 
+            call.setInt(1, t.getCuenta_no_cuenta_origen());
+            call.setInt(2, t.getCuenta_no_cuenta_destino());
+            call.setDouble(3, t.getMonto());
+            call.setInt(4, t.getUsuario_id_usuario());
+            call.setInt(5, t.getTerminal_id_terminal()); 
+            call.execute();
+             
+            call.close();
+            
             return true;
         } catch (Exception e) {
 
@@ -80,10 +108,11 @@ public class ConsultaTransaccion extends Conexion {
             try {
                 con.close();
             } catch (Exception e) {
+                System.err.println(e);
 
                 B2.GuiController.mensajeConsola(e.getMessage());
-                System.err.println(e);
             }
         }
     }
+ 
 }

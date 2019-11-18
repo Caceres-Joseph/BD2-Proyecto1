@@ -5,41 +5,66 @@
  */
 package Model.Transaccion;
 
-import java.sql.Date;
+import Main.B2;
 
 /**
  *
- * @author ricar
+ * @author Notebook
  */
 public class Transaccion {
+
     int id_transaccion;
-    Date fecha;
-    String Tipo;
-    String Naturaleza;
-    double saldo_inicial;
-    double saldo_final;
-    int codigo_autorizacion;
-    int rechazado;
-    String razon_rechazo;
     int usuario_id_usuario;
     int terminal_id_terminal;
-    int cuenta_no_cuenta;
+    int cuenta_no_cuenta_destino;
+    int cuenta_no_cuenta_origen;
     int estado_transaccion;
+    double monto;
 
-    public Transaccion(Date fecha, String Tipo, String Naturaleza, double saldo_inicial, double saldo_final, int codigo_autorizacion, int rechazado, String razon_rechazo, int usuario_id_usuario, int terminal_id_terminal, int cuenta_no_cuenta, int estado_transaccion) {
-        this.fecha = fecha;
-        this.Tipo = Tipo;
-        this.Naturaleza = Naturaleza;
-        this.saldo_inicial = saldo_inicial;
-        this.saldo_final = saldo_final;
-        this.codigo_autorizacion = codigo_autorizacion;
-        this.rechazado = rechazado;
-        this.razon_rechazo = razon_rechazo;
-        this.usuario_id_usuario = usuario_id_usuario;
-        this.terminal_id_terminal = terminal_id_terminal;
-        this.cuenta_no_cuenta = cuenta_no_cuenta;
-        this.estado_transaccion = estado_transaccion;
+    public Transaccion(int cuenta_no_cuenta, double monto) {
+
+        this.terminal_id_terminal = B2.usuario.getId_terminal();
+        this.usuario_id_usuario = B2.usuario.getId_usuario();
+        
+        this.cuenta_no_cuenta_destino = cuenta_no_cuenta;
+        this.cuenta_no_cuenta_origen = 0;
+        
+        this.monto = monto;
+        this.estado_transaccion = 0;
+        this.id_transaccion = 0;
+
     }
+
+    public Transaccion(int cuenta_origen, int cuenta_destino, double monto) {
+
+        this.terminal_id_terminal = B2.usuario.getId_terminal();
+        this.usuario_id_usuario = B2.usuario.getId_usuario();
+        
+        this.cuenta_no_cuenta_origen = cuenta_origen;
+        this.cuenta_no_cuenta_destino = cuenta_destino;
+        
+        this.monto = monto;
+        this.estado_transaccion = 0;
+        this.id_transaccion = 0;
+
+    }
+    
+    public int getCuenta_no_cuenta_destino() {
+        return cuenta_no_cuenta_destino;
+    }
+
+    public void setCuenta_no_cuenta_destino(int cuenta_no_cuenta_destino) {
+        this.cuenta_no_cuenta_destino = cuenta_no_cuenta_destino;
+    }
+
+    public int getCuenta_no_cuenta_origen() {
+        return cuenta_no_cuenta_origen;
+    }
+
+    public void setCuenta_no_cuenta_origen(int cuenta_no_cuenta_origen) {
+        this.cuenta_no_cuenta_origen = cuenta_no_cuenta_origen;
+    }
+
 
     public int getId_transaccion() {
         return id_transaccion;
@@ -47,70 +72,6 @@ public class Transaccion {
 
     public void setId_transaccion(int id_transaccion) {
         this.id_transaccion = id_transaccion;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getTipo() {
-        return Tipo;
-    }
-
-    public void setTipo(String Tipo) {
-        this.Tipo = Tipo;
-    }
-
-    public String getNaturaleza() {
-        return Naturaleza;
-    }
-
-    public void setNaturaleza(String Naturaleza) {
-        this.Naturaleza = Naturaleza;
-    }
-
-    public double getSaldo_inicial() {
-        return saldo_inicial;
-    }
-
-    public void setSaldo_inicial(double saldo_inicial) {
-        this.saldo_inicial = saldo_inicial;
-    }
-
-    public double getSaldo_final() {
-        return saldo_final;
-    }
-
-    public void setSaldo_final(double saldo_final) {
-        this.saldo_final = saldo_final;
-    }
-
-    public int getCodigo_autorizacion() {
-        return codigo_autorizacion;
-    }
-
-    public void setCodigo_autorizacion(int codigo_autorizacion) {
-        this.codigo_autorizacion = codigo_autorizacion;
-    }
-
-    public int getRechazado() {
-        return rechazado;
-    }
-
-    public void setRechazado(int rechazado) {
-        this.rechazado = rechazado;
-    }
-
-    public String getRazon_rechazo() {
-        return razon_rechazo;
-    }
-
-    public void setRazon_rechazo(String razon_rechazo) {
-        this.razon_rechazo = razon_rechazo;
     }
 
     public int getUsuario_id_usuario() {
@@ -129,14 +90,6 @@ public class Transaccion {
         this.terminal_id_terminal = terminal_id_terminal;
     }
 
-    public int getCuenta_no_cuenta() {
-        return cuenta_no_cuenta;
-    }
-
-    public void setCuenta_no_cuenta(int cuenta_no_cuenta) {
-        this.cuenta_no_cuenta = cuenta_no_cuenta;
-    }
-
     public int getEstado_transaccion() {
         return estado_transaccion;
     }
@@ -144,5 +97,24 @@ public class Transaccion {
     public void setEstado_transaccion(int estado_transaccion) {
         this.estado_transaccion = estado_transaccion;
     }
-    
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
+
+    public void imprimir() {
+        System.out.println("Monto:");
+        System.out.println(monto);
+        System.out.println("Terminal:");
+        System.out.println(terminal_id_terminal);
+        System.out.println("Usuario:");
+        System.out.println(usuario_id_usuario);
+        System.out.println("Cuenta Detino:");
+        System.out.println(cuenta_no_cuenta_destino);
+    }
+
 }
