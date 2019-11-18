@@ -10,15 +10,24 @@ package Model.Cheque;
  * @author ricar
  */
 public class Cheque {
+
     private int id_cheque;
     private int id_chequera;
     private int estado_cheque;
-    
-    public Cheque(int id_cheque, int id_chequera, int estado_cheque)
-    {
+    private double monto;
+
+    public Cheque(int id_cheque, int id_chequera, int estado_cheque) {
         this.id_cheque = id_cheque;
         this.id_chequera = id_chequera;
         this.estado_cheque = estado_cheque;
+        this.monto = 0;
+    }
+
+    public Cheque(int id_cheque, int id_chequera, double monto) {
+        this.id_cheque = id_cheque;
+        this.id_chequera = id_chequera;
+        this.estado_cheque = 1;
+        this.monto = monto;
     }
 
     public int getId_cheque() {
@@ -44,6 +53,13 @@ public class Cheque {
     public void setEstado_cheque(int estado_cheque) {
         this.estado_cheque = estado_cheque;
     }
-    
-    
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(int monto) {
+        this.monto = monto;
+    }
+
 }

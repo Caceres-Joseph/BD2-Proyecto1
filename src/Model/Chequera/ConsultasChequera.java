@@ -5,9 +5,11 @@
  */
 package Model.Chequera;
 
+import Main.B2;
 import Model.BD.BDOpciones;
 import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,21 +21,34 @@ import java.util.ArrayList;
  */
 public class ConsultasChequera extends Conexion{
     
-    public boolean createChequera()
+    public boolean createChequera(Chequera t)
     {
         Connection con = getConexion();
-        try {
+        try { 
+//            t.imprimir();
+            String cmd = "{CALL INSERT_CHEQUERA(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+       
+ 
+            call.setInt(1, t.getNo_cuenta());
+            call.setDouble(2, t.getEstado_chequera());
+            
+            call.execute();
+             
+            call.close();
             
             return true;
         } catch (Exception e) {
-            System.err.println(e);
+
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
-        }
-        finally{
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
                 System.err.println(e);
+
+                B2.GuiController.mensajeConsola(e.getMessage());
             }
         }
     }
