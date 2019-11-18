@@ -85,7 +85,7 @@ public class JsonPermiso {
             + "	\"cheques\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"chquera\",\n"
-            + "            \"modificar\",\n"
+            + "            \"cobrar\",\n"
             + "            \"listar\"\n"
             + "        ]\n"
             + "    },\n"
@@ -294,10 +294,10 @@ public class JsonPermiso {
 
                 if (permiso.equals("chquera")) {
                     rutaControlador = "/View/Cheque/Chequera.fxml";
-                } else if (permiso.equals("listar")) {
-                    rutaControlador = "/View/Agencia/ListarAgencia.fxml";
+                } else if (permiso.equals("cobrar")) {
+                    rutaControlador = "/View/Cheque/Cobrar.fxml";
 
-                } else if (permiso.equals("modificar")) {
+                } else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Agencia/EditarAgencia.fxml";
 
                 } else if (permiso.equals("eliminar")) {
