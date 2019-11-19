@@ -7,6 +7,7 @@ package Controller;
 
 import Model.ReConciliacion.ChequeConciliado;
 import Model.ReConciliacion.ConsultasConciliacion;
+import Model.ReConciliacion.DataArchivo;
 import Model.ReConciliacion.Lote;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,6 +59,15 @@ public class RecibirConciliacionController {
         //Verificación del lote
         consulta.verificarLote(lote.getId_lote());
     }
+    
+    /**
+     * Retorna un objeto con la información recopilada del archivo 
+     * del cual se realizó la lectura.
+     * @return objeto con los parámetros del archivo
+     */
+    public DataArchivo getInfoFile(){
+        return consulta.getDataArchivo();
+    }
 
     /**
      * Función utilizada para crear un nuevo lote que será almacenado en la
@@ -69,9 +79,9 @@ public class RecibirConciliacionController {
      */
     public Lote getDataLote(String path) {
 
-        String[] nameFile = path.replace(".txt", "").split("/");
+        String[] nameFile = path.replace(".txt", "").split("\\");
 
-        String nombreArchivo = nameFile[nameFile.length];
+        String nombreArchivo = nameFile[nameFile.length-1];
 
         String[] infoLote = nombreArchivo.split("_");
 
@@ -82,6 +92,8 @@ public class RecibirConciliacionController {
         int docs = Integer.parseInt(infoLote[3]);
 
         double total = Double.parseDouble(infoLote[4]);
+        
+        consulta.setDataArchivo(infoLote[3],infoLote[2],infoLote[4]);
 
         return new Lote(id_lote, banco, docs, total, 1);
     }
@@ -130,7 +142,7 @@ public class RecibirConciliacionController {
      * @param lote
      * @return
      */
-    public ArrayList<ChequeConciliado> listBancos(int lote) {
+    public ArrayList<ChequeConciliado> exportarConciliados(int lote) {
         try {
             ArrayList<ChequeConciliado> cheques = new ArrayList<>();
             ResultSet rs = consulta.listChequesGrabados(lote);

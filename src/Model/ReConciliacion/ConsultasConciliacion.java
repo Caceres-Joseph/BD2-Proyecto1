@@ -242,5 +242,19 @@ public class ConsultasConciliacion extends Conexion {
         }
     }
     
+    private DataArchivo dataArchivo;
+    public void setDataArchivo(String documentos, String id_lote, String total){
+        
+        dataArchivo = new DataArchivo(documentos,id_lote,total);
+        
+    }
+    
+    public DataArchivo getDataArchivo(){
+        return dataArchivo;
+    }
+    
+    
+    
+    
 
 }
