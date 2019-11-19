@@ -14,10 +14,15 @@ import java.sql.DriverManager;
  */
 public class Conexion {
     
-    private final String base = "orcl"; //NOMBRE DE LA BASE DE DATOS
+//    private final String base = "orcl"; //NOMBRE DE LA BASE DE DATOS
+//    private final String user = "System";  // USUARIO
+//    private final String password = "Informatica10"; // PASSWORD
+//    private final String url = "jdbc:oracle:thin:@localhost:1521";
+    
+    private final String base = "xe"; //NOMBRE DE LA BASE DE DATOS
     private final String user = "System";  // USUARIO
-    private final String password = "Informatica10"; // PASSWORD
-    private final String url = "jdbc:oracle:thin:@localhost:1521";
+    private final String password = "oracle"; // PASSWORD
+    private final String url = "jdbc:oracle:thin:@34.66.115.191:1521";
     private Connection con = null;
     
     public Conexion()
@@ -30,6 +35,7 @@ public class Conexion {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             this.con = (Connection) DriverManager.getConnection(this.url+":"+base, this.user,this.password);
+            System.out.println("Conectado .... ");
             return this.con;
         } catch (Exception e) {
             System.err.println(e);

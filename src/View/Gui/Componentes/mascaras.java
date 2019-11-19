@@ -74,6 +74,19 @@ public class mascaras {
         });
     }
     
+    
+    public void setMaskNumero() {
+        
+        
+        this.txtField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (!mskNumero(newValue)) {
+                this.esIncorrecto();
+            } else {
+                this.esCorrecto();
+            }
+        });
+    }
+    
 
     private void esCorrecto() {
         this.txtField.setStyle("-fx-background-color:white");
@@ -110,7 +123,14 @@ public class mascaras {
         }
         return false;
     }
-    
+
+
+    public boolean mskNumero(String dpi) {
+        if (dpi.matches("\\d+")) {
+            return true;
+        }
+        return false;
+    }    
     
     public boolean mskDecimalEntero(String dpi){
         if(dpi.matches("\\d+([.]\\d{1,2})?")){
@@ -118,5 +138,6 @@ public class mascaras {
         }
         return false;
     }
+
      
 }

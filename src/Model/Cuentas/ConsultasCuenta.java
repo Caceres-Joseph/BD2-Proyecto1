@@ -5,6 +5,7 @@
  */
 package Model.Cuentas;
 
+import Main.B2;
 import Model.BD.BDOpciones;
 import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
@@ -25,6 +26,7 @@ public class ConsultasCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
+            cuenta.imprimir();
             String cmd = "{CALL INSERT_CUENTA(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setDouble(1, cuenta.getSaldo());
@@ -52,7 +54,8 @@ public class ConsultasCuenta extends Conexion{
     {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL INSERT_CUENTA_CLIENTE(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            cuenta.imprimir();
+            String cmd = "{CALL CREAR_CUENTA(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setDouble(1, cuenta.getSaldo());
             call.setInt(2, cuenta.getBanco_id_banco());
@@ -64,6 +67,7 @@ public class ConsultasCuenta extends Conexion{
             return true;
         } catch (Exception e) {
             System.err.println(e);
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
         finally
