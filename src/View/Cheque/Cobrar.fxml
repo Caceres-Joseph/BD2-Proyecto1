@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Cheque.Cobrar">
    <children>
-      <GridPane prefWidth="641.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css">
+      <GridPane prefWidth="641.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="212.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="158.0" />

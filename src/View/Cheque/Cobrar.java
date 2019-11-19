@@ -6,6 +6,7 @@
 package View.Cheque;
 
 import Controller.ChequeController;
+import Controller.PagoChequeController;
 import Main.B2;
 import View.Gui.Componentes.mascaras;
 import com.jfoenix.controls.JFXTextField;
@@ -22,9 +23,8 @@ import javafx.fxml.Initializable;
  */
 public class Cobrar implements Initializable {
 
-    ChequeController con_cheque = new ChequeController();
-    
-    
+    PagoChequeController con_cheque = new PagoChequeController();
+
     @FXML
     private JFXTextField txtMonto;
 
@@ -36,17 +36,17 @@ public class Cobrar implements Initializable {
 
     @FXML
     void clckAceptar(ActionEvent event) {
-  if (!validar()) {
+        if (!validar()) {
             return;
         }
 
         try {
-            if (con_cheque.CrearChequera(Integer.valueOf(txtCuenta.getText()), 1)) {
-                B2.GuiController.mensajeConsola("Se creó la chequera para la cuenta: " + txtCuenta.getText());
-            }else{
-                B2.GuiController.mensajeConsola("Ocurrió un error al crear la chequera");
+            if (con_cheque.createTransaccionCheque(Integer.valueOf(txtNoCheque.getText()), Integer.valueOf(txtCuenta.getText()), Double.parseDouble(txtMonto.getText()))) {
+                B2.GuiController.mensajeConsola("Se cobró el cheque de forma exitosa");
+            } else {
+                B2.GuiController.mensajeConsola("Ocurrió un error al cobrar el cheque");
             }
-            
+
         } catch (Exception e) {
             B2.GuiController.mensajeConsola(e.getMessage());
         }
@@ -56,26 +56,29 @@ public class Cobrar implements Initializable {
     void clckCancelar(ActionEvent event) {
 
     }
-    
+
     mascaras mskCuenta;
-    
     mascaras mskCheque;
+
+    mascaras mskMonto;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
+
         mskCuenta = new mascaras(txtCuenta, false);
         mskCuenta.setMaskNumero();
-        
-        
+
         mskCheque = new mascaras(txtNoCheque, false);
         mskCheque.setMaskNumero();
-    }    
-    
-    
+
+        mskMonto = new mascaras(txtMonto, false);
+        mskMonto.setMaskDecimalEntero();
+
+    }
+
     /**
      * Validando que se hayan ingrasado todos los valores
      *
@@ -86,14 +89,18 @@ public class Cobrar implements Initializable {
             B2.GuiController.mensajeConsola("Debe insertar una cuenta válida");
             return false;
         }
-        
-        
+
         if (!mskCheque.estado) {
             B2.GuiController.mensajeConsola("Debe insertar un número de cheque válido");
             return false;
         }
 
+        if (!mskMonto.estado) {
+            B2.GuiController.mensajeConsola("Debe insertar un Monto válido");
+            return false;
+        }
+
         return true;
     }
-    
+
 }
