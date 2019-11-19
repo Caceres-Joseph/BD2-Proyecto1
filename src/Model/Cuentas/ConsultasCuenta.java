@@ -22,6 +22,33 @@ import Model.Cuentas.CuentaBancoTipo;
 public class ConsultasCuenta extends Conexion{
     
     
+    public boolean estado(Cuenta t) {
+     Connection con = getConexion();
+        try { 
+            String cmd = "{CALL CAMBIAR_ESTADO_CUENTA(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+       
+ 
+            call.setInt(1, t.getNo_cuenta());
+            call.setDouble(2, t.getEstado_cuenta()); 
+            call.execute(); 
+            call.close(); 
+            return true;
+        } catch (Exception e) { 
+            B2.GuiController.mensajeConsola(e.getMessage());
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+
+                B2.GuiController.mensajeConsola(e.getMessage());
+            }
+        } 
+    }
+    
+    
     public boolean save(Cuenta cuenta)
     {
         Connection con = getConexion();
@@ -322,4 +349,5 @@ public class ConsultasCuenta extends Conexion{
             }
         }
     }
+
 }

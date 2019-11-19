@@ -78,6 +78,25 @@ public class ComboTipoCuenta {
             contenidoTabla.add(temp);
         }
     }
+    
+    /**
+     * Mostrando los estados activo y desactivado
+     *
+     */
+    
+    
+    public void mostrarEstados() {
+        
+        TipoCuenta temp = new TipoCuenta("Activar");
+        temp.setId_tipo(1);
+        contenidoTabla.add(temp);
+        
+        
+        TipoCuenta temp2 = new TipoCuenta("Bloquear");
+        temp2.setId_tipo(0);
+        contenidoTabla.add(temp2);
+        
+    }
      
     /**
      * Inicializa la tabla
@@ -91,4 +110,5 @@ public class ComboTipoCuenta {
     public void clean() {
         contenidoTabla.clear();
     }
+
 }

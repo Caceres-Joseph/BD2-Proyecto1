@@ -16,6 +16,14 @@ public class Cuenta {
     private int tipo_cuenta_id_tipo;
     private int estado_cuenta;
     
+    public Cuenta(int no_cuenta, int estado_cuenta){
+        this.no_cuenta=no_cuenta;
+        this.estado_cuenta= estado_cuenta;
+        this.saldo=0;
+        this.banco_id_banco=0;
+        this.tipo_cuenta_id_tipo=0;
+    }
+    
     public Cuenta(double saldo, int banco_id_banco, int tipo_cuenta_id_tipo)
     {
         this.saldo = saldo;

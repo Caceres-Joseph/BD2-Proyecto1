@@ -86,6 +86,7 @@ public class JsonPermiso {
             + "		\"permisos\":[\n"
             + "            \"chquera\",\n"
             + "            \"cobrar\",\n"
+            + "            \"reportar\",\n"
             + "            \"listar\"\n"
             + "        ]\n"
             + "    },\n"
@@ -113,7 +114,7 @@ public class JsonPermiso {
             + "		\"permisos\":[\n"
             + "            \"crear\",\n"
             + "            \"modificar\",\n"
-            + "            \"eliminar\",\n"
+            + "            \"administrar\",\n"
             + "            \"listar\"\n"
             + "        ]\n"
             + "    },\n"
@@ -297,9 +298,12 @@ public class JsonPermiso {
                 } else if (permiso.equals("cobrar")) {
                     rutaControlador = "/View/Cheque/Cobrar.fxml";
 
-                } else if (permiso.equals("listar")) {
+                } else if (permiso.equals("reportar")) {
                     rutaControlador = "/View/Agencia/EditarAgencia.fxml";
 
+                }else if (permiso.equals("listar")) {
+                    rutaControlador = "/View/Agencia/EditarAgencia.fxml";
+ 
                 } else if (permiso.equals("eliminar")) {
 
                     //rutaControlador = "/View/Roles/EliminarRol.fxml";
@@ -356,9 +360,12 @@ public class JsonPermiso {
                 } else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Cuenta/ListarCuenta.fxml";
 
+                } else if (permiso.equals("administrar")) {
+                    rutaControlador = "/View/Cuenta/AdministrarCuenta.fxml";
+
                 } else if (permiso.equals("modificar")) {
                     rutaControlador = "/View/Cuenta/EditarCuenta.fxml";
-
+ 
                 } else if (permiso.equals("eliminar")) {
 
                     rutaControlador = "/View/Cuenta/EliminarCuenta.fxml";
