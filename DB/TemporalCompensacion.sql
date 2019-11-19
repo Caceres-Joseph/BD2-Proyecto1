@@ -21,7 +21,7 @@ CREATE TABLE cheque_tmp_1 (
     fecha     DATE NOT NULL,
     cuenta      INTEGER NOT NULL,
     valor   REAL NOT NULL,
-    estado  INTEGER NOT NULL,
+    estado  VARCHAR(32) NOT NULL,
     lote    INTEGER NOT NULL,
     referencia INTEGER NOT NULL,
     correlativo INTEGER NOT NULL
@@ -205,7 +205,7 @@ BEGIN
               
               -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE SE COBRÓ CON ÉXITO
                  
-              UPDATE cheque_tmp_1 SET estado = 1 WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
+              UPDATE cheque_tmp_1 SET estado = 'Cobrado' WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
               COMMIT;
             ELSE
               raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
@@ -213,13 +213,13 @@ BEGIN
               
               -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR SALDO INSUFICIENTE
               
-              UPDATE cheque_tmp_1 SET estado = 2 WHERE id_cheque = c_id_cheque; -- ESTADO 2 (CHEQUE NO COBRADO POR SALDO INSUFICIENTE)
+              UPDATE cheque_tmp_1 SET estado = 'No cobrado por saldo insuficiente' WHERE id_cheque = c_id_cheque; -- ESTADO 2 (CHEQUE NO COBRADO POR SALDO INSUFICIENTE)
               ROLLBACK;
             END IF;
-            
           ELSE
             -- EL CHEQUE YA EXISTE DEBO VERIFICAR SU ESTADO
             SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+<<<<<<< Updated upstream
             -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÃ? DENTRO DEL RANGO) (5)
             IF estado_cheque = 1 THEN
               -- EL CHEQUE FUE REPORTADO COMO ROBADO
@@ -255,20 +255,28 @@ BEGIN
                 
                 UPDATE cheque_tmp_1 SET estado = 6 WHERE id_cheque = c_id_cheque; -- ESTADO 6 (CHEQUE NO COBRADO YA FUE COBRADO)
             END IF;
+=======
+            -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI EST�? DENTRO DEL RANGO) (5)
+            
+              -- EL CHEQUE FUE REPORTADO COMO ROBADO
+              INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
+                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'Cheque rechazado: '||estado_cheque);
+
+>>>>>>> Stashed changes
           END IF;
         ELSE
           raise_application_error(-20456, 'Cheque no existe en el sistema para la cuenta especificada');
           
           -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO EXISTENTE
           
-          UPDATE cheque_tmp_1 SET estado = 7 WHERE id_cheque = c_id_cheque; -- ESTADO 7 (CHEQUE NO COBRADO NO EXISTENTE)
+          UPDATE cheque_tmp_1 SET estado = 'Cheque no cobrado fuera de rango' WHERE id_cheque = c_id_cheque; -- ESTADO 7 (CHEQUE NO COBRADO NO EXISTENTE)
         END IF;
       ELSE
         raise_application_error(-20456, 'La cuenta especificada no esta activa');
         
         -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CUENTA INACTIVA
         
-        UPDATE cheque_tmp_1 SET estado = 8 WHERE id_cheque = c_id_cheque; -- ESTADO 8 (CHEQUE NO COBRADO CUENTA INACTIVA)
+        UPDATE cheque_tmp_1 SET estado = 'No cobrado por cuenta inactiva' WHERE id_cheque = c_id_cheque; -- ESTADO 8 (CHEQUE NO COBRADO CUENTA INACTIVA)
       END IF;
     ELSE
 				-- LA CUENTA NO EXISTE
@@ -276,7 +284,7 @@ BEGIN
                
                 -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CUENTA INEXISTENTE
                 
-                UPDATE cheque_tmp_1 SET estado = 9 WHERE id_cheque = c_id_cheque; -- ESTADO 9 (CHEQUE NO COBRADO REPORTADO COMO PERDIDO)
+                UPDATE cheque_tmp_1 SET estado = 'No cobrado por cuenta inexistente' WHERE id_cheque = c_id_cheque; -- ESTADO 9 (CHEQUE NO COBRADO REPORTADO COMO PERDIDO)
     END IF;
     
     end loop;
