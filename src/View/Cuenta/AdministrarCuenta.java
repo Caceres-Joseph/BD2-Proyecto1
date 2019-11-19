@@ -36,8 +36,7 @@ public class AdministrarCuenta implements Initializable {
 
     @FXML
     void clckAceptar(ActionEvent event) {
-
-        System.out.println(comboTipo.id_TipoCuenta);
+ 
 
         if (!validar()) {
             return;

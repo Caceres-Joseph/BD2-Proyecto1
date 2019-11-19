@@ -111,4 +111,28 @@ public class ComboTipoCuenta {
         contenidoTabla.clear();
     }
 
+    public void mostrarEstadosCheque() {
+       
+        TipoCuenta temp1 = new TipoCuenta("Robado");
+        temp1.setId_tipo(1);
+        contenidoTabla.add(temp1);
+         
+        TipoCuenta temp2 = new TipoCuenta("Bloqueado");
+        temp2.setId_tipo(2);
+        contenidoTabla.add(temp2);
+        
+        TipoCuenta temp3 = new TipoCuenta("Perdido");
+        temp3.setId_tipo(3);
+        contenidoTabla.add(temp3);
+        
+        TipoCuenta temp4 = new TipoCuenta("Pagado");
+        temp4.setId_tipo(4);
+        contenidoTabla.add(temp4);
+        
+        TipoCuenta temp5 = new TipoCuenta("Activo");
+        temp5.setId_tipo(5);
+        contenidoTabla.add(temp5);
+         
+    }
+
 }
