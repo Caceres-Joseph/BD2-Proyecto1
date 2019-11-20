@@ -116,7 +116,7 @@ public class Grafica2 extends javax.swing.JFrame {
 
     private static JFreeChart createChart(PieDataset dataset) {
         JFreeChart chart = ChartFactory.createPieChart(
-                "Consulta gráfica de saldos por agencia", // chart title 
+                "Consulta gráfica de depositos por agencia", // chart title 
                 dataset, // data    
                 true, // include legend   
                 true,

@@ -95,7 +95,7 @@ public class ReporteAuditoria extends Conexion {
             
             tipo = tipo.equals("Cualquiera")?" ":" tipo = '" + tipo + "' AND ";
             fecha = fecha.equals("Cualquiera")?" ":" fecha = '" + fecha + "' AND";
-            naturaleza = tipo.equals("Cualquiera")?" ":" naturaleza = '" + naturaleza + "' AND";
+            naturaleza = naturaleza.equals("Cualquiera")?" ":" naturaleza = '" + naturaleza + "' AND";
             terminal = terminal.equals("Cualquiera")?" ":" terminal_id_terminal = " + terminal + " AND";
             cuenta = cuenta.equals("Cualquiera")?" ":" CUENTA_NO_CUENTA = " + cuenta + " AND";
 
@@ -103,7 +103,7 @@ public class ReporteAuditoria extends Conexion {
             String sql = "SELECT ID_TRANSACCION,FECHA,TIPO,NATURALEZA,CODIGO_AUTORIZACION,USUARIO_ID_USUARIO,TERMINAL_ID_TERMINAL,CUENTA_NO_CUENTA,RECHAZADO,RAZON_RECHAZO,SALDO_FINAL-SALDO_INICIAL AS MONTO FROM transaccion WHERE \n"
                     + tipo +  fecha +  naturaleza + terminal + cuenta + " ESTADO_TRANSACCION = 1";
                     
-
+            System.out.println("LA CONSULTA ES: "+sql);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -118,7 +118,7 @@ public class ReporteAuditoria extends Conexion {
                 resultsAuditor.setNo_cuenta(Integer.parseInt(rs.getString("CUENTA_NO_CUENTA")));
                 resultsAuditor.setRechazo(rs.getString("RECHAZADO"));
                 resultsAuditor.setRazon_rechazo(rs.getString("RAZON_RECHAZO"));
-                resultsAuditor.setMonto(Double.parseDouble(rs.getString("MONTO")));
+                resultsAuditor.setMonto(Math.abs(Double.parseDouble(rs.getString("MONTO"))));
                 results.add(resultsAuditor);
             }
             return results;

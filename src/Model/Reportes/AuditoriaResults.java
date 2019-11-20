@@ -81,7 +81,11 @@ public class AuditoriaResults {
     }
 
     public void setRechazo(String rechazo) {
-        this.rechazo = rechazo;
+        if(rechazo != null){
+            this.rechazo = rechazo;
+            return;
+        }
+        this.rechazo = "";
     }
 
     public String getRazon_rechazo() {
@@ -89,7 +93,13 @@ public class AuditoriaResults {
     }
 
     public void setRazon_rechazo(String razon_rechazo) {
-        this.razon_rechazo = razon_rechazo;
+        if(razon_rechazo != null){
+            this.razon_rechazo = razon_rechazo;
+            return;
+        }
+        this.razon_rechazo = "";
+        
+        
     }
 
     public int getId_usuario() {

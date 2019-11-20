@@ -32,7 +32,7 @@ public class ReporteGerencia extends Conexion {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                GerenciaQuery1 reporte1 = new GerenciaQuery1(Integer.parseInt(rs.getString("id_agencia")), rs.getString("nombre"), Double.parseDouble(rs.getString("Saldos")));
+                GerenciaQuery1 reporte1 = new GerenciaQuery1(Integer.parseInt(rs.getString("id_agencia")), rs.getString("nombre"), Math.abs(Double.parseDouble(rs.getString("Saldos"))));
                 results.add(reporte1);
             }
             return results;
@@ -61,14 +61,14 @@ public class ReporteGerencia extends Conexion {
                     + "    --DETERMINAR EL MÁXIMO DE DEPOSITOS REALIZADOS EN CADA AGENCIA\n"
                     + "    SELECT agencia, MAX(CONTEO) AS CANTIDAD FROM(\n"
                     + "        SELECT transaccion.cuenta_no_cuenta AS no_cuenta,transaccion.naturaleza AS naturaleza,cliente.dpi_cliente AS dpi,cliente.nombre AS nombre,agencia.nombre AS agencia, COUNT(*) AS CONTEO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
-                    + "        WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'deposito' \n"
+                    + "        WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'debito' \n"
                     + "        AND mancomunada.cuenta_no_cuenta = cuenta.no_cuenta AND mancomunada.cliente_dpi_cliente = cliente.dpi_cliente AND transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia\n"
                     + "        GROUP BY transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre\n"
                     + "    )\n"
                     + "    GROUP BY naturaleza,agencia),\n"
                     + "    --DETERMINAR EL CONTEO DE DEPOSITOS POR TODOS LOS CLIENTES\n"
                     + "    (SELECT transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre NOMBRE_AGENCIA, COUNT(*) AS CONTEO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
-                    + "    WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'deposito' \n"
+                    + "    WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'debito' \n"
                     + "    AND mancomunada.cuenta_no_cuenta = cuenta.no_cuenta AND mancomunada.cliente_dpi_cliente = cliente.dpi_cliente AND transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia\n"
                     + "    GROUP BY transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre) \n"
                     + "    --BUSCAR EL CLIENTE QUE HIZO CADA DEPOSITO MÁXIMO\n"
@@ -103,14 +103,14 @@ public class ReporteGerencia extends Conexion {
             //Consulta gráfica de saldos por agencia (Pie) 
             String sql = "SELECT agencia,nombre, maximo FROM(\n"
                     + "    SELECT agencia, MAX(PAGADO) AS MAXIMO FROM(\n"
-                    + "        SELECT transaccion.cuenta_no_cuenta AS no_cuenta,transaccion.naturaleza AS naturaleza,cliente.dpi_cliente AS dpi,cliente.nombre AS nombre,agencia.nombre AS agencia, SUM(SALDO_FINAL - SALDO_INICIAL) AS PAGADO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
+                    + "        SELECT transaccion.cuenta_no_cuenta AS no_cuenta,transaccion.naturaleza AS naturaleza,cliente.dpi_cliente AS dpi,cliente.nombre AS nombre,agencia.nombre AS agencia, SUM(ABS(SALDO_FINAL - SALDO_INICIAL)) AS PAGADO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
                     + "        WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.tipo = 'cheque' \n"
                     + "        AND mancomunada.cuenta_no_cuenta = cuenta.no_cuenta AND mancomunada.cliente_dpi_cliente = cliente.dpi_cliente AND transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia\n"
                     + "        GROUP BY transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre\n"
                     + "    )    \n"
                     + "    GROUP BY agencia),\n"
                     + "    \n"
-                    + "    (SELECT transaccion.cuenta_no_cuenta AS no_cuenta,transaccion.naturaleza AS naturaleza,cliente.dpi_cliente AS dpi,cliente.nombre AS nombre,agencia.nombre AS NOMBRE_AGENCIA, SUM(SALDO_FINAL - SALDO_INICIAL) AS PAGADO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
+                    + "    (SELECT transaccion.cuenta_no_cuenta AS no_cuenta,transaccion.naturaleza AS naturaleza,cliente.dpi_cliente AS dpi,cliente.nombre AS nombre,agencia.nombre AS NOMBRE_AGENCIA, SUM(ABS(SALDO_FINAL - SALDO_INICIAL)) AS PAGADO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
                     + "    WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.tipo = 'cheque' \n"
                     + "    AND mancomunada.cuenta_no_cuenta = cuenta.no_cuenta AND mancomunada.cliente_dpi_cliente = cliente.dpi_cliente AND transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia\n"
                     + "    GROUP BY transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre)\n"

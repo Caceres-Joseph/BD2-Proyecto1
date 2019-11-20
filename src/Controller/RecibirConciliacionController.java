@@ -115,7 +115,7 @@ public class RecibirConciliacionController {
         int id_cheque = Integer.parseInt(dataCheque[3]);
         double monto = Double.parseDouble(dataCheque[4]);
 
-        return new ChequeConciliado(id_cheque, cuenta, monto, lote, 0, referencia);
+        return new ChequeConciliado(id_cheque, cuenta, monto, lote, "", referencia);
     }
 
     /**
@@ -148,13 +148,13 @@ public class RecibirConciliacionController {
             ResultSet rs = consulta.listChequesGrabados(lote);
             String cadena_archivo = "";
 
-            Lote loteConciliado = consulta.findById(lote);
+            Lote loteConciliado = consulta.findLote(lote);
 
             if (loteConciliado != null) {
                 int banco = loteConciliado.getId_banco();
                 while (rs.next()) {
 
-                    ChequeConciliado nuevo = new ChequeConciliado(rs.getInt("correlativo"), rs.getInt("cuenta"), rs.getDouble("valor"), rs.getInt("lote"), rs.getInt("estado"), rs.getInt("referencia"));
+                    ChequeConciliado nuevo = new ChequeConciliado(rs.getInt("correlativo"), rs.getInt("cuenta"), rs.getDouble("valor"), rs.getInt("lote"), rs.getString("estado"), rs.getInt("referencia"));
 
                     cadena_archivo += banco + "|" + nuevo.getReferencia() + "|" + nuevo.getCuenta() + "|" + nuevo.getId_cheque() + "|" + nuevo.getValor() + "|" + nuevo.getEstado()+"\n";
                     
@@ -232,7 +232,7 @@ public class RecibirConciliacionController {
                  * de ser así no se liberan fondos de reserva
                  * y el cheque no se toma en cuenta.
                  */
-                if(cheque.getEstado() == 1){
+                if(cheque.getEstado().equalsIgnoreCase("OK")){
                     consulta.liberarFondos(cheque,usuario,terminal);
                 }
                 
@@ -263,9 +263,25 @@ public class RecibirConciliacionController {
         int cuenta = Integer.parseInt(dataCheque[2]);
         int id_cheque = Integer.parseInt(dataCheque[3]);
         double monto = Double.parseDouble(dataCheque[4]);
-        int estado = Integer.parseInt(dataCheque[5]);
+        String estado = dataCheque[5];
 
         return new ChequeConciliado(id_cheque, cuenta, monto, lote, estado, referencia);
+    }
+    
+    
+    /**
+     * Retorna los items listados del mas reciente al menos...
+     * @param idLote
+     * @return 
+     */
+    public ArrayList<ChequeConciliado> listCheques(int idLote)
+    {
+        try {
+            ArrayList<ChequeConciliado> cheques = consulta.listDataCheques(idLote);
+            return cheques;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
     
     
