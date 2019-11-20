@@ -352,6 +352,8 @@ END;
 
 
 
+select * from cheque_tmp_1 where lote = 2;
+
 /**
  * PRUEBAS PARA COMPENSACION
  */
@@ -397,12 +399,6 @@ SELECT * FROM CUENTA;
 
 SELECT * FROM TRANSACCION;
 */
-
-
-
-
-
-
 
 
 

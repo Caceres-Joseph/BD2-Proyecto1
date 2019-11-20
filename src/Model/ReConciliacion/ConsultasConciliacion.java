@@ -5,11 +5,13 @@
  */
 package Model.ReConciliacion;
 
+import Model.BD.BDOpciones;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -60,7 +62,7 @@ public class ConsultasConciliacion extends Conexion {
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, lote.getId_cheque());
             call.setInt(2, lote.getLote());
-            call.setInt(3, lote.getEstado());
+            call.setString(3, lote.getEstado());
             call.setDouble(4, lote.getValor());
             call.setInt(5, lote.getCuenta());
             call.setInt(6, lote.getReferencia());
@@ -115,7 +117,7 @@ public class ConsultasConciliacion extends Conexion {
      * @param id
      * @return el banco que encontro
      */
-    public Lote findById(int id)
+    public Lote findLote(int id)
     {        
         Connection con = getConexion();
         try {
@@ -241,6 +243,53 @@ public class ConsultasConciliacion extends Conexion {
             }
         }
     }
+    
+    private DataArchivo dataArchivo;
+    public void setDataArchivo(String documentos, String id_lote, String total){
+        
+        dataArchivo = new DataArchivo(documentos,id_lote,total);
+        
+    }
+    
+    public DataArchivo getDataArchivo(){
+        return dataArchivo;
+    }
+    
+    
+    
+    public ArrayList<ChequeConciliado> listDataCheques(int idLote)
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<ChequeConciliado> cheques = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            
+            String sql = "select * from cheque_tmp_1 where lote = "+idLote;
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                ChequeConciliado cheque = new ChequeConciliado(rs.getInt("correlativo"),rs.getInt("cuenta"),rs.getDouble("valor"),rs.getInt("lote"),rs.getString("estado"),rs.getInt("referencia"));
+                cheques.add(cheque);
+            }
+            return cheques;
+        } catch (Exception e) {
+            System.err.println(e);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    
+    
     
 
 }

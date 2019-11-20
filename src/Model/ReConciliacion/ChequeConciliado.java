@@ -16,7 +16,7 @@ public class ChequeConciliado {
     private int cuenta;
     private double valor;
     private int lote;
-    private int estado;
+    private String estado;
     private int referencia;
 
     /**
@@ -29,7 +29,7 @@ public class ChequeConciliado {
      * @param lote
      * @param estado 
      */
-    public ChequeConciliado(int id_cheque, int cuenta, double valor, int lote, int estado, int referencia) {
+    public ChequeConciliado(int id_cheque, int cuenta, double valor, int lote, String estado, int referencia) {
         this.id_cheque = id_cheque;
         this.cuenta = cuenta;
         this.valor = valor;
@@ -70,11 +70,11 @@ public class ChequeConciliado {
         this.lote = lote;
     }
 
-    public int getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
     
