@@ -288,6 +288,33 @@ END;
 /
 
 
+-- INSERTAR REGISTRO NUEVO CHEQUE COMPENSADO////////////////////////////////////////////////////////////////////////////////////
+CREATE OR REPLACE PROCEDURE CAMBIAR_ESTADO_LOTE(
+    p_id_lote IN lote_tmp_1.ID_LOTE%TYPE
+)
+IS
+    
+    
+    lote_existe INTEGER;
+
+BEGIN    
+    SELECT COUNT(*) INTO lote_existe FROM lote_tmp_1 WHERE lote_tmp_1.id_lote = p_id_lote;
+
+    IF lote_existe = 1 THEN
+    
+        UPDATE lote_tmp_1 SET estado = 3 WHERE id_lote = p_id_lote; -- ESTADO 3 (LOTE EXPORTADO)
+    
+    ELSE
+        -- ALGUNA DE LAS CUENTAS NO EXISTE
+        raise_application_error(-20456,'El lote no existe');
+    END IF;
+    
+	COMMIT;
+END;
+/
+
+
+
 
 
 -- INSERTAR REGISTRO NUEVO CHEQUE COMPENSADO////////////////////////////////////////////////////////////////////////////////////
@@ -355,13 +382,6 @@ BEGIN
 END;
 /
 
-select * from cuenta;
-
-UPDATE CUENTA SET SALDO_RESERVA = 2500 WHERE NO_CUENTA = 123;
-UPDATE CUENTA SET SALDO_TOTAL = (2500 + 2500) WHERE NO_CUENTA = 123;
-
-
-CALL LIBERAR_FONDOS(123,10,1,1,0);
 /**
  * PRUEBAS PARA COMPENSACION
  */

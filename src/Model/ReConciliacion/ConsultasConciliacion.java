@@ -326,6 +326,36 @@ public class ConsultasConciliacion extends Conexion {
     
     
     
+    /**
+     * Grabar el lote que ya fue cuadrado, realizando todas las operaciones
+     * que se encuentran en las tablas temporales y actualizando los estados
+     * de los cheques y lotes.
+     * @param lote
+     * @return 
+     */
+    public boolean reportarExportacion(int lote) {
+        Connection con = getConexion();
+        try {
+            String cmd = "{CALL CAMBIAR_ESTADO_LOTE(?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            CallableStatement call = con.prepareCall(cmd);
+            call.setInt(1, lote);
+            call.execute();
+            call.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    
+    
     
 
 }

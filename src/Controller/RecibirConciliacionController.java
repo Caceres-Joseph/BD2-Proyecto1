@@ -165,6 +165,9 @@ public class RecibirConciliacionController {
                 
                 escribir(cadena_archivo,loteConciliado.getId_banco(),loteConciliado.getId_lote());
                 
+                //Se cambia el estado del lote a exportado
+                consulta.reportarExportacion(lote);
+                
                 return cheques;
             } else {
                 return null;
@@ -235,7 +238,9 @@ public class RecibirConciliacionController {
                  * y el cheque no se toma en cuenta.
                  */
                 if(cheque.getEstado().equalsIgnoreCase("OK")){
-                    consulta.liberarFondos(cheque,usuario,terminal);
+                    consulta.liberarFondos(cheque,usuario,terminal,1);
+                }else{
+                    consulta.liberarFondos(cheque,usuario,terminal,0);
                 }
                 
 
