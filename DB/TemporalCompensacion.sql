@@ -21,7 +21,7 @@ CREATE TABLE cheque_tmp_1 (
     fecha     DATE NOT NULL,
     cuenta      INTEGER NOT NULL,
     valor   REAL NOT NULL,
-    estado  INTEGER NOT NULL,
+    estado  VARCHAR(32),
     lote    INTEGER NOT NULL,
     referencia INTEGER NOT NULL,
     correlativo INTEGER NOT NULL
