@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Cheque.Cobrar">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Cheque.Reportar">
    <children>
       <GridPane prefWidth="641.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -28,7 +29,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
                <children>
-                  <Label styleClass="title" text="Debitar">
+                  <Label styleClass="title" text="Reportar cheque">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -57,22 +58,13 @@
             </JFXButton>
          </children>
       </GridPane>
-      <JFXTextField fx:id="txtMonto" labelFloat="true" layoutX="96.0" layoutY="226.0" prefHeight="34.0" prefWidth="336.0" promptText="Q.">
+      <JFXComboBox fx:id="cbEstados" layoutX="38.0" layoutY="236.0" prefHeight="37.0" prefWidth="425.0" promptText="Opciones" />
+      <JFXTextField fx:id="txtCuenta" labelFloat="true" layoutX="41.0" layoutY="127.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cuenta">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <Label layoutX="31.0" layoutY="228.0" prefHeight="30.0" prefWidth="50.0" text="Monto">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <JFXTextField fx:id="txtCuenta" labelFloat="true" layoutX="31.0" layoutY="117.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cuenta">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="txtNoCheque" labelFloat="true" layoutX="31.0" layoutY="174.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cheque">
+      <JFXTextField fx:id="txtNoCheque" labelFloat="true" layoutX="41.0" layoutY="184.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cheque">
          <font>
             <Font size="15.0" />
          </font>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="549.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Compesacion.CobrarCheque">
+   <children>
+      <GridPane layoutX="10.0" layoutY="10.0" prefWidth="641.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="212.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="158.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1054.0" minWidth="10.0" prefWidth="252.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
+               <children>
+                  <Label styleClass="title" text="Cobro de cheque">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <JFXButton onAction="#clckAceptar" text="Aceptar" textFill="WHITE" GridPane.columnIndex="1">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Gui/img/baseline_play_arrow_white_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="238.0" layoutY="20.0" onAction="#clckCancelar" text="Cancelar" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </GridPane>
+      <AnchorPane layoutX="32.0" layoutY="83.0" prefHeight="87.0" prefWidth="536.0" style="-fx-border-color: gray;" AnchorPane.bottomAnchor="379.0" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="83.0">
+         <children>
+            <Label layoutX="25.0" layoutY="14.0" style="-fx-background-color: #F6F6F6;" text="Banco Actual" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-10.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtCuentaActual" labelFloat="true" layoutX="23.0" layoutY="27.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cuenta" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="86.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="32.0" layoutY="184.0" prefHeight="300.0" prefWidth="536.0" style="-fx-border-color: gray;" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="184.0">
+         <children>
+            <Label layoutX="21.0" layoutY="11.0" style="-fx-background-color: #F6F6F6;" text="Banco Externo" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="-10.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtMonto" labelFloat="true" layoutX="90.0" layoutY="145.0" prefHeight="34.0" prefWidth="336.0" promptText="Q." AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="86.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <Label layoutX="9.0" layoutY="147.0" prefHeight="30.0" prefWidth="50.0" text="Monto" AnchorPane.leftAnchor="24.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtCuenta" labelFloat="true" layoutX="14.0" layoutY="24.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cuenta" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="24.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="txtNoCheque" labelFloat="true" layoutX="14.0" layoutY="78.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cheque" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="86.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXComboBox fx:id="cbBancos" layoutX="14.0" layoutY="203.0" prefHeight="37.0" prefWidth="425.0" promptText="Banco" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="86.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

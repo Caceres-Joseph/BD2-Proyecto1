@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Cheque.Cobrar">
+<AnchorPane id="AnchorPane" prefHeight="422.0" prefWidth="795.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Compesacion.ArchivoConciliacion">
    <children>
       <GridPane prefWidth="641.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -28,7 +29,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
                <children>
-                  <Label styleClass="title" text="Debitar">
+                  <Label styleClass="title" text="Archivo de Conciliación">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -38,7 +39,7 @@
                   <Insets />
                </GridPane.margin>
             </HBox>
-            <JFXButton onAction="#clckAceptar" text="Aceptar" textFill="WHITE" GridPane.columnIndex="1">
+            <JFXButton onAction="#clckAceptar" text="Exportar" textFill="WHITE" GridPane.columnIndex="1">
                <graphic>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -57,25 +58,14 @@
             </JFXButton>
          </children>
       </GridPane>
-      <JFXTextField fx:id="txtMonto" labelFloat="true" layoutX="96.0" layoutY="226.0" prefHeight="34.0" prefWidth="336.0" promptText="Q.">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </JFXTextField>
-      <Label layoutX="31.0" layoutY="228.0" prefHeight="30.0" prefWidth="50.0" text="Monto">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <JFXTextField fx:id="txtCuenta" labelFloat="true" layoutX="31.0" layoutY="117.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cuenta">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="txtNoCheque" labelFloat="true" layoutX="31.0" layoutY="174.0" prefHeight="34.0" prefWidth="425.0" promptText="No. de cheque">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </JFXTextField>
+      <TableView fx:id="tb" editable="true" layoutX="23.0" layoutY="91.0" prefHeight="200.0" prefWidth="267.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
+         <columns>
+            <TableColumn fx:id="tc0" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="56.0" text="Lote" />
+            <TableColumn fx:id="tc1" prefWidth="140.0" text="Cant. de Docs" />
+            <TableColumn fx:id="tc2" prefWidth="104.0" text="Total de Lote" />
+            <TableColumn fx:id="tc3" prefWidth="153.0" text="Banco Destino" />
+            <TableColumn fx:id="tc4" prefWidth="153.0" text="Estado" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

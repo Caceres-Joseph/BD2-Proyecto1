@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.Cheque;
+package View.Cuenta;
 
-import Controller.ChequeController;
-import Controller.PagoChequeController;
+import Controller.CuentasController;
 import Main.B2;
+import Model.Cuentas.Estado;
+import Model.TipoCuentas.TipoCuenta;
 import View.Gui.Componentes.mascaras;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,30 +23,30 @@ import javafx.fxml.Initializable;
  *
  * @author Notebook
  */
-public class Cobrar implements Initializable {
+public class AdministrarCuenta implements Initializable {
 
-    PagoChequeController con_cheque = new PagoChequeController();
-
-    @FXML
-    private JFXTextField txtMonto;
+    ComboTipoCuenta comboTipo;
+    CuentasController con_cuenta = new CuentasController();
 
     @FXML
     private JFXTextField txtCuenta;
 
     @FXML
-    private JFXTextField txtNoCheque;
+    private JFXComboBox<TipoCuenta> cbEstados;
 
     @FXML
     void clckAceptar(ActionEvent event) {
+ 
+
         if (!validar()) {
             return;
         }
 
         try {
-            if (con_cheque.createTransaccionCheque(Integer.valueOf(txtNoCheque.getText()), Integer.valueOf(txtCuenta.getText()), Double.parseDouble(txtMonto.getText()))) {
-                B2.GuiController.mensajeConsola("Se cobró el cheque de forma exitosa");
-            } else {
-                B2.GuiController.mensajeConsola("Ocurrió un error al cobrar el cheque");
+
+            if (con_cuenta.estadoCuenta(Integer.valueOf(txtCuenta.getText()), comboTipo.id_TipoCuenta)) 
+            {
+                B2.GuiController.mensajeConsola("Se cambió el estado de la cuenta: " + txtCuenta.getText());
             }
 
         } catch (Exception e) {
@@ -58,9 +60,6 @@ public class Cobrar implements Initializable {
     }
 
     mascaras mskCuenta;
-    mascaras mskCheque;
-
-    mascaras mskMonto;
 
     /**
      * Initializes the controller class.
@@ -68,15 +67,12 @@ public class Cobrar implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //llenando el combo
+        comboTipo = new ComboTipoCuenta(cbEstados);
+        comboTipo.mostrarEstados();
+
         mskCuenta = new mascaras(txtCuenta, false);
         mskCuenta.setMaskNumero();
-
-        mskCheque = new mascaras(txtNoCheque, false);
-        mskCheque.setMaskNumero();
-
-        mskMonto = new mascaras(txtMonto, false);
-        mskMonto.setMaskDecimalEntero();
-
     }
 
     /**
@@ -90,17 +86,11 @@ public class Cobrar implements Initializable {
             return false;
         }
 
-        if (!mskCheque.estado) {
-            B2.GuiController.mensajeConsola("Debe insertar un número de cheque válido");
-            return false;
-        }
-
-        if (!mskMonto.estado) {
-            B2.GuiController.mensajeConsola("Debe insertar un Monto válido");
+        if (comboTipo.id_TipoCuenta == -1) {
+            B2.GuiController.mensajeConsola("Debe seleccionar un estado para la cuenta");
             return false;
         }
 
         return true;
     }
-
 }

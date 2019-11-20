@@ -22,6 +22,22 @@ public class CuentasController {
         consultas = new ConsultasCuenta();
     }
     
+    
+    /**
+     * Funcion para cambiar el estado de una Cuenta
+     * @param no_cuenta
+     * @param estado 
+     * @return 
+     */
+    public boolean estadoCuenta(int no_cuenta, int estado)
+    {
+        try {
+            return consultas.estado(new Cuenta(no_cuenta, estado));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
     /**
      * Funcion para crear una Cuenta
      * @param saldo

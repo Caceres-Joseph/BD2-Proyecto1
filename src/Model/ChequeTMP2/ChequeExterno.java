@@ -67,4 +67,20 @@ public class ChequeExterno {
     }
     
     
+    
+    public void imprimir(){
+        System.out.println("No cuenta local:");
+        System.out.println(no_cuenta_local);
+        System.out.println("No cuenta externa: ");
+        System.out.println(no_cuenta_externa);
+        System.out.println("No correlativo cheuqe:");
+        System.out.println(correlativo_cheque);
+        System.out.println("Monto: ");
+        System.out.println(monto);
+        System.out.println("Id banco:");
+        System.out.println(id_banco);
+        
+         
+    }
+    
 }
