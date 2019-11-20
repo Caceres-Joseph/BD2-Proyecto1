@@ -197,6 +197,8 @@ public class JsonPermiso {
 
             root.getChildren().add(nuevo.module);
         }
+        
+        
 
         public TreeItem<nodoVistaArbol> getRoot() {
             return root;
