@@ -5,6 +5,7 @@
  */
 package Model.ChequeTMP2;
 
+import Main.B2;
 import Model.BD.BDOpciones;
 import Model.BD.Conexion;
 import Model.LoteTMP2.LoteTMP2;
@@ -18,13 +19,16 @@ import java.util.ArrayList;
  *
  * @author ricar
  */
-public class ConsultasChequeTMP2 extends Conexion{
-    
-    public boolean cobra_cheque_externo(ChequeExterno cheque, int id_usuario, int terminal)
-    {
+public class ConsultasChequeTMP2 extends Conexion {
+
+    public boolean cobra_cheque_externo(ChequeExterno cheque, int id_usuario, int terminal) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL CHEQUE_EXTERNO(?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+//            cheque.imprimir();
+//            System.out.println(id_usuario);
+//            System.out.println(terminal);
+            
+            String cmd = "{CALL CHEQUE_EXTERNO(?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, cheque.getNo_cuenta_local());
             call.setInt(2, cheque.getNo_cuenta_externa());
@@ -38,34 +42,32 @@ public class ConsultasChequeTMP2 extends Conexion{
             return true;
         } catch (Exception e) {
             System.err.println(e);
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
-        }
-        finally{
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
                 System.err.println(e);
+                B2.GuiController.mensajeConsola(e.getMessage());
             }
         }
     }
-    
-    public ArrayList<LoteTMP2> listLotes()
-    {
+
+    public ArrayList<LoteTMP2> listLotes() {
         Connection con = getConexion();
         try {
             ArrayList<LoteTMP2> lotes = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
             String sql = "SELECT LOTE_TMP_2.ID_LOTE_2, LOTE_TMP_2.TOTAL_DOCUMENTOS, LOTE_TMP_2.TOTAL_MONTO, LOTE_TMP_2.ID_BANCO, LOTE_TMP_2.ESTADO_LOTE, "
-                        + "BANCO.NOMBRE AS BANCO "
-                        + "FROM BANCO, LOTE_TMP_2 "
-                        + "WHERE BANCO.ID_BANCO = LOTE_TMP_2.ID_BANCO "
-                        + "ORDER BY LOTE_TMP_2.ID_LOTE_2 DESC "
-                    ;
+                    + "BANCO.NOMBRE AS BANCO "
+                    + "FROM BANCO, LOTE_TMP_2 "
+                    + "WHERE BANCO.ID_BANCO = LOTE_TMP_2.ID_BANCO "
+                    + "ORDER BY LOTE_TMP_2.ID_LOTE_2 DESC ";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 LoteTMP2 l = new LoteTMP2(rs.getInt("total_documentos"), rs.getDouble("total_monto"), rs.getInt("id_banco"), rs.getInt("estado_lote"));
                 l.setBancoName(rs.getString("banco"));
                 l.setId_lote_2(rs.getInt("id_lote_2"));
@@ -74,19 +76,19 @@ public class ConsultasChequeTMP2 extends Conexion{
             return lotes;
         } catch (Exception e) {
             System.err.println(e);
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
-        }
-        finally{
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
-    public ArrayList<ChequeTMP2> listChequesLote(int idlote)
-    {
+
+    public ArrayList<ChequeTMP2> listChequesLote(int idlote) {
         Connection con = getConexion();
         try {
             ArrayList<ChequeTMP2> cheques = new ArrayList<>();
@@ -96,28 +98,27 @@ public class ConsultasChequeTMP2 extends Conexion{
             ps = con.prepareStatement(sql);
             ps.setInt(1, idlote);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
-                ChequeTMP2 cheque = new ChequeTMP2(rs.getDate("fecha"), rs.getInt("cuenta"), rs.getDouble("valor"), rs.getInt("lote"), rs.getInt("referencia"),rs.getInt("correlativo"));
+            while (rs.next()) {
+                ChequeTMP2 cheque = new ChequeTMP2(rs.getDate("fecha"), rs.getInt("cuenta"), rs.getDouble("valor"), rs.getInt("lote"), rs.getInt("referencia"), rs.getInt("correlativo"));
                 cheque.setId_cheque(rs.getInt("id_cheque"));
                 cheques.add(cheque);
             }
             return cheques;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
-            return new ArrayList<>();  
-        }
-        finally{
+            return new ArrayList<>();
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
-    public boolean marcar_lote_exportado(int id_lote, int id_banco)
-    {
+
+    public boolean marcar_lote_exportado(int id_lote, int id_banco) {
         Connection con = getConexion();
         try {
             String cmd = "{CALL MARCAR_LOTE_EXPORTADO(?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
@@ -129,12 +130,13 @@ public class ConsultasChequeTMP2 extends Conexion{
             return true;
         } catch (Exception e) {
             System.err.println(e);
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
-        }
-        finally{
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }

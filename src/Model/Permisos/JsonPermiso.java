@@ -50,6 +50,14 @@ public class JsonPermiso {
             + "        ]\n"
             + "    },\n"
             + "    \n"
+            + "	\"compensacion\" : {\n"
+            + "		\"permisos\":[\n"
+            + "            \"cobrar_cheque\",\n"
+            + "            \"modificar\",\n"
+            + "            \"listar\"\n"
+            + "        ]\n"
+            + "    },\n"
+            + "    \n"
             + "	\"operaciones\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"acreditar\",\n"
@@ -301,9 +309,9 @@ public class JsonPermiso {
                 } else if (permiso.equals("reportar")) {
                     rutaControlador = "/View/Cheque/Reportar.fxml";
 
-                }else if (permiso.equals("listar")) {
+                } else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Agencia/EditarAgencia.fxml";
- 
+
                 } else if (permiso.equals("eliminar")) {
 
                     //rutaControlador = "/View/Roles/EliminarRol.fxml";
@@ -365,7 +373,7 @@ public class JsonPermiso {
 
                 } else if (permiso.equals("modificar")) {
                     rutaControlador = "/View/Cuenta/EditarCuenta.fxml";
- 
+
                 } else if (permiso.equals("eliminar")) {
 
                     rutaControlador = "/View/Cuenta/EliminarCuenta.fxml";
@@ -396,14 +404,32 @@ public class JsonPermiso {
                 if (permiso.equals("acreditar")) {
                     rutaControlador = "/View/Transacciones/Depositar.fxml";
 
-                }else if (permiso.equals("debitar")) {
+                } else if (permiso.equals("debitar")) {
                     rutaControlador = "/View/Transacciones/Debitar.fxml";
 
-                }else if (permiso.equals("transferencia")) {
+                } else if (permiso.equals("transferencia")) {
                     rutaControlador = "/View/Transacciones/Transferir.fxml";
 
                 } else {
                     System.out.println("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+
+                    B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
+                }
+
+            } else if (nombreModulo.toLowerCase().equals("compensacion")) {
+
+                if (permiso.equals("cobrar_cheque")) {
+                    rutaControlador = "/View/Compesacion/CobrarCheque.fxml";
+                } else if (permiso.equals("listar")) {
+                    rutaControlador = "/View/Clientes/ListarCliente.fxml";
+
+                } else if (permiso.equals("modificar")) {
+                    rutaControlador = "/View/Clientes/EditarCliente.fxml";
+
+                } else if (permiso.equals("eliminar")) {
+
+                    //rutaControlador = "/View/Roles/EliminarRol.fxml";
+                } else {
 
                     B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
                 }
@@ -442,7 +468,7 @@ public class JsonPermiso {
                     B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);
                 }
             }
- 
+
             if (rutaControlador == "") {
 
                 B2.GuiController.mensajeConsola("No se reconoció el permiso: " + permiso + " del módulo: " + nombreModulo);

@@ -69,9 +69,9 @@ public class RecibirConciliacionController {
      */
     public Lote getDataLote(String path) {
 
-        String[] nameFile = path.replace(".txt", "").split("/");
+        String[] nameFile = path.replace(".txt", "").split("\\");
 
-        String nombreArchivo = nameFile[nameFile.length];
+        String nombreArchivo = nameFile[nameFile.length-1];
 
         String[] infoLote = nombreArchivo.split("_");
 
@@ -130,7 +130,7 @@ public class RecibirConciliacionController {
      * @param lote
      * @return
      */
-    public ArrayList<ChequeConciliado> listBancos(int lote) {
+    public ArrayList<ChequeConciliado> exportarConciliados(int lote) {
         try {
             ArrayList<ChequeConciliado> cheques = new ArrayList<>();
             ResultSet rs = consulta.listChequesGrabados(lote);
