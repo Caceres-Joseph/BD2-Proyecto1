@@ -33,7 +33,7 @@ public class RecibirConciliacionController {
      *
      * @param path
      */
-    public void LeerArchivo(String path) {
+    public Lote LeerArchivo(String path) {
 
         Lote lote = getDataLote(path);
         consulta.saveLote(lote);
@@ -58,6 +58,8 @@ public class RecibirConciliacionController {
 
         //Verificación del lote
         consulta.verificarLote(lote.getId_lote());
+        
+        return consulta.findLote(lote.getId_lote());
     }
     
     /**
@@ -163,6 +165,9 @@ public class RecibirConciliacionController {
                 
                 escribir(cadena_archivo,loteConciliado.getId_banco(),loteConciliado.getId_lote());
                 
+                //Se cambia el estado del lote a exportado
+                consulta.reportarExportacion(lote);
+                
                 return cheques;
             } else {
                 return null;
@@ -233,7 +238,9 @@ public class RecibirConciliacionController {
                  * y el cheque no se toma en cuenta.
                  */
                 if(cheque.getEstado().equalsIgnoreCase("OK")){
-                    consulta.liberarFondos(cheque,usuario,terminal);
+                    consulta.liberarFondos(cheque,usuario,terminal,1);
+                }else{
+                    consulta.liberarFondos(cheque,usuario,terminal,0);
                 }
                 
 
@@ -279,6 +286,21 @@ public class RecibirConciliacionController {
         try {
             ArrayList<ChequeConciliado> cheques = consulta.listDataCheques(idLote);
             return cheques;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+    
+    
+    /**
+     * Retorna los lotes de la tabla temporal lote.
+     * @return 
+     */
+    public ArrayList<Lote> listLotes()
+    {
+        try {
+            ArrayList<Lote> lotes = consulta.listlotes();
+            return lotes;
         } catch (Exception e) {
             return new ArrayList<>();
         }
