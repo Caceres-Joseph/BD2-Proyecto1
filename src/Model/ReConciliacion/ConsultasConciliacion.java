@@ -5,6 +5,7 @@
  */
 package Model.ReConciliacion;
 
+import Main.B2;
 import Model.BD.BDOpciones;
 import Model.BD.Conexion;
 import java.sql.CallableStatement;
@@ -19,11 +20,11 @@ import java.util.ArrayList;
  */
 public class ConsultasConciliacion extends Conexion {
 
-    
     /**
      * Creación de un nuevo lote en la tabla temporal.
+     *
      * @param lote
-     * @return 
+     * @return
      */
     public boolean saveLote(Lote lote) {
         Connection con = getConexion();
@@ -49,11 +50,12 @@ public class ConsultasConciliacion extends Conexion {
             }
         }
     }
-    
+
     /**
      * Creación de un nuevo cheque para un lote específico.
+     *
      * @param lote
-     * @return 
+     * @return
      */
     public boolean saveCheque(ChequeConciliado lote) {
         Connection con = getConexion();
@@ -80,13 +82,13 @@ public class ConsultasConciliacion extends Conexion {
             }
         }
     }
-    
-    
+
     /**
-     * Verificación de lote, si la cantidad de documentos y el total 
-     * del monto cuadra.
+     * Verificación de lote, si la cantidad de documentos y el total del monto
+     * cuadra.
+     *
      * @param lote
-     * @return 
+     * @return
      */
     public boolean verificarLote(int lote) {
         Connection con = getConexion();
@@ -108,17 +110,14 @@ public class ConsultasConciliacion extends Conexion {
             }
         }
     }
-    
-    
-    
-    
+
     /**
      * Busca un lote en especifico para determinar su estado
+     *
      * @param id
      * @return el banco que encontro
      */
-    public Lote findLote(int id)
-    {        
+    public Lote findLote(int id) {
         Connection con = getConexion();
         try {
             PreparedStatement ps = null;
@@ -127,18 +126,15 @@ public class ConsultasConciliacion extends Conexion {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            Lote lote = null;        
-            if(rs.next())
-            {
-                lote = new Lote(rs.getInt("id_lote"),rs.getInt("banco"),rs.getInt("no_documentos"),rs.getInt("valor"),rs.getInt("estado"));
+            Lote lote = null;
+            if (rs.next()) {
+                lote = new Lote(rs.getInt("id_lote"), rs.getInt("banco"), rs.getInt("no_documentos"), rs.getInt("valor"), rs.getInt("estado"));
             }
             return lote;
         } catch (Exception e) {
             System.err.println(e);
             return null;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
@@ -146,16 +142,16 @@ public class ConsultasConciliacion extends Conexion {
             }
         }
     }
-    
-    
+
     /**
-     * Grabar el lote que ya fue cuadrado, realizando todas las operaciones
-     * que se encuentran en las tablas temporales y actualizando los estados
-     * de los cheques y lotes.
+     * Grabar el lote que ya fue cuadrado, realizando todas las operaciones que
+     * se encuentran en las tablas temporales y actualizando los estados de los
+     * cheques y lotes.
+     *
      * @param lote
      * @param usuario
      * @param terminal
-     * @return 
+     * @return
      */
     public boolean grabarLote(int lote, int usuario, int terminal) {
         Connection con = getConexion();
@@ -163,8 +159,8 @@ public class ConsultasConciliacion extends Conexion {
             String cmd = "{CALL OPERAR_LOTE(?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, lote);
-            call.setInt(1, usuario);
-            call.setInt(1, terminal);
+            call.setInt(2, usuario);
+            call.setInt(3, terminal);
             call.execute();
             call.close();
             return true;
@@ -179,46 +175,47 @@ public class ConsultasConciliacion extends Conexion {
             }
         }
     }
-    
-    
-        /**
+
+    /**
      * List todos los elementos de bancos del mas reciente al menos
-     * @return 
+     *
+     * @return
      */
-    public ResultSet listChequesGrabados(int lote)
-    {
+    public ResultSet listChequesGrabados(int lote) {
         Connection con = getConexion();
         try {
             PreparedStatement ps = null;
             ResultSet rs = null;
             String sql = "SELECT * FROM cheque_tmp_1  WHERE lote = ?";
-             ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, lote);
             rs = ps.executeQuery();
             return rs;
         } catch (Exception e) {
+
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return null;
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
+
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
-    
+
     /**
-     * Liberación de fondos cuando se recibe el lote de los archivos que 
-     * ya fueron conciliados.
+     * Liberación de fondos cuando se recibe el lote de los archivos que ya
+     * fueron conciliados.
+     *
      * @param cheque
      * @param usuario
      * @param terminal
      * @param estado_operacion
-     * @return 
+     * @return
      */
     public boolean liberarFondos(ChequeConciliado cheque, int usuario, int terminal, int estado_operacion) {
         Connection con = getConexion();
@@ -230,108 +227,107 @@ public class ConsultasConciliacion extends Conexion {
             call.setInt(3, usuario);
             call.setInt(4, terminal);
             call.setInt(5, estado_operacion);
-            
 
             call.execute();
             call.close();
             return true;
         } catch (Exception e) {
+
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return false;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
+
     private DataArchivo dataArchivo;
-    public void setDataArchivo(String documentos, String id_lote, String total){
-        
-        dataArchivo = new DataArchivo(documentos,id_lote,total);
-        
+
+    public void setDataArchivo(String documentos, String id_lote, String total) {
+
+        dataArchivo = new DataArchivo(documentos, id_lote, total);
+
     }
-    
-    public DataArchivo getDataArchivo(){
+
+    public DataArchivo getDataArchivo() {
         return dataArchivo;
     }
-    
-    
-    
-    public ArrayList<ChequeConciliado> listDataCheques(int idLote)
-    {
+
+    public ArrayList<ChequeConciliado> listDataCheques(int idLote) {
         Connection con = getConexion();
         try {
             ArrayList<ChequeConciliado> cheques = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            
-            String sql = "select * from cheque_tmp_1 where lote = "+idLote;
+
+            String sql = "select * from cheque_tmp_1 where lote = " + idLote;
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
-                ChequeConciliado cheque = new ChequeConciliado(rs.getInt("correlativo"),rs.getInt("cuenta"),rs.getDouble("valor"),rs.getInt("lote"),rs.getString("estado"),rs.getInt("referencia"));
+            while (rs.next()) {
+                ChequeConciliado cheque = new ChequeConciliado(rs.getInt("correlativo"), rs.getInt("cuenta"), rs.getDouble("valor"), rs.getInt("lote"), rs.getString("estado"), rs.getInt("referencia"));
                 cheques.add(cheque);
             }
             return cheques;
         } catch (Exception e) {
+
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return new ArrayList<>();
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
+
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
-    
-    
-    public ArrayList<Lote> listlotes()
-    {
+
+    public ArrayList<Lote> listlotes() {
         Connection con = getConexion();
         try {
             ArrayList<Lote> lotes = new ArrayList<>();
             PreparedStatement ps = null;
             ResultSet rs = null;
-            
+
             String sql = "select * from lote_tmp_1";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next())
-            {
-                Lote lote = new Lote(rs.getInt("id_lote"),rs.getInt("banco"),rs.getInt("no_documentos"),rs.getDouble("valor"),rs.getInt("estado"));
+            while (rs.next()) {
+                Lote lote = new Lote(rs.getInt("id_lote"), rs.getInt("banco"), rs.getInt("no_documentos"), rs.getDouble("valor"), rs.getInt("estado"));
                 lotes.add(lote);
             }
             return lotes;
         } catch (Exception e) {
+
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return new ArrayList<>();
-        }
-        finally
-        {
+        } finally {
             try {
                 con.close();
             } catch (Exception e) {
+
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
-    
-    
+
     /**
-     * Grabar el lote que ya fue cuadrado, realizando todas las operaciones
-     * que se encuentran en las tablas temporales y actualizando los estados
-     * de los cheques y lotes.
+     * Grabar el lote que ya fue cuadrado, realizando todas las operaciones que
+     * se encuentran en las tablas temporales y actualizando los estados de los
+     * cheques y lotes.
+     *
      * @param lote
-     * @return 
+     * @return
      */
     public boolean reportarExportacion(int lote) {
         Connection con = getConexion();
@@ -353,9 +349,5 @@ public class ConsultasConciliacion extends Conexion {
             }
         }
     }
-    
-    
-    
-    
 
 }

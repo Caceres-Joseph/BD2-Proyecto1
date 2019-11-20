@@ -120,7 +120,7 @@ public class RecibirConciliacionController {
         int id_cheque = Integer.parseInt(dataCheque[3]);
         double monto = Double.parseDouble(dataCheque[4]);
 
-        return new ChequeConciliado(id_cheque, cuenta, monto, lote, "", referencia);
+        return new ChequeConciliado(id_cheque, cuenta, monto, lote, "Pendiente", referencia);
     }
 
     /**
