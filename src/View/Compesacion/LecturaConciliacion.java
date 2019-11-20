@@ -33,6 +33,7 @@ public class LecturaConciliacion implements Initializable {
     public TablaLecturaGrabador tabla; 
     
     
+    @FXML
     private JFXTextField txtDocumento;
 
     @FXML
@@ -78,13 +79,15 @@ public class LecturaConciliacion implements Initializable {
             if (file != null) {
                 lote = con_Recibir.LeerArchivo(file.getAbsolutePath());
 
-                //Enviando los valores 
+                //Enviando los valores  
                 this.txtDocumento.setText(String.valueOf(lote.getNo_documentos()));
                 this.txtIdLote.setText(String.valueOf(lote.getId_lote()));
                 this.txtTotal.setText(String.valueOf(lote.getValor()));
                 
                 
                 this.txtEstado.setText(String.valueOf(lote.getEstadoString()));
+              
+                B2.GuiController.mensajeConsola("Se cargó el archivo correctamente"); 
             }
 
         } catch (Exception e) {
