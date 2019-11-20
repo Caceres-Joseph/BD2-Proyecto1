@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="456.0" prefWidth="529.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Compesacion.ArchivoConciliado">
+   <children>
+      <GridPane maxHeight="141.0" prefHeight="141.0" prefWidth="600.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1186.0" minWidth="10.0" prefWidth="318.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="522.0" minWidth="0.0" prefWidth="143.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1054.0" minWidth="10.0" prefWidth="108.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
+               <children>
+                  <Label styleClass="title" text="Exportar Conciliación" wrapText="true">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <JFXButton onAction="#clckAceptar" prefHeight="37.0" prefWidth="115.0" text="Exportar" textFill="WHITE" GridPane.columnIndex="1">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Gui/img/baseline_play_arrow_white_24dp.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="238.0" layoutY="20.0" onAction="#clckCancelar" text="Cancelar" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </GridPane>
+      <Label contentDisplay="CENTER" layoutX="14.0" layoutY="65.0" text="Lotes Conciliados" AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tb" editable="true" layoutX="26.0" layoutY="108.0" prefHeight="291.0" prefWidth="580.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="99.0">
+         <columns>
+            <TableColumn fx:id="tc0" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="56.0" text="Lote" />
+            <TableColumn fx:id="tc1" prefWidth="115.0" text="Cant de Docs" />
+            <TableColumn fx:id="tc2" minWidth="0.0" prefWidth="108.0" text="Total de Lote" />
+            <TableColumn fx:id="tc3" prefWidth="104.0" text="Banco Destino" />
+            <TableColumn fx:id="tc4" prefWidth="83.0" text="Estado" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
