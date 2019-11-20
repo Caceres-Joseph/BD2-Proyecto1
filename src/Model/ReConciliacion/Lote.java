@@ -69,6 +69,23 @@ public class Lote {
     public int getEstado() {
         return estado;
     }
+    
+    
+    public String getEstadoString(){
+        
+        switch (estado) {
+            case 1:
+                return "Cuadrado";
+            case 2:
+                return "Operado";
+            case 3:
+                return "Exportado";
+            default:
+                return "Desconocido";
+        }
+        
+         
+    }
 
     public void setEstado(int estado) {
         this.estado = estado;

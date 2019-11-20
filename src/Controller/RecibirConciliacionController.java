@@ -227,7 +227,7 @@ public class RecibirConciliacionController {
      * @param usuario
      * @param terminal
      */
-    public void LeerConciliados(String path, int usuario, int terminal) {
+    public void LeerConciliados(String path) {
 
         Lote lote = getDataLote(path);
         consulta.saveLote(lote);
@@ -245,6 +245,10 @@ public class RecibirConciliacionController {
                  * Es posible que se encuentre en otro estado de ser así no se
                  * liberan fondos de reserva y el cheque no se toma en cuenta.
                  */
+                
+                int terminal = B2.usuario.getId_terminal();
+                int usuario = B2.usuario.getId_usuario();
+            
                 if (cheque.getEstado().equalsIgnoreCase("OK")) {
                     consulta.liberarFondos(cheque, usuario, terminal, 1);
                 } else {

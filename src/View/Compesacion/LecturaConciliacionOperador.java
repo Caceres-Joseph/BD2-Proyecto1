@@ -15,6 +15,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -26,13 +27,12 @@ import javafx.stage.FileChooser;
  *
  * @author Notebook
  */
-public class LecturaConciliacion implements Initializable {
+public class LecturaConciliacionOperador implements Initializable {
 
     RecibirConciliacionController con_Recibir = new RecibirConciliacionController();
-    Lote lote; 
-    public TablaLecturaGrabador tabla; 
-    
-    
+    Lote lote;
+    public TablaLecturaGrabador tabla;
+
     @FXML
     private JFXTextField txtDocumento;
 
@@ -68,26 +68,24 @@ public class LecturaConciliacion implements Initializable {
 
         FileChooser fileChooser = new FileChooser();
 
-        fileChooser.getExtensionFilters().addAll( 
-//                new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png")
-                );
+        fileChooser.getExtensionFilters().addAll();
 
         File file = fileChooser.showOpenDialog(sta);
 
         try {
 
             if (file != null) {
-                lote = con_Recibir.LeerArchivo(file.getAbsolutePath());
+                con_Recibir.LeerConciliados(file.getAbsolutePath());
 
-                //Enviando los valores  
+                //Enviando los valores 
                 this.txtDocumento.setText(String.valueOf(lote.getNo_documentos()));
                 this.txtIdLote.setText(String.valueOf(lote.getId_lote()));
                 this.txtTotal.setText(String.valueOf(lote.getValor()));
-                
-                
-                this.txtEstado.setText(String.valueOf(lote.getEstadoString()));
-              
-                B2.GuiController.mensajeConsola("Se cargó el archivo correctamente"); 
+                this.txtEstado.setText(String.valueOf(lote.getEstado()));
+
+                //Obteniendo la información para colocarla en los combo box
+                B2.GuiController.mensajeConsola("Lectura exitosa");
+
             }
 
         } catch (Exception e) {
@@ -104,22 +102,21 @@ public class LecturaConciliacion implements Initializable {
             return;
         }
 
-        //cargando la tabla
-        if (con_Recibir.operarLote(lote.getId_lote())) {
-
-            //Inicializando tabla
-            tabla = new TablaLecturaGrabador(tb, tc0, tc1, tc2, tc3, tc4);
-            //Cargando la tabla con datos
-            tabla.mostrar(con_Recibir, lote.getId_lote());
-            //Imprimiendo mensaje en consola
-            B2.GuiController.mensajeConsola("Listando lotes");
-        }
+//        //cargando la tabla 
+//        //Inicializando tabla
+//        tabla = new TablaLecturaGrabador(tb, tc0, tc1, tc2, tc3, tc4);
+//        //Cargando la tabla con datos
+//        tabla.mostrar(con_Recibir, lote.getId_lote());
+//        //Imprimiendo mensaje en consola
+//        B2.GuiController.mensajeConsola("Listando lotes");
 
     }
 
-
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -15,7 +15,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="620.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Compesacion.LecturaConciliacion">
+
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="742.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Compesacion.LecturaConciliacionOperador">
    <children>
       <GridPane maxHeight="141.0" prefHeight="141.0" prefWidth="600.0" styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -58,7 +59,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <AnchorPane layoutX="24.0" layoutY="74.0" prefHeight="160.0" prefWidth="536.0" style="-fx-border-color: gray;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="74.0">
+      <AnchorPane layoutX="20.0" layoutY="79.0" prefHeight="160.0" prefWidth="536.0" style="-fx-border-color: gray;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="79.0">
          <children>
             <Label layoutX="25.0" layoutY="14.0" style="-fx-background-color: #F6F6F6;" text="Datos de Archivo" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-10.0">
                <font>
@@ -71,14 +72,14 @@
             <JFXTextField fx:id="txtEstado" disable="true" labelFloat="true" layoutX="24.0" layoutY="103.0" prefHeight="34.0" prefWidth="262.0" promptText="Estado" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="24.0" layoutY="260.0" prefHeight="333.0" prefWidth="560.0" style="-fx-border-color: gray;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="260.0">
+      <AnchorPane layoutX="20.0" layoutY="255.0" prefHeight="333.0" prefWidth="560.0" style="-fx-border-color: gray;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="255.0">
          <children>
             <Label layoutX="25.0" layoutY="14.0" style="-fx-background-color: #F6F6F6;" text="Cheques" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="-10.0">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TableView fx:id="tb" editable="true" layoutX="16.0" layoutY="22.0" prefHeight="297.0" prefWidth="530.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="21.0">
+            <TableView fx:id="tb" editable="true" layoutX="16.0" layoutY="22.0" prefHeight="297.0" prefWidth="530.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="21.0">
                <columns>
                   <TableColumn fx:id="tc0" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="99.0" text="Cuenta externa" />
                   <TableColumn fx:id="tc1" prefWidth="96.0" text="Cuenta local" />
