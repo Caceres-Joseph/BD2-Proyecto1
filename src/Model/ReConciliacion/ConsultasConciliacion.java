@@ -227,6 +227,7 @@ public class ConsultasConciliacion extends Conexion {
             call.setInt(3, usuario);
             call.setInt(4, terminal);
             call.setInt(5, estado_operacion);
+            call.setInt(6, cheque.getId_cheque());
 
             call.execute();
             call.close();

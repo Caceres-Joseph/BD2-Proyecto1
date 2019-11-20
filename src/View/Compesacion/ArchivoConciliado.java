@@ -52,7 +52,8 @@ public class ArchivoConciliado implements Initializable {
 
         try {
             Lote loteSeleccionado= selected;
-            
+            con_Recibir.exportarConciliados(loteSeleccionado.getId_lote());
+            B2.GuiController.mensajeConsola("Se exportó el archivo de forma correcta.");
 
         } catch (Exception e) {
             B2.GuiController.mensajeConsola(e.getMessage());

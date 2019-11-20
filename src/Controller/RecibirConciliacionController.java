@@ -99,7 +99,6 @@ public class RecibirConciliacionController {
         double total = Double.parseDouble(infoLote[1]);
 
         //consulta.setDataArchivo(infoLote[3], infoLote[2], infoLote[4]);
-
         return new Lote(id_lote, banco, docs, total, 1);
     }
 
@@ -155,20 +154,17 @@ public class RecibirConciliacionController {
     public ArrayList<ChequeConciliado> exportarConciliados(int lote) {
         try {
             ArrayList<ChequeConciliado> cheques = new ArrayList<>();
-            ResultSet rs = consulta.listChequesGrabados(lote);
+            cheques = consulta.listDataCheques(lote);
             String cadena_archivo = "";
 
             Lote loteConciliado = consulta.findLote(lote);
 
             if (loteConciliado != null) {
                 int banco = loteConciliado.getId_banco();
-                while (rs.next()) {
+                for (ChequeConciliado cheque : cheques) {
 
-                    ChequeConciliado nuevo = new ChequeConciliado(rs.getInt("correlativo"), rs.getInt("cuenta"), rs.getDouble("valor"), rs.getInt("lote"), rs.getString("estado"), rs.getInt("referencia"));
+                    cadena_archivo += banco + "|" + cheque.getReferencia() + "|" + cheque.getCuenta() + "|" + cheque.getId_cheque() + "|" + cheque.getValor() + "|" + cheque.getEstado() + "\n";
 
-                    cadena_archivo += banco + "|" + nuevo.getReferencia() + "|" + nuevo.getCuenta() + "|" + nuevo.getId_cheque() + "|" + nuevo.getValor() + "|" + nuevo.getEstado() + "\n";
-
-                    cheques.add(nuevo);
                 }
 
                 escribir(cadena_archivo, loteConciliado.getId_banco(), loteConciliado.getId_lote());
@@ -210,6 +206,7 @@ public class RecibirConciliacionController {
 
             wr.close();
             bw.close();
+            w.close();
 
             return true;
 
@@ -245,10 +242,9 @@ public class RecibirConciliacionController {
                  * Es posible que se encuentre en otro estado de ser así no se
                  * liberan fondos de reserva y el cheque no se toma en cuenta.
                  */
-                
                 int terminal = B2.usuario.getId_terminal();
                 int usuario = B2.usuario.getId_usuario();
-            
+
                 if (cheque.getEstado().equalsIgnoreCase("OK")) {
                     consulta.liberarFondos(cheque, usuario, terminal, 1);
                 } else {

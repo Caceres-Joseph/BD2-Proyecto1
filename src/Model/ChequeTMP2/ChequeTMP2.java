@@ -17,6 +17,7 @@ public class ChequeTMP2 {
     private int lote;
     private int referencia;
     private int correlativo;
+    private String estado_cheque;
     
     public ChequeTMP2(Date fecha, int cuenta, double valor, int lote, int referencia, int correlativo)
     {
@@ -26,6 +27,7 @@ public class ChequeTMP2 {
         this.lote = lote;
         this.referencia = referencia;
         this.correlativo = correlativo;
+        this.estado_cheque = "";
     }
 
     public int getId_cheque() {
@@ -82,6 +84,14 @@ public class ChequeTMP2 {
 
     public void setCorrelativo(int correlativo) {
         this.correlativo = correlativo;
+    }
+
+    public String getEstado_cheque() {
+        return estado_cheque;
+    }
+
+    public void setEstado_cheque(String estado_cheque) {
+        this.estado_cheque = estado_cheque;
     }
     
 }

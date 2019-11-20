@@ -264,7 +264,8 @@ CREATE OR REPLACE PROCEDURE LIBERAR_FONDOS(
     monto IN CUENTA.SALDO%TYPE,
     p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
     p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE,
-    p_estado_operacion INTEGER
+    p_estado_operacion INTEGER,
+    p_correlativo INTEGER
 )
 IS
     saldo_inicial_destino CUENTA.SALDO%TYPE;
@@ -310,6 +311,8 @@ BEGIN
             ----------------------
             SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible_destino, reserva_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
             UPDATE CUENTA SET SALDO_TOTAL = (disponible_destino + reserva_destino) WHERE NO_CUENTA = p_no_cuenta_destino;
+           --
+            UPDATE CHEQUE_TMP_2 SET ESTADO_CHEQUE='RESERVA LIBERADA' WHERE CUENTA=p_no_cuenta_destino AND CORRELATIVO=p_correlativo; 
             ----------------------
             COMMIT;
       ELSE

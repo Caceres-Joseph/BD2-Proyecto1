@@ -101,6 +101,7 @@ public class ConsultasChequeTMP2 extends Conexion {
             while (rs.next()) {
                 ChequeTMP2 cheque = new ChequeTMP2(rs.getDate("fecha"), rs.getInt("cuenta"), rs.getDouble("valor"), rs.getInt("lote"), rs.getInt("referencia"), rs.getInt("correlativo"));
                 cheque.setId_cheque(rs.getInt("id_cheque"));
+                cheque.setEstado_cheque(rs.getString("estado_cheque"));
                 cheques.add(cheque);
             }
             return cheques;
