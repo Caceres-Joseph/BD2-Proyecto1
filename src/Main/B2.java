@@ -76,6 +76,7 @@ public class B2 extends Application {
     public static void main(String[] args)  {
            
         //RecibirConciliacionController a = new RecibirConciliacionController();
+        //a.operarLote(2);
         //a.LeerArchivo("C:\\Users\\Daniel\\Documents\\BASES 2\\BD2_PROYECTO\\BD2-Proyecto1\\resources\\OUT_5000.0_1_4_2");
         launch(args); 
     }
