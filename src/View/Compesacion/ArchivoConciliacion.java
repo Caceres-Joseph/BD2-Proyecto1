@@ -53,6 +53,7 @@ public class ArchivoConciliacion implements Initializable {
         try {
 
             if (con.exportLote(selected)) {
+                con.marcarExportado(selected.getId_lote_2(), selected.getId_banco());
                 B2.GuiController.mensajeConsola("Se exportó de forma correcta");
             } else {
                 B2.GuiController.mensajeConsola("Ocurrió un error :(");

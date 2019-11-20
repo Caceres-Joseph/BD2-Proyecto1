@@ -40,7 +40,7 @@ public class LoteExport {
     {
         try {
             String content = "";
-            content += "BANCO|REFERENCIA|CUENTA|NO_CHEQUE|MONTO\n";
+            //content += "BANCO|REFERENCIA|CUENTA|NO_CHEQUE|MONTO\n";
             for(ChequeTMP2 c : this.cheques)
             {
                 content += String.valueOf(this.lote.getId_banco())+"|"+String.valueOf(c.getCuenta())+"|"+String.valueOf(c.getReferencia())+"|"+String.valueOf(c.getCorrelativo())+"|"+String.valueOf(c.getValor())+"\n";            
@@ -55,7 +55,7 @@ public class LoteExport {
     {
         try {
             String name = "";
-            name = String.valueOf(this.lote.getTotal_monto())+"_"+String.valueOf(this.lote.getTotal_documentos())+"_"+this.lote.getBancoName()+"_"+String.valueOf(this.lote.getId_lote_2());
+            name = "OUT_"+String.valueOf(this.lote.getTotal_monto())+"_"+String.valueOf(this.lote.getTotal_documentos())+"_"+String.valueOf(this.lote.getId_banco())+"_"+String.valueOf(this.lote.getId_lote_2());
             return name;
         } catch (Exception e) {
             return "error.txt";

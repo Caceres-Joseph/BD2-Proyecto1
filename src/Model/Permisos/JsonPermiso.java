@@ -54,7 +54,9 @@ public class JsonPermiso {
             + "		\"permisos\":[\n"
             + "            \"cobrar_cheque\",\n"
             + "            \"archivo_de_conciliacion\",\n"
-            + "            \"lectura_del_archivo\",\n"
+            + "            \"lectura_del_archivo_grabador\",\n"
+            + "            \"lectura_del_archivo_operador\",\n"
+            + "            \"exportar_conciliacion\",\n"
             + "            \"listar\"\n"
             + "        ]\n"
             + "    },\n"
@@ -195,6 +197,8 @@ public class JsonPermiso {
 
             root.getChildren().add(nuevo.module);
         }
+        
+        
 
         public TreeItem<nodoVistaArbol> getRoot() {
             return root;
@@ -425,11 +429,20 @@ public class JsonPermiso {
                     rutaControlador = "/View/Compesacion/ArchivoConciliacion.fxml";
 
                 } 
-                else if (permiso.equals("lectura_del_archivo")) {
+                else if (permiso.equals("lectura_del_archivo_grabador")) {
                     rutaControlador = "/View/Compesacion/LecturaConciliacion.fxml";
 
                 } 
                 
+                else if (permiso.equals("lectura_del_archivo_operador")) {
+                    rutaControlador = "/View/Compesacion/LecturaConciliacion.fxml";
+
+                } 
+                
+                else if (permiso.equals("exportar_conciliacion")) {
+                    rutaControlador = "/View/Compesacion/ArchivoConciliado.fxml";
+
+                } 
                 
                 else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Clientes/ListarCliente.fxml";
