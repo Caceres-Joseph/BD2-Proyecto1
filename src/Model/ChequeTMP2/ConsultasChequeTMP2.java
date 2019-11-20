@@ -24,9 +24,9 @@ public class ConsultasChequeTMP2 extends Conexion {
     public boolean cobra_cheque_externo(ChequeExterno cheque, int id_usuario, int terminal) {
         Connection con = getConexion();
         try {
-//            cheque.imprimir();
-//            System.out.println(id_usuario);
-//            System.out.println(terminal);
+            cheque.imprimir();
+            System.out.println(id_usuario);
+            System.out.println(terminal);
             
             String cmd = "{CALL CHEQUE_EXTERNO(?,?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);

@@ -5,6 +5,9 @@
  */
 package View.Compesacion;
 
+import Controller.RecibirConciliacionController;
+import Main.B2;
+import Model.ReConciliacion.Lote;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,23 +22,29 @@ import javafx.scene.control.TableView;
  * @author Notebook
  */
 public class ArchivoConciliado implements Initializable {
+    
+    RecibirConciliacionController con_Recibir = new RecibirConciliacionController();
+    public TablaLotesConciliados tabla; 
+    
+    
+    
    @FXML
-    private TableView<?> tb;
+    private TableView<Lote> tb;
 
     @FXML
-    private TableColumn<?, ?> tc0;
+    private TableColumn tc0;
 
     @FXML
-    private TableColumn<?, ?> tc1;
+    private TableColumn tc1;
 
     @FXML
-    private TableColumn<?, ?> tc2;
+    private TableColumn tc2;
 
     @FXML
-    private TableColumn<?, ?> tc3;
+    private TableColumn tc3;
 
     @FXML
-    private TableColumn<?, ?> tc4;
+    private TableColumn tc4;
 
     @FXML
     void clckAceptar(ActionEvent event) {
@@ -51,7 +60,12 @@ public class ArchivoConciliado implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+     
+            //Inicializando tabla
+            tabla = new TablaLotesConciliados(tb, tc0, tc1, tc2, tc3, tc4);
+            //Cargando la tabla con datos
+            tabla.mostrar(con_Recibir);
+            //Imprimiendo mensaje en consola
+            B2.GuiController.mensajeConsola("Listando lotes");
+    }     
 }

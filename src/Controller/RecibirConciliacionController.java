@@ -89,15 +89,15 @@ public class RecibirConciliacionController {
 
         String[] infoLote = nombreArchivo.split("_");
 
-        int banco = Integer.parseInt(infoLote[1]);
+        int banco = Integer.parseInt(infoLote[3]);
 
-        int id_lote = Integer.parseInt(infoLote[2]);
+        int id_lote = Integer.parseInt(infoLote[4]);
 
-        int docs = Integer.parseInt(infoLote[3]);
+        int docs = Integer.parseInt(infoLote[2]);
 
-        double total = Double.parseDouble(infoLote[4]);
+        double total = Double.parseDouble(infoLote[1]);
 
-        consulta.setDataArchivo(infoLote[3], infoLote[2], infoLote[4]);
+        //consulta.setDataArchivo(infoLote[3], infoLote[2], infoLote[4]);
 
         return new Lote(id_lote, banco, docs, total, 1);
     }
