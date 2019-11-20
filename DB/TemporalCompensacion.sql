@@ -300,7 +300,8 @@ CREATE OR REPLACE PROCEDURE LIBERAR_FONDOS(
     p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
     monto IN CUENTA.SALDO%TYPE,
     p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
-    p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
+    p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE,
+    p_estado_operacion INTEGER
 )
 IS
     saldo_inicial_destino CUENTA.SALDO%TYPE;
@@ -312,12 +313,12 @@ IS
 
     disponible_destino CUENTA.SALDO%TYPE;
     reserva_destino CUENTA.SALDO%TYPE;
-
+    
 BEGIN
 		SELECT COUNT(*) INTO destino_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
     IF destino_existe = 1 THEN
     -- VER SI ESTAN DISPONIBLES LAS CUENTAS
-
+      
       SELECT CUENTA.ESTADO_CUENTA INTO destino_estado FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
       IF destino_estado = 1 THEN
         -- TOMANDO DE LA CUENTA DE DESTINO LOS DATOS:
@@ -328,7 +329,11 @@ BEGIN
         
             
             -- ACREDITO AL DESTINO
-            saldo_final_destino := saldo_inicial_destino + monto;
+            IF p_estado_operacion = 1 THEN
+                saldo_final_destino := saldo_inicial_destino + monto;
+            ELSE
+                saldo_final_destino := saldo_inicial_destino;
+            END IF;
     
             -- INSERTANDO LOS CREDITOS
             INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
@@ -352,6 +357,31 @@ BEGIN
 			-- ALGUNA DE LAS CUENTAS NO EXISTE
 			raise_application_error(-20456,'Una de las cuentas especificadas no existe');
     END IF;
+END;
+/
+
+-- INSERTAR REGISTRO NUEVO CHEQUE COMPENSADO////////////////////////////////////////////////////////////////////////////////////
+CREATE OR REPLACE PROCEDURE CAMBIAR_ESTADO_LOTE(
+    p_id_lote IN lote_tmp_1.ID_LOTE%TYPE
+)
+IS
+    
+    
+    lote_existe INTEGER;
+
+BEGIN    
+    SELECT COUNT(*) INTO lote_existe FROM lote_tmp_1 WHERE lote_tmp_1.id_lote = p_id_lote;
+
+    IF lote_existe = 1 THEN
+    
+        UPDATE lote_tmp_1 SET estado = 3 WHERE id_lote = p_id_lote; -- ESTADO 3 (LOTE EXPORTADO)
+    
+    ELSE
+        -- ALGUNA DE LAS CUENTAS NO EXISTE
+        raise_application_error(-20456,'El lote no existe');
+    END IF;
+    
+	COMMIT;
 END;
 /
 
