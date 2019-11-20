@@ -54,6 +54,7 @@ public class RecibirConciliacionController {
             input.close();
 
         } catch (FileNotFoundException ex) {
+            B2.GuiController.mensajeConsola(ex.getMessage());
             System.out.println(ex);
         }
 
@@ -83,7 +84,7 @@ public class RecibirConciliacionController {
      */
     public Lote getDataLote(String path) {
 
-        String[] nameFile = path.replace(".txt", "").split("\\");
+        String[] nameFile = path.split("\\\\");
 
         String nombreArchivo = nameFile[nameFile.length - 1];
 
@@ -112,7 +113,7 @@ public class RecibirConciliacionController {
      */
     public ChequeConciliado getDataCheque(String line, int lote) {
 
-        String[] dataCheque = line.split("|");
+        String[] dataCheque = line.split("\\|");
 
         int referencia = Integer.parseInt(dataCheque[1]);
         int cuenta = Integer.parseInt(dataCheque[2]);
