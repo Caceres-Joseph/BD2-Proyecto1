@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Controller;
+import Main.B2;
 import Model.BD.BDOpciones;
 import Model.Cuentas.Cuenta;
 import Model.Cuentas.ConsultasCuenta;
@@ -34,6 +35,7 @@ public class CuentasController {
         try {
             return consultas.estado(new Cuenta(no_cuenta, estado));
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -50,6 +52,7 @@ public class CuentasController {
         try {
             return consultas.save(new Cuenta(saldo, banco_id_banco, tipo_cuenta_id_tipo));
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -59,6 +62,7 @@ public class CuentasController {
         try {
             return consultas.save(new Cuenta(saldo, banco_id_banco, tipo_cuenta_id_tipo), dpi_cliente);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -80,6 +84,7 @@ public class CuentasController {
             c.setNo_cuenta(id_cuenta);
             return consultas.update(c);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -94,6 +99,7 @@ public class CuentasController {
         try {
             return consultas.findById(id);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return null;
         }
     }
@@ -108,6 +114,7 @@ public class CuentasController {
             
             return consultas.listData(BDOpciones.Orden.DESC, BDOpciones.LimitOp.NO_LIMIT, -1);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -117,6 +124,7 @@ public class CuentasController {
         try {
             return consultas.listCuentaTipo(dpi_cliente, 1);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -126,6 +134,7 @@ public class CuentasController {
         try {
             return consultas.getLastCuentaFrom(dpi_cliente, estado_cuenta);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e.getMessage());
             return null;
         }
