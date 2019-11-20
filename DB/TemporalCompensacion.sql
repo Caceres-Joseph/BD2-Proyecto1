@@ -295,7 +295,8 @@ CREATE OR REPLACE PROCEDURE LIBERAR_FONDOS(
     p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
     monto IN CUENTA.SALDO%TYPE,
     p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
-    p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE
+    p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE,
+    p_estado_operacion INTEGER
 )
 IS
     saldo_inicial_destino CUENTA.SALDO%TYPE;
@@ -323,7 +324,11 @@ BEGIN
         
             
             -- ACREDITO AL DESTINO
-            saldo_final_destino := saldo_inicial_destino + monto;
+            IF p_estado_operacion = 1 THEN
+                saldo_final_destino := saldo_inicial_destino + monto;
+            ELSE
+                saldo_final_destino := saldo_inicial_destino;
+            END IF;
     
             -- INSERTANDO LOS CREDITOS
             INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION)
@@ -350,10 +355,13 @@ BEGIN
 END;
 /
 
+select * from cuenta;
+
+UPDATE CUENTA SET SALDO_RESERVA = 2500 WHERE NO_CUENTA = 123;
+UPDATE CUENTA SET SALDO_TOTAL = (2500 + 2500) WHERE NO_CUENTA = 123;
 
 
-select * from cheque_tmp_1 where lote = 2;
-
+CALL LIBERAR_FONDOS(123,10,1,1,0);
 /**
  * PRUEBAS PARA COMPENSACION
  */
@@ -399,7 +407,6 @@ SELECT * FROM CUENTA;
 
 SELECT * FROM TRANSACCION;
 */
-
 
 
 

@@ -217,17 +217,20 @@ public class ConsultasConciliacion extends Conexion {
      * @param cheque
      * @param usuario
      * @param terminal
+     * @param estado_operacion
      * @return 
      */
-    public boolean liberarFondos(ChequeConciliado cheque, int usuario, int terminal) {
+    public boolean liberarFondos(ChequeConciliado cheque, int usuario, int terminal, int estado_operacion) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL LIBERAR_FONDOS(?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL LIBERAR_FONDOS(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, cheque.getReferencia());
             call.setDouble(2, cheque.getValor());
             call.setInt(3, usuario);
             call.setInt(4, terminal);
+            call.setInt(5, estado_operacion);
+            
 
             call.execute();
             call.close();
@@ -274,6 +277,39 @@ public class ConsultasConciliacion extends Conexion {
                 cheques.add(cheque);
             }
             return cheques;
+        } catch (Exception e) {
+            System.err.println(e);
+            return new ArrayList<>();
+        }
+        finally
+        {
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    
+    
+    public ArrayList<Lote> listlotes()
+    {
+        Connection con = getConexion();
+        try {
+            ArrayList<Lote> lotes = new ArrayList<>();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            
+            String sql = "select * from lote_tmp_1";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                Lote lote = new Lote(rs.getInt("id_lote"),rs.getInt("banco"),rs.getInt("no_documentos"),rs.getDouble("valor"),rs.getInt("estado"));
+                lotes.add(lote);
+            }
+            return lotes;
         } catch (Exception e) {
             System.err.println(e);
             return new ArrayList<>();

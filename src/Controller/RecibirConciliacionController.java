@@ -33,7 +33,7 @@ public class RecibirConciliacionController {
      *
      * @param path
      */
-    public void LeerArchivo(String path) {
+    public Lote LeerArchivo(String path) {
 
         Lote lote = getDataLote(path);
         consulta.saveLote(lote);
@@ -58,6 +58,8 @@ public class RecibirConciliacionController {
 
         //Verificación del lote
         consulta.verificarLote(lote.getId_lote());
+        
+        return consulta.findLote(lote.getId_lote());
     }
     
     /**
@@ -279,6 +281,21 @@ public class RecibirConciliacionController {
         try {
             ArrayList<ChequeConciliado> cheques = consulta.listDataCheques(idLote);
             return cheques;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+    
+    
+    /**
+     * Retorna los lotes de la tabla temporal lote.
+     * @return 
+     */
+    public ArrayList<Lote> listLotes()
+    {
+        try {
+            ArrayList<Lote> lotes = consulta.listlotes();
+            return lotes;
         } catch (Exception e) {
             return new ArrayList<>();
         }
