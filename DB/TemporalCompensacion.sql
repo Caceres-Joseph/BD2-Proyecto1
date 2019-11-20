@@ -219,51 +219,15 @@ BEGIN
           ELSE
             -- EL CHEQUE YA EXISTE DEBO VERIFICAR SU ESTADO
             SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
-<<<<<<< Updated upstream
-            -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÃ? DENTRO DEL RANGO) (5)
-            IF estado_cheque = 1 THEN
+
               -- EL CHEQUE FUE REPORTADO COMO ROBADO
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'REPORTADO COMO ROBADO');
+                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE REPORTAD: '||estado_cheque);
                 
                 -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE ROBADO
                 
-                UPDATE cheque_tmp_1 SET estado = 3 WHERE id_cheque = c_id_cheque; -- ESTADO 3 (CHEQUE NO COBRADO REPORTADO COMO ROBADO)
-            ELSIF estado_cheque = 2 THEN
-              -- EL CHEQUE FUE BLOQUEADO
-              INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE BLOQUEADO');
-                
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE BLOQUEADO
-                
-                UPDATE cheque_tmp_1 SET estado = 4 WHERE id_cheque = c_id_cheque; -- ESTADO 4 (CHEQUE NO COBRADO BLOQUEADO)
-            ELSIF estado_cheque = 3 THEN
-              -- EL CHEQUE FUE REPORTADO COMO PERDIDO
-              INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE PERDIDO');
-                
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE PERDIDO
-                
-                UPDATE cheque_tmp_1 SET estado = 5 WHERE id_cheque = c_id_cheque; -- ESTADO 5 (CHEQUE NO COBRADO REPORTADO COMO PERDIDO)
-            ELSIF estado_cheque = 4 THEN
-              -- EL CHEQUE YA FUE PAGADO
-              INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE YA HA SIDO PAGADO');
-
-                
-                -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE COBRADO
-                
-                UPDATE cheque_tmp_1 SET estado = 6 WHERE id_cheque = c_id_cheque; -- ESTADO 6 (CHEQUE NO COBRADO YA FUE COBRADO)
-            END IF;
-=======
-            -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI EST�? DENTRO DEL RANGO) (5)
-            
-              -- EL CHEQUE FUE REPORTADO COMO ROBADO
-              INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'Cheque rechazado: '||estado_cheque);
-
->>>>>>> Stashed changes
-          END IF;
+                UPDATE cheque_tmp_1 SET estado = estado_cheque WHERE id_cheque = c_id_cheque;
+         END IF;
         ELSE
           raise_application_error(-20456, 'Cheque no existe en el sistema para la cuenta especificada');
           
@@ -290,7 +254,7 @@ BEGIN
     end loop;
   close c1;
   
-  UPDATE lote_tmp_1 SET estado = 2 WHERE id_lote = p_id_lote; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
+  UPDATE lote_tmp_1 SET estado = 'OK' WHERE id_lote = p_id_lote; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
 END;
 /
 
