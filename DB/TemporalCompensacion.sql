@@ -205,7 +205,7 @@ BEGIN
               
               -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE SE COBRÓ CON ÉXITO
                  
-              UPDATE cheque_tmp_1 SET estado = 'Cobrado' WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
+              UPDATE cheque_tmp_1 SET estado = 'OK' WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
               COMMIT;
             ELSE
               raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
@@ -218,15 +218,14 @@ BEGIN
             END IF;
           ELSE
             -- EL CHEQUE YA EXISTE DEBO VERIFICAR SU ESTADO
-            SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
-
+           
               -- EL CHEQUE FUE REPORTADO COMO ROBADO
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
                 VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE REPORTADO: '||estado_cheque);
                 
                 -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE ROBADO
                 
-                UPDATE cheque_tmp_1 SET estado = estado_cheque WHERE id_cheque = c_id_cheque;
+                UPDATE cheque_tmp_1 SET estado = 'Cheque ya reportado' WHERE id_cheque = c_id_cheque;
          END IF;
         ELSE
           raise_application_error(-20456, 'Cheque no existe en el sistema para la cuenta especificada');
@@ -258,7 +257,7 @@ BEGIN
 END;
 /
 
-
+select * from cheque_tmp_1;
 -- INSERTAR REGISTRO NUEVO CHEQUE COMPENSADO////////////////////////////////////////////////////////////////////////////////////
 CREATE OR REPLACE PROCEDURE LIBERAR_FONDOS(
     p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
@@ -400,7 +399,7 @@ SELECT * FROM TRANSACCION;
 
 
 
-
+select * from cheque_tmp_1;
 
 
 /*

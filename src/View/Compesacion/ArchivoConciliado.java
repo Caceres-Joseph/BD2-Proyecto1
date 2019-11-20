@@ -22,13 +22,11 @@ import javafx.scene.control.TableView;
  * @author Notebook
  */
 public class ArchivoConciliado implements Initializable {
-    
+
     RecibirConciliacionController con_Recibir = new RecibirConciliacionController();
-    public TablaLotesConciliados tabla; 
-    
-    
-    
-   @FXML
+    public TablaLotesConciliados tabla;
+
+    @FXML
     private TableView<Lote> tb;
 
     @FXML
@@ -48,24 +46,53 @@ public class ArchivoConciliado implements Initializable {
 
     @FXML
     void clckAceptar(ActionEvent event) {
+        if (!validar()) {
+            return;
+        }
 
+        try {
+            Lote loteSeleccionado= selected;
+            
+
+        } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
+        }
     }
 
     @FXML
     void clckCancelar(ActionEvent event) {
 
     }
+
     /**
      * Initializes the controller class.
      */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-     
-            //Inicializando tabla
-            tabla = new TablaLotesConciliados(tb, tc0, tc1, tc2, tc3, tc4);
-            //Cargando la tabla con datos
-            tabla.mostrar(con_Recibir);
-            //Imprimiendo mensaje en consola
-            B2.GuiController.mensajeConsola("Listando lotes");
-    }     
+
+        //Inicializando tabla
+        tabla = new TablaLotesConciliados(tb, tc0, tc1, tc2, tc3, tc4);
+        //Cargando la tabla con datos
+        tabla.mostrar(con_Recibir);
+        //Imprimiendo mensaje en consola
+        B2.GuiController.mensajeConsola("Listando lotes");
+    }
+
+    Lote selected;
+
+    //Validando si se realizó una selección en la tabla
+    public boolean validar() {
+
+        selected = tb.getSelectionModel().getSelectedItem();
+
+        //Validación
+        if (selected == null) {
+            B2.GuiController.mensajeConsola("No ha seleccionado un item de la tabla");
+            return false;
+
+        }
+
+        return true;
+    }
 }
