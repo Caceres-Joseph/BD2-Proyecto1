@@ -32,6 +32,7 @@ public class GeneracionConciliacionController {
             ChequeExterno cheque = new ChequeExterno(no_cuenta_local, no_cuenta_externa, correlativo, monto, idbanco);
             return consultas.cobra_cheque_externo(cheque, usuario, terminal);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -40,8 +41,28 @@ public class GeneracionConciliacionController {
         try {
             return consultas.listLotes();
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         }
+    }
+
+    /*
+    Metodo temporal
+     */
+    public ArrayList<LoteTMP2> listarLotes2() {
+
+        ArrayList<LoteTMP2> retorno = new ArrayList<>();
+
+        LoteTMP2 temp1 = new LoteTMP2(1, 12.42, 3, 3);
+        temp1.setId_lote_2(0);
+        temp1.setBancoName("prueba");
+        retorno.add(temp1);
+
+        LoteTMP2 temp2 = new LoteTMP2(2, 123.42, 2, 1);
+        temp2.setId_lote_2(1);
+        retorno.add(temp2);
+
+        return retorno;
     }
 
     //Exportación archivo de conciliacion
@@ -57,6 +78,7 @@ public class GeneracionConciliacionController {
         try {
             return consultas.marcar_lote_exportado(lote, idbanco);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -77,6 +99,7 @@ public class GeneracionConciliacionController {
             return false;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }

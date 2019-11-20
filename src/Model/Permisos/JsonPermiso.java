@@ -53,7 +53,7 @@ public class JsonPermiso {
             + "	\"compensacion\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"cobrar_cheque\",\n"
-            + "            \"modificar\",\n"
+            + "            \"archivo_de_conciliacion\",\n"
             + "            \"listar\"\n"
             + "        ]\n"
             + "    },\n"
@@ -420,7 +420,10 @@ public class JsonPermiso {
 
                 if (permiso.equals("cobrar_cheque")) {
                     rutaControlador = "/View/Compesacion/CobrarCheque.fxml";
-                } else if (permiso.equals("listar")) {
+                }else if (permiso.equals("archivo_de_conciliacion")) {
+                    rutaControlador = "/View/Compesacion/ArchivoConciliacion.fxml";
+
+                }  else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Clientes/ListarCliente.fxml";
 
                 } else if (permiso.equals("modificar")) {

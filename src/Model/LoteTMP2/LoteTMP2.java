@@ -85,5 +85,7 @@ public class LoteTMP2 {
         return estado_loteString;
     }
     
-    
+    public void imprimir(){
+        
+    }
 }
