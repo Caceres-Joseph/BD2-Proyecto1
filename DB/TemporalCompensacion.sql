@@ -158,7 +158,7 @@ CURSOR c1 IS
     cuenta_existe INTEGER;
     num_chequeras INTEGER;
     rango INTEGER;
-    id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
+    p_id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
     cheque_existe INTEGER;
     estado_cuenta CUENTA.ESTADO_CUENTA%TYPE;
     reserva CUENTA.SALDO%TYPE;
@@ -185,9 +185,9 @@ BEGIN
         rango := (num_chequeras*100); -- CALCULANDO LOS CHEQUES
         IF p_correlativo <= rango THEN
           -- OBTENGO EL ID DE LA CHEQUERA
-          SELECT CHEQUERA.ID_CHEQUERA INTO id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = p_no_cuenta_origen;
+          SELECT CHEQUERA.ID_CHEQUERA INTO p_id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = p_no_cuenta_origen;
           -- VERIFICANDO SI EL CHEQUE YA EXISTE EN LA TABLA DE CHEQUES
-          SELECT COUNT(*) INTO cheque_existe FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+          SELECT COUNT(*) INTO cheque_existe FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = p_id_chequera;
           IF cheque_existe = 0 THEN
             -- PUEDO PROCEDER A TRANSFERIR
             IF saldo_inicial_origen >= monto THEN
@@ -201,14 +201,14 @@ BEGIN
               SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible, reserva FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
               UPDATE CUENTA SET SALDO_TOTAL = (disponible+reserva) WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
               ------------------------------------------
-              INSERT INTO CHEQUE(CORRELATIVO, ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, id_chequera, 4); -- INSERTANDO CHEQUE PAGADO
+              INSERT INTO CHEQUE(CORRELATIVO, ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, p_id_chequera, 4); -- INSERTANDO CHEQUE PAGADO
               
               -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE SE COBRÓ CON ÉXITO
                  
               UPDATE cheque_tmp_1 SET estado = 'OK' WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
               COMMIT;
             ELSE
-              raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
+              
 
               
               -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR SALDO INSUFICIENTE
@@ -228,14 +228,14 @@ BEGIN
                 UPDATE cheque_tmp_1 SET estado = 'Cheque ya reportado' WHERE id_cheque = c_id_cheque;
          END IF;
         ELSE
-          raise_application_error(-20456, 'Cheque no existe en el sistema para la cuenta especificada');
+          
           
           -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO EXISTENTE
           
           UPDATE cheque_tmp_1 SET estado = 'Cheque no cobrado fuera de rango' WHERE id_cheque = c_id_cheque; -- ESTADO 7 (CHEQUE NO COBRADO NO EXISTENTE)
         END IF;
       ELSE
-        raise_application_error(-20456, 'La cuenta especificada no esta activa');
+        
         
         -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CUENTA INACTIVA
         
@@ -243,7 +243,7 @@ BEGIN
       END IF;
     ELSE
 				-- LA CUENTA NO EXISTE
-				raise_application_error(-20456, 'Cuenta especificada no existe');
+				
                
                 -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CUENTA INEXISTENTE
                 
