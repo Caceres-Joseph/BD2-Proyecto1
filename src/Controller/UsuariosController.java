@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Main.B2;
 import Model.BD.BDOpciones;
 import Model.Usuarios.ConsultaUsuarios;
 import Model.Usuarios.Usuario;
@@ -36,6 +37,7 @@ public class UsuariosController {
         try {
             return consultas.save(new Usuario(nombre, password, rol_id_rol));
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -55,6 +57,7 @@ public class UsuariosController {
             u.setId_usuario(id_usuario);
             return consultas.update(u);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -69,6 +72,7 @@ public class UsuariosController {
         try {
             return consultas.findById(id);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return null;
         }
     }
@@ -83,6 +87,7 @@ public class UsuariosController {
             ArrayList<Usuario> usuarios = consultas.listData(orden, limitOp, limite);
             return usuarios;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -105,6 +110,7 @@ public class UsuariosController {
             
             return usuarios;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -120,6 +126,7 @@ public class UsuariosController {
         try {
             return consultas.usuarioLogIn(new Usuario(usuario, password));
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         }
     }
@@ -129,6 +136,7 @@ public class UsuariosController {
         try {
             return consultas.usuarioEnSession(usuario);
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return null;
         }
     }

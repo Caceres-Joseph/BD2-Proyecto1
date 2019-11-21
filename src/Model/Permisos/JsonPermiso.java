@@ -50,7 +50,7 @@ public class JsonPermiso {
             + "        ]\n"
             + "    },\n"
             + "    \n"
-            + "	\"compensacion\" : {\n"  
+            + "	\"compensacion\" : {\n"
             + "		\"permisos\":[\n"
             + "            \"cobrar_cheque\",\n"
             + "            \"archivo_de_conciliacion\",\n"
@@ -134,6 +134,26 @@ public class JsonPermiso {
 
     public JsonPermiso(String usuario, String password) {
 
+        JsonRoles roles = new JsonRoles();
+
+        String rol = B2.usuario.getNombreRol();
+        if (rol.toLowerCase().contains("admin")) {
+//            permisos = roles.rolAdministrador();
+            System.out.println("Rol: Administrador");
+        } else if (rol.toLowerCase().contains("opera")) {
+            permisos = roles.rolOperador();
+            System.out.println("Rol: Operador");
+        } else if (rol.toLowerCase().contains("graba")) {
+            permisos = roles.rolGrabador();
+            System.out.println("Rol: Grabador");
+        } else if (rol.toLowerCase().contains("geren")) {
+            permisos = roles.rolGerencia();
+            System.out.println("Rol: Gerente");
+        } else if (rol.toLowerCase().contains("cajero")) {
+            permisos = roles.rolCajero();
+            System.out.println("Rol: Cajero");
+        }
+
         JSONObject obj = new JSONObject(permisos);
         Iterator<String> keys = obj.keys();
 
@@ -189,8 +209,6 @@ public class JsonPermiso {
 
             root.getChildren().add(nuevo.module);
         }
-        
-        
 
         public TreeItem<nodoVistaArbol> getRoot() {
             return root;
@@ -417,26 +435,19 @@ public class JsonPermiso {
 
                 if (permiso.equals("cobrar_cheque")) {
                     rutaControlador = "/View/Compesacion/CobrarCheque.fxml";
-                }else if (permiso.equals("archivo_de_conciliacion")) {
+                } else if (permiso.equals("archivo_de_conciliacion")) {
                     rutaControlador = "/View/Compesacion/ArchivoConciliacion.fxml";
 
-                } 
-                else if (permiso.equals("lectura_del_archivo_grabador")) {
+                } else if (permiso.equals("lectura_del_archivo_grabador")) {
                     rutaControlador = "/View/Compesacion/LecturaConciliacion.fxml";
 
-                } 
-                
-                else if (permiso.equals("lectura_del_archivo_operador")) {
+                } else if (permiso.equals("lectura_del_archivo_operador")) {
                     rutaControlador = "/View/Compesacion/LecturaConciliacionOperador.fxml";
 
-                } 
-                
-                else if (permiso.equals("exportar_conciliacion")) {
+                } else if (permiso.equals("exportar_conciliacion")) {
                     rutaControlador = "/View/Compesacion/ArchivoConciliado.fxml";
 
-                } 
-                
-                else if (permiso.equals("listar")) {
+                } else if (permiso.equals("listar")) {
                     rutaControlador = "/View/Clientes/ListarCliente.fxml";
 
                 } else if (permiso.equals("modificar")) {

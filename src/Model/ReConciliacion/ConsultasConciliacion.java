@@ -40,6 +40,7 @@ public class ConsultasConciliacion extends Conexion {
             call.close();
             return true;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return false;
         } finally {
@@ -78,6 +79,7 @@ public class ConsultasConciliacion extends Conexion {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
@@ -106,6 +108,7 @@ public class ConsultasConciliacion extends Conexion {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
@@ -132,12 +135,14 @@ public class ConsultasConciliacion extends Conexion {
             }
             return lote;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return null;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
@@ -165,12 +170,14 @@ public class ConsultasConciliacion extends Conexion {
             call.close();
             return true;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return false;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
@@ -340,12 +347,14 @@ public class ConsultasConciliacion extends Conexion {
             call.close();
             return true;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return false;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }

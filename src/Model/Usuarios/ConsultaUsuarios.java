@@ -5,6 +5,7 @@
  */
 package Model.Usuarios;
 
+import Main.B2;
 import Model.BD.BDOpciones;
 import Model.BD.ColumnaTabla;
 import Model.BD.Conexion;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * @author ricar
  */
 public class ConsultaUsuarios extends Conexion {
-    
+
     public boolean save(Usuario usuario) {
         Connection con = getConexion();
         try {
@@ -35,16 +36,18 @@ public class ConsultaUsuarios extends Conexion {
             return true;
         } catch (Exception e) {
             System.err.println(e);
+            B2.GuiController.mensajeConsola(e.getMessage());
             return false;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
+
     public boolean update(Usuario usuario) {
         Connection con = getConexion();
         try {
@@ -59,17 +62,19 @@ public class ConsultaUsuarios extends Conexion {
             call.close();
             return true;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return false;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
+
     public Usuario findById(int id) {
         Connection con = getConexion();
         try {
@@ -88,17 +93,19 @@ public class ConsultaUsuarios extends Conexion {
             }
             return us;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return null;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
+
     public ResultSet listItems() {
         Connection con = getConexion();
         try {
@@ -109,12 +116,14 @@ public class ConsultaUsuarios extends Conexion {
             rs = ps.executeQuery();
             return rs;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return null;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
@@ -136,29 +145,31 @@ public class ConsultaUsuarios extends Conexion {
             ps.setString(1, usuario.getUsuario());
             ps.setString(2, usuario.getPassword());
             rs = ps.executeQuery();
-            
+
             boolean bandera = false;
-            
+
             while (rs.next()) {
-                bandera = true;          
+                bandera = true;
                 System.out.println("-id usuario--");
                 System.out.println(rs.getString("ID_USUARIO"));
             }
-            
+
             ps.close();
             return bandera;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             System.err.println(e);
             return false;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
+
     public ArrayList<Usuario> listData(BDOpciones.Orden Opcorden, BDOpciones.LimitOp OpcLimite, int limite) {
         Connection con = getConexion();
         try {
@@ -182,16 +193,18 @@ public class ConsultaUsuarios extends Conexion {
             }
             return users;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
+
     public ArrayList<Usuario> listDataLike(BDOpciones.Orden Opcorden, String LikeString) {
         Connection con = getConexion();
         try {
@@ -210,41 +223,46 @@ public class ConsultaUsuarios extends Conexion {
             }
             return users;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }
     }
-    
+
     public UsuarioSession usuarioEnSession(String usuario) {
         Connection con = getConexion();
         try {
             UsuarioSession u = null;
             ResultSet rs = null;
             PreparedStatement ps = null;
-            String sql = "SELECT USUARIO.ID_USUARIO, USUARIO.USUARIO,  TERMINAL.ID_TERMINAL, AGENCIA.ID_AGENCIA, BANCO.ID_BANCO, AGENCIA.NOMBRE AS AGENCIA, BANCO.NOMBRE AS BANCO "
-                    + "FROM USUARIO, AGENCIA, BANCO, TERMINAL "
+            String sql = "SELECT USUARIO.ID_USUARIO, ROL.NOMBRE as ROL, USUARIO.USUARIO,  TERMINAL.ID_TERMINAL, AGENCIA.ID_AGENCIA, BANCO.ID_BANCO, AGENCIA.NOMBRE AS AGENCIA, BANCO.NOMBRE AS BANCO "
+                    + "FROM USUARIO, AGENCIA, BANCO, TERMINAL, ROL "
                     + "WHERE USUARIO.ID_USUARIO = TERMINAL.USUARIO_ID_USUARIO AND AGENCIA.ID_AGENCIA = TERMINAL.AGENCIA_ID_AGENCIA AND "
                     + "BANCO.ID_BANCO = AGENCIA.BANCO_ID_BANCO AND "
+                    + "USUARIO.ROL_ID_ROL = ROL.ID_ROL AND "
                     + "USUARIO.USUARIO = '" + usuario + "'";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 u = new UsuarioSession(rs.getInt("id_usuario"), usuario, rs.getInt("id_terminal"), rs.getInt("id_agencia"),
                         rs.getInt("id_banco"), rs.getString("agencia"), rs.getString("banco"));
-                
+                u.setNombreRol(rs.getString("rol"));
             }
             return u;
         } catch (Exception e) {
+            B2.GuiController.mensajeConsola(e.getMessage());
             return null;
         } finally {
             try {
                 con.close();
             } catch (Exception e) {
+                B2.GuiController.mensajeConsola(e.getMessage());
                 System.err.println(e);
             }
         }

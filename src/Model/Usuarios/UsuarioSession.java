@@ -12,12 +12,12 @@ package Model.Usuarios;
 public class UsuarioSession {
     private int id_usuario;
     private String usuario;
-    private int id_terminal;
-    private int id_agencia;
+    private int id_terminal=-1;
+    private int id_agencia=-1;
     private int id_banco;
     private String agencia;
     private String banco;
-    
+    private String nombreRol;
     
     public UsuarioSession(int id_usuario, String usuario, int id_terminal,
                 int id_agencia, int id_banco, String agencia, String banco
@@ -30,6 +30,7 @@ public class UsuarioSession {
         this.id_banco = id_banco;
         this.agencia = agencia;
         this.banco = banco;
+        this.nombreRol="";
     }
 
     public int getId_usuario() {
@@ -87,6 +88,35 @@ public class UsuarioSession {
     public void setBanco(String banco) {
         this.banco = banco;
     }
+
+    public String getNombreRol() {
+        return nombreRol;
+    }
+
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
+    }
+    
+    
+    public void imprimir(){
+//    private String usuario;
+//    private int id_terminal;
+//    private int id_agencia;
+//    private int id_banco;
+//    private String agencia;
+//    private String banco;
+//    private String nombreRol;
+
+        System.out.println("ID terminal:");
+        System.out.println(id_terminal);
+        System.out.println("ID agencia:");
+        System.out.println(id_agencia); 
+        System.out.println("Nombre rol:");
+        System.out.println(nombreRol); 
+ 
+    }
+    
+    
     
     
 }

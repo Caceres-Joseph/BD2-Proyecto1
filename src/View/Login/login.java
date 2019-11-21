@@ -53,8 +53,9 @@ public class login implements Initializable {
 
         
         if (usuario.UserLogin(tUsuario, tPassword)) {
-            this.success_login();
             B2.usuario = usuario.getUser(tUsuario);
+            B2.usuario.imprimir(); 
+            this.success_login();
         }
         else
         {
