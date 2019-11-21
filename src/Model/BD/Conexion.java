@@ -19,10 +19,18 @@ public class Conexion {
 //    private final String password = "Informatica10"; // PASSWORD
 //    private final String url = "jdbc:oracle:thin:@localhost:1521";
     
-    private final String base = "xe"; //NOMBRE DE LA BASE DE DATOS
-    private final String user = "System";  // USUARIO
-    private final String password = "oracle"; // PASSWORD
-    private final String url = "jdbc:oracle:thin:@34.66.115.191:1521";
+//    private final String base = "xe"; //NOMBRE DE LA BASE DE DATOS
+//    private final String user = "System";  // USUARIO
+//    private final String password = "oracle"; // PASSWORD
+//    private final String url = "jdbc:oracle:thin:@34.66.115.191:1521";
+    
+    private final String base = "bd2p1"; //NOMBRE DE LA BASE DE DATOS
+    private final String user = "system";  // USUARIO
+    private final String password = "ricardcutzh-777"; // PASSWORD
+    private final String url = "jdbc:oracle:thin:@0.tcp.ngrok.io:12393";
+    
+    
+    
     private Connection con = null;
     
     public Conexion()
