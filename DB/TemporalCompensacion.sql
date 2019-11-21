@@ -205,7 +205,7 @@ BEGIN
               
               -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE SE COBRÓ CON ÉXITO
                  
-              UPDATE cheque_tmp_1 SET estado = 'Cobrado' WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
+              UPDATE cheque_tmp_1 SET estado = 'OK' WHERE id_cheque = c_id_cheque; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
               COMMIT;
             ELSE
               raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
@@ -218,15 +218,14 @@ BEGIN
             END IF;
           ELSE
             -- EL CHEQUE YA EXISTE DEBO VERIFICAR SU ESTADO
-            SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
-
+           
               -- EL CHEQUE FUE REPORTADO COMO ROBADO
               INSERT INTO TRANSACCION(FECHA, TIPO, NATURALEZA, SALDO_INICIAL, SALDO_FINAL, CODIGO_AUTORIZACION, USUARIO_ID_USUARIO, TERMINAL_ID_TERMINAL, CUENTA_NO_CUENTA, ESTADO_TRANSACCION,RECHAZADO,RAZON_RECHAZO)
-                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE REPORTAD: '||estado_cheque);
+                VALUES (TO_DATE(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'), 'cheque', 'debito', saldo_inicial_origen, saldo_inicial_origen, 1, p_usuario_id_usuario, p_terminal_id_terminal, p_no_cuenta_origen, 1,1,'CHEQUE REPORTADO: '||estado_cheque);
                 
                 -- DEBO DE ACTUALIZAR EL CHEQUE EN MI TABLA TEMPORAL EL CHEQUE NO SE COBRÓ CON ÉXITO POR CHEQUE ROBADO
                 
-                UPDATE cheque_tmp_1 SET estado = estado_cheque WHERE id_cheque = c_id_cheque;
+                UPDATE cheque_tmp_1 SET estado = 'Cheque ya reportado' WHERE id_cheque = c_id_cheque;
          END IF;
         ELSE
           raise_application_error(-20456, 'Cheque no existe en el sistema para la cuenta especificada');
@@ -254,18 +253,19 @@ BEGIN
     end loop;
   close c1;
   
-  UPDATE lote_tmp_1 SET estado = 'OK' WHERE id_lote = p_id_lote; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
+  UPDATE lote_tmp_1 SET estado = 2 WHERE id_lote = p_id_lote; -- ESTADO 1 (CHEQUE COBRADO CON EXITO)
 END;
 /
 
-
+select * from cheque_tmp_1;
 -- INSERTAR REGISTRO NUEVO CHEQUE COMPENSADO////////////////////////////////////////////////////////////////////////////////////
 CREATE OR REPLACE PROCEDURE LIBERAR_FONDOS(
     p_no_cuenta_destino IN CUENTA.NO_CUENTA%TYPE,
     monto IN CUENTA.SALDO%TYPE,
     p_usuario_id_usuario IN USUARIO.ID_USUARIO%TYPE,
     p_terminal_id_terminal IN TERMINAL.ID_TERMINAL%TYPE,
-    p_estado_operacion INTEGER
+    p_estado_operacion INTEGER,
+    p_correlativo INTEGER
 )
 IS
     saldo_inicial_destino CUENTA.SALDO%TYPE;
@@ -307,10 +307,16 @@ BEGIN
             -- ACTUALIZO EL DESTINO LIBERO LA RESERVA
             UPDATE CUENTA SET SALDO = saldo_final_destino WHERE NO_CUENTA = p_no_cuenta_destino;
             
-            UPDATE CUENTA SET SALDO_RESERVA = reserva_destino - monto WHERE NO_CUENTA = p_no_cuenta_destino;
+            IF reserva_destino - monto >= 0 THEN
+                UPDATE CUENTA SET SALDO_RESERVA = reserva_destino - monto WHERE NO_CUENTA = p_no_cuenta_destino;
+            ELSE
+                UPDATE CUENTA SET SALDO_RESERVA = 0 WHERE NO_CUENTA = p_no_cuenta_destino;
+            END IF;
             ----------------------
             SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible_destino, reserva_destino FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_destino;
             UPDATE CUENTA SET SALDO_TOTAL = (disponible_destino + reserva_destino) WHERE NO_CUENTA = p_no_cuenta_destino;
+           --
+            UPDATE CHEQUE_TMP_2 SET ESTADO_CHEQUE='RESERVA LIBERADA' WHERE CUENTA=p_no_cuenta_destino AND CORRELATIVO=p_correlativo; 
             ----------------------
             COMMIT;
       ELSE
@@ -400,10 +406,10 @@ SELECT * FROM TRANSACCION;
 
 
 
+select * from cheque_tmp_1;
 
 
-
-
+/*
 CALL OPERAR_LOTE(2,1,1);
 SELECT * FROM USUARIO;
 SELECT * FROM TERMINAL;
@@ -415,3 +421,5 @@ SELECT * FROM CUENTA;
 
 SELECT * FROM TRANSACCION;
 */
+
+
