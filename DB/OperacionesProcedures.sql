@@ -306,35 +306,35 @@ END;
 -- --------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE PROCEDURE REPORTAR_CHEQUE(
 	p_correlativo IN CHEQUE.CORRELATIVO%TYPE,
-	no_cuenta IN CUENTA.NO_CUENTA%TYPE,
-	estado_cheque IN CHEQUE.ESTADO_CHEQUE%TYPE
+	p_no_cuenta IN CUENTA.NO_CUENTA%TYPE,
+	p_estado_cheque IN CHEQUE.ESTADO_CHEQUE%TYPE
 )
 IS
 	cuenta_existe INTEGER;
-	id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
+	p_id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
 	num_chequeras INTEGER;
 	rango CHEQUERA.RANGO_SUP%TYPE;
 	actualiza_cheque INTEGER;
-  estado_cuenta CUENTA.NO_CUENTA%TYPE;
+  p_estado_cuenta CUENTA.NO_CUENTA%TYPE;
 BEGIN
 	--COMPROBACION DE EXISTE CUENTA
-	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = no_cuenta;
+	SELECT COUNT(*) INTO cuenta_existe FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta;
 	IF cuenta_existe = 1 THEN
-    SELECT CUENTA.ESTADO_CUENTA INTO estado_cuenta FROM CUENTA WHERE CUENTA.NO_CUENTA = no_cuenta;
-    IF estado_cuenta = 1 THEN
+    SELECT CUENTA.ESTADO_CUENTA INTO p_estado_cuenta FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta;
+    IF p_estado_cuenta = 1 THEN
       -- COMPROBACION QUE LA CHEQUERA EXISTA
-  		SELECT COUNT(*) INTO num_chequeras FROM CHEQUERA WHERE CHEQUERA.NO_CUENTA = no_cuenta;
+  		SELECT COUNT(*) INTO num_chequeras FROM CHEQUERA WHERE CHEQUERA.NO_CUENTA = p_no_cuenta;
   		rango := (num_chequeras * 100);
   		IF p_correlativo <= rango THEN
-  			SELECT CHEQUERA.ID_CHEQUERA INTO id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = no_cuenta;
-  			SELECT COUNT(*) INTO actualiza_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+  			SELECT CHEQUERA.ID_CHEQUERA INTO p_id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = p_no_cuenta;
+  			SELECT COUNT(*) INTO actualiza_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = p_id_chequera;
   			IF actualiza_cheque = 0 THEN
   				--EL CHEQUE NO EXISTIA EN LA BD ASI QUE LO CREO
-  				INSERT INTO CHEQUE(CORRELATIVO,ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, id_chequera, estado_cheque);
+  				INSERT INTO CHEQUE(CORRELATIVO,ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, p_id_chequera, p_estado_cheque);
   				COMMIT;
   			ELSE
   				-- EL CHEQUE YA EXISTE EN LA BD ASI QUE ACTUALIZO EL ESTADO
-  				UPDATE CHEQUE SET ESTADO_CHEQUE=estado_cheque WHERE ID_CHEQUERA = id_chequera AND CORRELATIVO=p_correlativo;
+  				UPDATE CHEQUE SET ESTADO_CHEQUE=p_estado_cheque WHERE ID_CHEQUERA = p_id_chequera AND CORRELATIVO=p_correlativo;
   				COMMIT;
   			END IF;
   		ELSE
