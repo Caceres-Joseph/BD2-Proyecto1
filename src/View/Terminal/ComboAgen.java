@@ -5,8 +5,10 @@
  */
 package View.Terminal;
 
+import Controller.AgenciaBancoController;
 import Controller.AgenciasController;
 import Model.Agencias.Agencia;
+import Model.Agencias.AgenciaBanco;
 import Model.BD.BDOpciones;
 import com.jfoenix.controls.JFXComboBox;
 import java.util.ArrayList;
@@ -21,24 +23,24 @@ import javafx.util.StringConverter;
  */
 public class ComboAgen {
     
-    private ObservableList<Agencia> contenidoTabla = FXCollections.observableArrayList();
-    private JFXComboBox<Agencia> cbAgencia;
+    private ObservableList<AgenciaBanco> contenidoTabla = FXCollections.observableArrayList();
+    private JFXComboBox<AgenciaBanco> cbAgencia;
 
     public int id_Agencia = -1;
 
-    public ComboAgen(JFXComboBox<Agencia> cbAgencia) {
+    public ComboAgen(JFXComboBox<AgenciaBanco> cbAgencia) {
 
         this.cbAgencia = cbAgencia;
         inicializarTabla();
 
-        StringConverter<Agencia> converter = new StringConverter<Agencia>() {
+        StringConverter<AgenciaBanco> converter = new StringConverter<AgenciaBanco>() {
             @Override
-            public String toString(Agencia bank) {
-                return bank.getNombre();
+            public String toString(AgenciaBanco bank) {
+                return bank.getNombre_banco()+"-"+bank.getNombre();
             }
 
             @Override
-            public Agencia fromString(String id) {
+            public AgenciaBanco fromString(String id) {
                 return contenidoTabla.stream()
                         //.filter(item -> item.getNo().equals(id))
                         .filter(item -> item.getId_agencia()== Integer.valueOf(id))
@@ -69,12 +71,12 @@ public class ComboAgen {
      * @param Stack
      */
     
-    void mostrarAgencias(AgenciasController b) {
+    void mostrarAgencias(AgenciaBancoController b) {
         //limpiando tabla
         contenidoTabla.clear();
-        ArrayList<Agencia> listarAgencias = b.listAgencias();
+        ArrayList<AgenciaBanco> listarAgencias = b.listBancosTest();
         for (int i = 0; i < listarAgencias.size(); i++) {
-            Agencia temp = listarAgencias.get(i);
+            AgenciaBanco temp = listarAgencias.get(i);
             contenidoTabla.add(temp);
         }
     }

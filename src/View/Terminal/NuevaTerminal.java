@@ -5,11 +5,13 @@
  */
 package View.Terminal;
 
+import Controller.AgenciaBancoController;
 import Controller.AgenciasController;
 import Controller.TerminalController;
 import Controller.UsuariosController;
 import Main.B2;
 import Model.Agencias.Agencia;
+import Model.Agencias.AgenciaBanco;
 import Model.Terminal.Terminal;
 import Model.Usuarios.Usuario;
 import View.Agencia.ComboAgencia;
@@ -31,6 +33,7 @@ public class NuevaTerminal implements Initializable {
     UsuariosController u = new UsuariosController();
     AgenciasController a = new AgenciasController();
     TerminalController t = new TerminalController();
+    AgenciaBancoController agenciaBanco = new AgenciaBancoController();
 
     ComboAgen comboAgencia;
     ComboUsuario comboUsuario;
@@ -39,7 +42,7 @@ public class NuevaTerminal implements Initializable {
     private JFXComboBox<Usuario> cbUsuario;
 
     @FXML
-    private JFXComboBox<Agencia> cbAgencia;
+    private JFXComboBox<AgenciaBanco> cbAgencia;
 
     @FXML
     void clckAceptar(ActionEvent event) {
@@ -80,7 +83,7 @@ public class NuevaTerminal implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         comboAgencia = new ComboAgen(cbAgencia);
-        comboAgencia.mostrarAgencias(a);
+        comboAgencia.mostrarAgencias(agenciaBanco);
 
         comboUsuario = new ComboUsuario(cbUsuario);
         comboUsuario.mostrarUsuarios(u);
