@@ -435,7 +435,7 @@ public class JsonPermiso {
                 } 
                 
                 else if (permiso.equals("lectura_del_archivo_operador")) {
-                    rutaControlador = "/View/Compesacion/LecturaConciliacion.fxml";
+                    rutaControlador = "/View/Compesacion/LecturaConciliacionOperador.fxml";
 
                 } 
                 

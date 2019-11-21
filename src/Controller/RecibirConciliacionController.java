@@ -224,10 +224,10 @@ public class RecibirConciliacionController {
      * @param usuario
      * @param terminal
      */
-    public void LeerConciliados(String path) {
+    public Lote LeerConciliados(String path) {
 
-        Lote lote = getDataLote(path);
-        consulta.saveLote(lote);
+        Lote lote = getDataLoteConciliados(path);
+        //consulta.saveLote(lote);
 
         try {
             Scanner input = new Scanner(new File(path));
@@ -258,6 +258,8 @@ public class RecibirConciliacionController {
             B2.GuiController.mensajeConsola(ex.getMessage());
             System.out.println(ex);
         }
+        
+        return lote;
     }
 
     /**
@@ -270,7 +272,7 @@ public class RecibirConciliacionController {
      */
     public ChequeConciliado getDataChequeConciliado(String line, int lote) {
 
-        String[] dataCheque = line.split("|");
+        String[] dataCheque = line.split("\\|");
 
         int referencia = Integer.parseInt(dataCheque[1]);
         int cuenta = Integer.parseInt(dataCheque[2]);
@@ -310,6 +312,31 @@ public class RecibirConciliacionController {
             B2.GuiController.mensajeConsola(e.getMessage());
             return new ArrayList<>();
         }
+    }
+    
+    
+    /**
+     * Función utilizada para crear un nuevo lote que será almacenado en la
+     * tabla temporal lote, para luego almacenar los cheques que pertenezcan al
+     * lote y realizar las compensaciones si todo cuadra.
+     *
+     * @param path
+     * @return retorna un nuevo lote para la tabla temporal.
+     */
+    public Lote getDataLoteConciliados(String path) {
+
+        String[] nameFile = path.replace(".txt","").split("\\\\");
+
+        String nombreArchivo = nameFile[nameFile.length - 1];
+
+        String[] infoLote = nombreArchivo.split("_");
+
+        int banco = Integer.parseInt(infoLote[1]);
+
+        int id_lote = Integer.parseInt(infoLote[2]);
+
+        //consulta.setDataArchivo(infoLote[3], infoLote[2], infoLote[4]);
+        return new Lote(id_lote, banco, 0, 0, 1);
     }
 
 }

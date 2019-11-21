@@ -5,9 +5,11 @@
  */
 package View.Compesacion;
 
+import Controller.GeneracionConciliacionController;
 import Controller.RecibirConciliacionController;
 import Main.B2;
 import static Main.B2.sta;
+import Model.ChequeTMP2.ChequeTMP2;
 import Model.ReConciliacion.ChequeConciliado;
 import Model.ReConciliacion.Lote;
 import com.jfoenix.controls.JFXTextField;
@@ -30,8 +32,10 @@ import javafx.stage.FileChooser;
 public class LecturaConciliacionOperador implements Initializable {
 
     RecibirConciliacionController con_Recibir = new RecibirConciliacionController();
+    GeneracionConciliacionController con_Generar =new GeneracionConciliacionController();
+    public TablaCheques tabla;
     Lote lote;
-    public TablaLecturaGrabador tabla;
+     
 
     @FXML
     private JFXTextField txtDocumento;
@@ -46,7 +50,7 @@ public class LecturaConciliacionOperador implements Initializable {
     private JFXTextField txtEstado;
 
     @FXML
-    private TableView<ChequeConciliado> tb;
+    private TableView<ChequeTMP2> tb;
 
     @FXML
     private TableColumn tc0;
@@ -64,7 +68,7 @@ public class LecturaConciliacionOperador implements Initializable {
     private TableColumn tc4;
 
     @FXML
-    void clckAceptar(ActionEvent event) {
+    void clckAceptar1(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
 
@@ -75,8 +79,14 @@ public class LecturaConciliacionOperador implements Initializable {
         try {
 
             if (file != null) {
-                con_Recibir.LeerConciliados(file.getAbsolutePath());
+                lote= con_Recibir.LeerConciliados(file.getAbsolutePath());
+            
+                
+                tabla=new TablaCheques(tb, tc0, tc1, tc2, tc3, tc4);
+                tabla.mostrar(con_Generar, lote.getId_lote());
+                
 
+                //con
                 //Enviando los valores 
                 this.txtDocumento.setText(String.valueOf(lote.getNo_documentos()));
                 this.txtIdLote.setText(String.valueOf(lote.getId_lote()));

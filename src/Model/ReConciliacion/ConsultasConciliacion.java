@@ -220,7 +220,7 @@ public class ConsultasConciliacion extends Conexion {
     public boolean liberarFondos(ChequeConciliado cheque, int usuario, int terminal, int estado_operacion) {
         Connection con = getConexion();
         try {
-            String cmd = "{CALL LIBERAR_FONDOS(?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
+            String cmd = "{CALL LIBERAR_FONDOS(?,?,?,?,?,?)}"; //USANDO EL PROCEDIMIENTO ALMACENADO
             CallableStatement call = con.prepareCall(cmd);
             call.setInt(1, cheque.getReferencia());
             call.setDouble(2, cheque.getValor());

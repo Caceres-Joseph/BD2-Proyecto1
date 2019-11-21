@@ -30,7 +30,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.hgrow="ALWAYS">
                <children>
-                  <Label styleClass="title" text="Grabador-Lectura de archivo de Conciliación" wrapText="true">
+                  <Label styleClass="title" text="Operador-Lectura de archivo de Conciliación" wrapText="true">
                      <font>
                         <Font size="9.0" />
                      </font>
@@ -40,7 +40,7 @@
                   <Insets />
                </GridPane.margin>
             </HBox>
-            <JFXButton onAction="#clckAceptar" prefHeight="37.0" prefWidth="115.0" text="Cargar" textFill="WHITE" GridPane.columnIndex="1">
+            <JFXButton onAction="#clckAceptar1" prefHeight="37.0" prefWidth="115.0" text="Cargar" textFill="WHITE" GridPane.columnIndex="1">
                <graphic>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>

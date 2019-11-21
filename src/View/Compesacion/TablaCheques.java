@@ -5,10 +5,8 @@
  */
 package View.Compesacion;
 
-import Controller.AgenciaBancoController;
 import Controller.GeneracionConciliacionController;
-import Model.Agencias.AgenciaBanco;
-import Model.LoteTMP2.LoteTMP2;
+import Model.ChequeTMP2.ChequeTMP2; 
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,10 +18,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author Notebook
  */
-public class TablaConciliacion {
-
-    private final ObservableList<LoteTMP2> contenidoTabla = FXCollections.observableArrayList();
-    private final TableView<LoteTMP2> tb;
+public class TablaCheques {
+    
+    private final ObservableList<ChequeTMP2> contenidoTabla = FXCollections.observableArrayList();
+    private final TableView<ChequeTMP2> tb;
 
     private final TableColumn tc0;
     private final TableColumn tc1;
@@ -31,14 +29,15 @@ public class TablaConciliacion {
     private final TableColumn tc3;
     private final TableColumn tc4;
 
-    public TablaConciliacion(
-            TableView<LoteTMP2> tb,
+    public TablaCheques(
+            TableView<ChequeTMP2> tb,
             TableColumn tc0,
             TableColumn tc1,
             TableColumn tc2,
             TableColumn tc3,
             TableColumn tc4
     ) {
+        
         this.tb = tb;
         this.tc0 = tc0;
         this.tc1 = tc1;
@@ -49,15 +48,17 @@ public class TablaConciliacion {
         
         /*
         
-    private int id_lote_2;
-    private int total_documentos;
-    private double total_monto;
-    private int id_banco;
-    private int estado_lote;
-    private String bancoName;
-    private String estado_loteString;
+    private int id_cheque;
+    private Date fecha;
+    private int cuenta;
+    private double valor;
+    private int lote;
+    private int referencia;
+    private int correlativo;
+    private String estado_cheque;
+        
         */
-        inicializarTabla("Id_lote_2", "Total_documentos", "Total_monto", "BancoName", "Estado_loteString");
+        inicializarTabla("Cuenta", "Referencia", "Correlativo", "Valor", "Estado_cheque");
     }
 
     public void inicializarColumnas(String text0, String text1, String text2, String text3, String text4) {
@@ -95,16 +96,18 @@ public class TablaConciliacion {
     +---------------------------------------
      */
     
-    void mostrar(GeneracionConciliacionController con) {
+    void mostrar(GeneracionConciliacionController con, int idLote) {
 
         //limpiando tabla
         contenidoTabla.clear();
+        
+        
 
+        
         //Llenando la tabla
-        ArrayList<LoteTMP2> lista = con.listarLotes();
+        ArrayList<ChequeTMP2> lista = con.listarChequesLote(idLote);
         contenidoTabla.addAll(lista); 
     }
     
      
-
 }
