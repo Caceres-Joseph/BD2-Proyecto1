@@ -61,14 +61,14 @@ public class ReporteGerencia extends Conexion {
                     + "    --DETERMINAR EL MÁXIMO DE DEPOSITOS REALIZADOS EN CADA AGENCIA\n"
                     + "    SELECT agencia, MAX(CONTEO) AS CANTIDAD FROM(\n"
                     + "        SELECT transaccion.cuenta_no_cuenta AS no_cuenta,transaccion.naturaleza AS naturaleza,cliente.dpi_cliente AS dpi,cliente.nombre AS nombre,agencia.nombre AS agencia, COUNT(*) AS CONTEO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
-                    + "        WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'debito' \n"
+                    + "        WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'credito' \n"
                     + "        AND mancomunada.cuenta_no_cuenta = cuenta.no_cuenta AND mancomunada.cliente_dpi_cliente = cliente.dpi_cliente AND transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia\n"
                     + "        GROUP BY transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre\n"
                     + "    )\n"
                     + "    GROUP BY naturaleza,agencia),\n"
                     + "    --DETERMINAR EL CONTEO DE DEPOSITOS POR TODOS LOS CLIENTES\n"
                     + "    (SELECT transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre NOMBRE_AGENCIA, COUNT(*) AS CONTEO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
-                    + "    WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'debito' \n"
+                    + "    WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'credito' \n"
                     + "    AND mancomunada.cuenta_no_cuenta = cuenta.no_cuenta AND mancomunada.cliente_dpi_cliente = cliente.dpi_cliente AND transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia\n"
                     + "    GROUP BY transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre) \n"
                     + "    --BUSCAR EL CLIENTE QUE HIZO CADA DEPOSITO MÁXIMO\n"
@@ -135,7 +135,7 @@ public class ReporteGerencia extends Conexion {
         }
     }
 
-    public ArrayList<GerenciaQuery4> nuncaDepositan() {
+    public ArrayList<GerenciaQuery4> nuncaDepositan(String agencia) {
         Connection con = getConexion();
         try {
             ArrayList<GerenciaQuery4> results = new ArrayList<>();
@@ -147,7 +147,7 @@ public class ReporteGerencia extends Conexion {
                     + "MINUS\n"
                     + "    SELECT dpi,nombre FROM(\n"
                     + "    SELECT transaccion.cuenta_no_cuenta AS no_cuenta,cliente.dpi_cliente AS dpi,cliente.nombre AS nombre,COUNT(*) AS CONTEO FROM TRANSACCION,CUENTA,TERMINAL,AGENCIA,CLIENTE,MANCOMUNADA\n"
-                    + "    WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'deposito' AND agencia.id_agencia = 3 \n"
+                    + "    WHERE transaccion.cuenta_no_cuenta = cuenta.no_cuenta AND transaccion.naturaleza = 'credito' AND agencia.id_agencia = "+agencia+" \n"
                     + "    AND mancomunada.cuenta_no_cuenta = cuenta.no_cuenta AND mancomunada.cliente_dpi_cliente = cliente.dpi_cliente AND transaccion.terminal_id_terminal = terminal.id_terminal AND terminal.agencia_id_agencia = agencia.id_agencia\n"
                     + "    GROUP BY transaccion.cuenta_no_cuenta,transaccion.naturaleza,cliente.dpi_cliente,cliente.nombre,agencia.nombre\n"
                     + "    )";
