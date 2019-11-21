@@ -143,7 +143,7 @@ IS
 		cuenta_existe INTEGER;
 		num_chequeras INTEGER;
 		rango INTEGER;
-		id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
+		p_id_chequera CHEQUERA.ID_CHEQUERA%TYPE;
 
 		cheque_existe INTEGER;
 
@@ -163,9 +163,9 @@ BEGIN
         rango := (num_chequeras*100); -- CALCULANDO LOS CHEQUES
         IF p_correlativo <= rango THEN
           -- OBTENGO EL ID DE LA CHEQUERA
-          SELECT CHEQUERA.ID_CHEQUERA INTO id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = p_no_cuenta_origen;
+          SELECT CHEQUERA.ID_CHEQUERA INTO p_id_chequera FROM CHEQUERA WHERE p_correlativo <= CHEQUERA.RANGO_SUP AND p_correlativo >= CHEQUERA.RANGO_INF AND CHEQUERA.NO_CUENTA = p_no_cuenta_origen;
           -- VERIFICANDO SI EL CHEQUE YA EXISTE EN LA TABLA DE CHEQUES
-          SELECT COUNT(*) INTO cheque_existe FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+          SELECT COUNT(*) INTO cheque_existe FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = p_id_chequera;
           IF cheque_existe = 0 THEN
             -- PUEDO PROCEDER A TRANSFERIR
             IF saldo_inicial_origen >= monto THEN
@@ -179,7 +179,7 @@ BEGIN
               SELECT CUENTA.SALDO, CUENTA.SALDO_RESERVA INTO disponible, reserva FROM CUENTA WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
               UPDATE CUENTA SET SALDO_TOTAL = (disponible+reserva) WHERE CUENTA.NO_CUENTA = p_no_cuenta_origen;
               ------------------------------------------
-              INSERT INTO CHEQUE(CORRELATIVO, ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, id_chequera, 4); -- INSERTANDO CHEQUE PAGADO
+              INSERT INTO CHEQUE(CORRELATIVO, ID_CHEQUERA, ESTADO_CHEQUE) VALUES(p_correlativo, p_id_chequera, 4); -- INSERTANDO CHEQUE PAGADO
               COMMIT;
             ELSE
               raise_application_error(-20456,'Saldo no es suficiente para cubrir el monto solicitado');
@@ -187,7 +187,7 @@ BEGIN
             END IF;
           ELSE
             -- EL CHEQUE YA EXISTE DEBO VERIFICAR SU ESTADO
-            SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = id_chequera;
+            SELECT CHEQUE.ESTADO_CHEQUE INTO estado_cheque FROM CHEQUE WHERE CHEQUE.CORRELATIVO = p_correlativo AND CHEQUE.ID_CHEQUERA = p_id_chequera;
             -- ROBADO (1), BLOQUEADO (2), PERDIDO (3), PAGAOD(4), ACTIVO (SOLO SI ESTÁ DENTRO DEL RANGO) (5)
             IF estado_cheque = 1 THEN
               -- EL CHEQUE FUE REPORTADO COMO ROBADO
