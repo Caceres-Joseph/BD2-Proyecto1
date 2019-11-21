@@ -26,16 +26,21 @@ public class TablaCuenta {
     private final ObservableList<Cuenta> contenidoTabla = FXCollections.observableArrayList();
     private final TableView<Cuenta> tb;
  
+    private final TableColumn tc0; 
     private final TableColumn tc1; 
-
-    public TablaCuenta(
-            TableView<Cuenta> tb, 
-            TableColumn tc1
-    ) {
+    private final TableColumn tc2; 
+    private final TableColumn tc3; 
+ 
+    public TablaCuenta(TableView<Cuenta> tb, TableColumn tc0, TableColumn tc1, TableColumn tc2, TableColumn tc3) {
+    
         this.tb = tb; 
+        this.tc0 = tc0; 
         this.tc1 = tc1; 
+        this.tc2 = tc2; 
+        this.tc3 = tc3; 
 
         inicializarTabla("No_cuenta");
+    
     }
 
     public void inicializarColumnas(String text1) {

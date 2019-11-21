@@ -24,7 +24,7 @@ import javafx.scene.control.TableView;
  */
 public class ListarCuenta implements Initializable {
 
-    TablaCuenta tablaCuenta;
+    TablaCuenta2 tablaCuenta;
     CuentasController c = new CuentasController();
 
     @FXML
@@ -37,8 +37,18 @@ public class ListarCuenta implements Initializable {
     private TableView<Cuenta> tb;
 
     @FXML
+    private TableColumn tc0;
+
+    @FXML
     private TableColumn tc1;
 
+    @FXML
+    private TableColumn tc2;
+
+    @FXML
+    private TableColumn tc3;
+    
+    
     @FXML
     void clckEditar(ActionEvent event) {
 
@@ -68,11 +78,11 @@ public class ListarCuenta implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //Inicializando tabla
-        tablaCuenta = new TablaCuenta(tb, tc1);
+        tablaCuenta = new TablaCuenta2(tb, tc0, tc1, tc2, tc3);
         //Cargando la tabla con datos
         tablaCuenta.mostrar(c);
         //Imprimiendo mensaje en consola
-        B2.GuiController.mensajeConsola("Listando agencias");
+        B2.GuiController.mensajeConsola("Listando cuentas");
     }
 
     /*
@@ -82,8 +92,7 @@ public class ListarCuenta implements Initializable {
     
      */
     public boolean eliminar(Cuenta cuenta) {
-
-        
+ 
         c.updateCuenta(cuenta.getNo_cuenta(), 0.00, cuenta.getBanco_id_banco(), cuenta.getTipo_cuenta_id_tipo(),0);
         
         return true;

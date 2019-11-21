@@ -12,6 +12,8 @@ package Model.Cuentas;
 public class Cuenta {
     private int no_cuenta;
     private double saldo;
+    private double saldoTotal=0;
+    private double saldoReserva=0; 
     private int banco_id_banco;
     private int tipo_cuenta_id_tipo;
     private int estado_cuenta;
@@ -70,6 +72,22 @@ public class Cuenta {
 
     public void setEstado_cuenta(int estado_cuenta) {
         this.estado_cuenta = estado_cuenta;
+    }
+
+    public double getSaldoTotal() {
+        return saldoTotal;
+    }
+
+    public void setSaldoTotal(double saldoTotal) {
+        this.saldoTotal = saldoTotal;
+    }
+
+    public double getSaldoReserva() {
+        return saldoReserva;
+    }
+
+    public void setSaldoReserva(double saldoReserva) {
+        this.saldoReserva = saldoReserva;
     }
     
     

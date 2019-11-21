@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="View.Cuenta.ListarCuenta">
+<AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Cuenta.ListarCuenta">
    <children>
       <GridPane styleClass="appbar" stylesheets="@../Gui/Estilos/material-design-styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -51,7 +50,10 @@
       </GridPane>
       <TableView fx:id="tb" editable="true" prefHeight="200.0" prefWidth="267.0" stylesheets="@../Gui/Estilos/tableCuentaCaja.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
          <columns>
-            <TableColumn fx:id="tc1" prefWidth="295.0" text="No. Cuenta" />
+            <TableColumn fx:id="tc0" prefWidth="134.0" text="No. Cuenta" />
+            <TableColumn fx:id="tc1" prefWidth="120.0" text="Saldo" />
+            <TableColumn fx:id="tc2" prefWidth="94.0" text="Salto Reserva" />
+            <TableColumn fx:id="tc3" prefWidth="116.0" text="Saldo Total" />
          </columns>
       </TableView>
    </children>

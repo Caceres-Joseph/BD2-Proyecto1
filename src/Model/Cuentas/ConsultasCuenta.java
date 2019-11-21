@@ -258,6 +258,9 @@ public class ConsultasCuenta extends Conexion{
                 Cuenta c = new Cuenta(rs.getDouble("saldo"), rs.getInt("banco_id_banco"), rs.getInt("tipo_cuenta_id_tipo"));
                 c.setNo_cuenta(rs.getInt("no_cuenta"));
                 c.setEstado_cuenta(rs.getInt("estado_cuenta"));
+                c.setSaldoReserva(rs.getDouble("saldo_reserva"));
+                c.setSaldoTotal(rs.getDouble("saldo_total"));
+                
                 cuentas.add(c);
             }
             return cuentas;
