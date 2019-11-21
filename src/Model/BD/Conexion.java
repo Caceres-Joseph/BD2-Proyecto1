@@ -27,7 +27,7 @@ public class Conexion {
     private final String base = "bd2p1"; //NOMBRE DE LA BASE DE DATOS
     private final String user = "system";  // USUARIO
     private final String password = "ricardcutzh-777"; // PASSWORD
-    private final String url = "jdbc:oracle:thin:@0.tcp.ngrok.io:12393";
+    private final String url = "jdbc:oracle:thin:@192.168.43.223:1521";
     
     
     
